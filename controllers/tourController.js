@@ -50,13 +50,13 @@ exports.getTourStats = catchAsync(async (req, res, next) => {
   });
 });
 
-// This has to be analyzed and watch videos again
 exports.getMonthlyPlan = catchAsync(async (req, res, next) => {
   const year = req.params.year * 1;
 
   const plan = await Tour.aggregate([
     {
-      $unwind: "$startDates"
+      // useful for desconstruting array
+      $unwind: "$startDates" // deconstruct array from input and create one element for output
     },
     {
       $match: {
@@ -69,13 +69,61 @@ exports.getMonthlyPlan = catchAsync(async (req, res, next) => {
     {
       $group: {
         _id: { $month: "$startDates" },
-        numTourStats: { $sum: 1 },
+        numTourStarts: { $sum: 1 },
+        tours: { $push: "$name" } // to push name field into array
+      }
+    },
+    {
+      $addFields: {
+        month: "$_id" // get value from _id field
+      }
+    },
+    {
+      $project: {
+        _id: 0 // to get rid of _id field
+      }
+    },
+    {
+      $sort: {
+        numTourStarts: -1
+      }
+    }
+  ]);
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      plan
+    }
+  });
+});
+
+exports.getWeeklyPlan = catchAsync(async (req, res, next) => {
+  const month = req.params.month * 1;
+  const year = req.params.year * 1;
+
+  const plan = await Tour.aggregate([
+    {
+      $unwind: "$startDates"
+    },
+    {
+      $match: {
+        startDates: {
+          $gte: new Date(`${year}-${month}-01`),
+          $lte: new Date(`${year}-${month}-31`)
+        }
+      }
+    },
+    {
+      $group: {
+        _id: { $dayOfMonth: "$startDates" },
+        numTourStarts: { $sum: 1 },
         tours: { $push: "$name" }
       }
     },
     {
-      $addField: {
-        month: "$_id"
+      $addFields: {
+        dayOfMonth: "$_id"
       }
     },
     {
