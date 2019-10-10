@@ -102,6 +102,7 @@ const tourSchema = new mongoose.Schema(
   }
 );
 tourSchema.index({ price: 1, ratingsAverage: -1 });
+tourSchema.index({ startLocation: "2dsphere" });
 
 // You can't use the virtual properties to query
 tourSchema.virtual("durationWeeks").get(function() {

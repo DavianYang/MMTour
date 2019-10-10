@@ -13,6 +13,13 @@ router.route("/monthly-plan/:year").get(tourController.getMonthlyPlan);
 router.route("/weekly-plan/:month/:year").get(tourController.getWeeklyPlan);
 
 router
+  .route("/tours-within/:distance/center/:latlng/unit/:unit")
+  .get(tourController.getTourWithin);
+
+router.route("/distances/:latlng/unit/:unit").get(tourController.getDistances);
+// router.route("/tours-nearby/center/:latlng").get(tourController.getTourNearBy);
+
+router
   .route("/")
   .get(tourController.getAllTours)
   .post(tourController.createTour);
