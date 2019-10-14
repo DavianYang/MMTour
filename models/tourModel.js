@@ -1,5 +1,8 @@
+const fs = require("fs");
+const path = require("path");
 const mongoose = require("mongoose");
 const slugify = require("slugify");
+const { Parser } = require("json2csv");
 
 const tourSchema = new mongoose.Schema(
   {
@@ -118,6 +121,29 @@ tourSchema.pre(/^find/, function(next) {
   this.find({ secretTour: { $ne: true } });
 
   this.start = Date.now();
+  next();
+});
+
+tourSchema.post(/^find/, function(docs, next) {
+  let csv;
+  const filepath = path.join(__dirname, "tours.csv");
+
+  const fields = ["name", "price", "startLocation.coordinates"];
+
+  try {
+    const parser = new Parser({ fields, quote: "" });
+    csv = parser.parse(Array.from(docs));
+  } catch (err) {
+    console.error(err);
+  }
+
+  fs.writeFile(filepath, csv, err => {
+    if (err) {
+      console.error(err);
+    }
+    console.log("It is saved!!");
+  });
+
   next();
 });
 

@@ -1,14 +1,6 @@
 const fs = require("fs");
-const path = require("path");
 const _ = require("lodash");
 const shuffleSeed = require("shuffle-seed");
-const { Parser } = require("json2csv");
-const catchAsync = require("../utils/catchAsync");
-
-const filepath = path.join(__dirname, "tours.csv");
-
-// Define AppError
-// Do some refactoring
 
 const extractColumns = (data, colNames) => {
   const headers = _.first(data);
@@ -17,26 +9,6 @@ const extractColumns = (data, colNames) => {
   const extracted = _.map(data, row => _.pullAt(row, idxes));
 
   return extracted;
-};
-
-exports.jsontocsv = jsonObj => {
-  let csv;
-
-  const fields = ["name", "price", "startLocation.coordinates"];
-
-  try {
-    const parser = new Parser({ fields, quote: "" });
-    csv = parser.parse(jsonObj);
-  } catch (err) {
-    console.error(err);
-  }
-
-  fs.writeFile(filepath, csv, err => {
-    if (err) {
-      console.error(err);
-    }
-    console.log("It is saved!!");
-  });
 };
 
 exports.loadCSV = (

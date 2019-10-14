@@ -1,11 +1,10 @@
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const APIFeatures = require("../utils/apiFeatures");
-const { jsontocsv } = require("../utils/load-csv");
+const { tourstocsv } = require("../utils/load-csv");
 
 exports.getAll = Model =>
   catchAsync(async (req, res, next) => {
-    console.log(req.params.tourId);
     let filter = {};
     if (req.params.tourId) filter = { tour: req.params.tourId };
     console.log(filter);
@@ -18,7 +17,8 @@ exports.getAll = Model =>
 
     const doc = await features.query;
 
-    jsontocsv(Array.from(doc));
+    // have to refactor
+    // tourstocsv(Array.from(doc));
 
     res.status(200).json({
       status: "success",
