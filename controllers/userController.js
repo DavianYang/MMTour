@@ -14,7 +14,6 @@ const filterObj = (obj, ...allowedFields) => {
 };
 
 exports.getMe = (req, res, next) => {
-  console.log(req.params);
   req.params.id = req.user.id;
   next();
 };
@@ -31,8 +30,6 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   }
 
   const filteredObj = filterObj(req.body, "name", "email");
-
-  console.log(filteredObj);
 
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredObj, {
     runValidators: true,
