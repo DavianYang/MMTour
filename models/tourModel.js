@@ -124,28 +124,28 @@ tourSchema.pre(/^find/, function(next) {
   next();
 });
 
-tourSchema.post(/^find/, function(docs, next) {
-  let csv;
-  const filepath = path.join(__dirname, "tours.csv");
+// tourSchema.post(/^find/, function(docs, next) {
+//   let csv;
+//   const filepath = path.join(__dirname, "tours.csv");
 
-  const fields = ["name", "price", "startLocation.coordinates"];
+//   const fields = ["name", "price", "startLocation.coordinates"];
 
-  try {
-    const parser = new Parser({ fields, quote: "" });
-    csv = parser.parse(Array.from(docs));
-  } catch (err) {
-    console.error(err);
-  }
+//   try {
+//     const parser = new Parser({ fields, quote: "" });
+//     csv = parser.parse(Array.from(docs));
+//   } catch (err) {
+//     console.error(err);
+//   }
 
-  fs.writeFile(filepath, csv, err => {
-    if (err) {
-      console.error(err);
-    }
-    console.log("It is saved!!");
-  });
+//   fs.writeFile(filepath, csv, err => {
+//     if (err) {
+//       console.error(err);
+//     }
+//     console.log("It is saved!!");
+//   });
 
-  next();
-});
+//   next();
+// });
 
 tourSchema.post(/^find/, function(docs, next) {
   console.log(`Query took ${Date.now() - this.start} milliseconds`);
