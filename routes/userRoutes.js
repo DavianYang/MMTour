@@ -5,7 +5,7 @@ const userController = require("../controllers/userController");
 const authController = require("../controllers/authController");
 
 // Todo List
-// Watch Password Change Algo
+
 // Watch Error Handling
 
 router.post("/signup", authController.signup);
@@ -16,6 +16,8 @@ router.post("/forgotPassword", authController.forgotPassword);
 router.patch("/resetPassword/:token", authController.resetPassword);
 
 router.use(authController.protect);
+
+router.patch("/updateMyPassword", authController.updatePassword);
 
 router
   .route("/me")
