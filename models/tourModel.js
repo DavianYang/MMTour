@@ -112,6 +112,14 @@ tourSchema.virtual("durationWeeks").get(function() {
   return this.duration / 7;
 });
 
+// Virtual Populate
+// Review tour <-> Tour reviews _id
+tourSchema.virtual("reviews", {
+  ref: "Review",
+  foreignField: "tour", // Reivew's tour field
+  localField: "_id" // Tour's _id of reviews
+});
+
 tourSchema.pre("save", function(next) {
   this.slug = slugify(this.name, { lower: true });
   next();

@@ -33,5 +33,17 @@ const reviewSchema = new mongoose.Schema(
   }
 );
 
+reviewSchema.index({ tour: 1, user: 1 }, { unique: true });
+
+// Populate User
+reviewSchema.pre(/^find/, function(next) {
+  this.populate({
+    path: "user",
+    select: "name photo"
+  });
+
+  next();
+});
+
 const Review = mongoose.model("Review", reviewSchema);
 module.exports = Review;
