@@ -16,9 +16,6 @@ exports.getAll = Model =>
 
     const doc = await features.query;
 
-    // have to refactor
-    // tourstocsv(Array.from(doc));
-
     res.status(200).json({
       status: "success",
       results: doc.length,
