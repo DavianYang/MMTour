@@ -1,4 +1,5 @@
 class AppError extends Error {
+  // Notice extends to Error
   constructor(message, statusCode) {
     super(message);
 
