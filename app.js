@@ -10,13 +10,16 @@ const cookieParser = require("cookie-parser");
 const AppError = require("./utils/appError");
 
 // Router
+const viewRouter = require("./routes/viewRoutes");
 const tourRouter = require("./routes/tourRoutes");
 const userRouter = require("./routes/userRoutes");
 const reviewRouter = require("./routes/reviewRoutes");
 
 const app = express();
 
+// Set View Engine
 app.set("view engine", "pug");
+//  Serving static files
 app.set("views", path.join(__dirname, "views"));
 
 // Global Middleware
@@ -51,6 +54,7 @@ app.use((req, res, next) => {
 });
 
 // Routes
+app.use("/", viewRouter);
 app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/reviews", reviewRouter);
