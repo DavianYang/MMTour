@@ -6,4 +6,6 @@ const router = express.Router();
 
 router.get("/", viewController.getOverview);
 
+router.get("/tour/:slug", viewController.getTour); // slug -> the-park-camper
+
 module.exports = router;
