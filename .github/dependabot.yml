@@ -1,0 +1,26 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "22:30"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: nodemailer
+    versions:
+    - 6.4.17
+    - 6.4.18
+    - 6.5.0
+  - dependency-name: lodash
+    versions:
+    - 4.17.20
+  - dependency-name: pug
+    versions:
+    - 3.0.0
+  - dependency-name: elliptic
+    versions:
+    - 6.5.3
+  - dependency-name: parcel-bundler
+    versions:
+    - 1.12.4
