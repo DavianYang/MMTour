@@ -1,7 +1,6 @@
 {
   "name": "mmtours",
   "version": "1.0.0",
-  "description": "",
   "main": "app.js",
   "scripts": {
     "start:dev": "nodemon server.js",
@@ -49,5 +48,17 @@
     "ndb": "^1.1.4",
     "parcel-bundler": "^1.12.3",
     "prettier": "^1.18.2"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DavianYang/MMTour.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DavianYang/MMTour/issues"
+  },
+  "homepage": "https://github.com/DavianYang/MMTour#readme",
+  "description": ""
 }
