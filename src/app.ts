@@ -30,7 +30,7 @@ class App {
     this.app.listen(this.port, () => {
       logger.info(`=================================`);
       logger.info(`======= ENV: ${this.env} =======`);
-      logger.info(`🚀 App listening on the port ${this.port}`);
+      logger.info(`🚀 App listening on the port http://127.0.0.1:${this.port}/`);
       logger.info(`=================================`);
     });
   }
@@ -63,7 +63,7 @@ class App {
       this.app.use('/api', limiter);
     } else {
       this.app.use(morgan('dev', { stream }));
-      this.app.use();
+      this.app.use(cors({ origin: true, credentials: true }));
     }
 
     this.app.use(hpp());
@@ -82,7 +82,7 @@ class App {
           description: 'Example doc',
         },
       },
-      // apis: ['swagger.yaml']
+      apis: ['swagger.yaml'],
     };
 
     const specs = swaggerJSDoc(options);
