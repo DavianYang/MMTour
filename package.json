@@ -7,8 +7,22 @@
     "test": "test"
   },
   "scripts": {
-    "start": "pnpm run build && cross-env NODE_ENV=production node dist/server.js",
-    "dev": ""
+    "build-ts": "tsc && npx tsc-alias",
+    "build": "pnpm run build-ts && pnpm run lint && pnpm run copy-static-assets",
+    "copy-static-assets": "ts-node copyStaticAssets.ts",
+    "lint": "eslint --ignore-path .gitignore --ext .ts src/",
+    "lint:fix": "pnpm run lint -- --fix",
+    "serve": "node dist/server.js",
+    "start": "pnpm run build && NODE_ENV=production pnpm run serve",
+    "dev": "NODE_ENV=development nodemon",
+    "test": "jest --forceExit --detectOpenHandles --coverage --verbose",
+    "watch-node": "nodemon dist/server.js",
+    "watch-ts": "tsc -w",
+    "watch-test": "pnpm run test -- --watchAll",
+    "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run watch-node\"",
+    "debug": "pnpm run build && pnpm run watch-debug",
+    "serve-debug": "nodemon --inspect dist/server.js",
+    "watch-debug": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run serve-debug\""
   },
   "repository": {
     "type": "git",
@@ -42,6 +56,7 @@
     "slugify": "^1.5.3",
     "swagger-jsdoc": "^6.1.0",
     "swagger-ui-express": "^4.1.6",
+    "ts-jest": "^27.0.3",
     "ts-node": "^10.0.0",
     "typescript": "^4.3.4",
     "validator": "^13.6.0",
@@ -58,9 +73,13 @@
     "@types/hpp": "^0.2.1",
     "@types/morgan": "^1.9.2",
     "@types/node": "^15.12.4",
+    "@types/shelljs": "^0.8.8",
     "@types/supertest": "^2.0.11",
     "@types/swagger-jsdoc": "^6.0.0",
     "@types/swagger-ui-express": "^4.1.2",
+    "@typescript-eslint/eslint-plugin": "^4.28.0",
+    "@typescript-eslint/parser": "^4.28.0",
+    "concurrently": "6.0.2",
     "eslint": "^7.29.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-node": "^11.1.0",
@@ -68,8 +87,10 @@
     "husky": "^6.0.0",
     "lint-staged": "^11.0.0",
     "node-config": "^0.0.2",
+    "node-gyp": "^8.1.0",
     "nodemon": "^2.0.7",
     "prettier": "^2.3.1",
+    "shelljs": "^0.8.4",
     "supertest": "^6.1.3",
     "tsconfig-paths": "^3.9.0"
   }
