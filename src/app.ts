@@ -7,9 +7,12 @@ import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import hpp from 'hpp';
 import cookieParser from 'cookie-parser';
+import mongoose from 'mongoose';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 
+import Routes from '@interfaces/routes.interface';
+import { dbConnection } from '@databases/mongodb';
 import { logger, stream } from '@utils/logger';
 
 class App {
@@ -17,12 +20,14 @@ class App {
   public port: string | number;
   public env: string;
 
-  constructor() {
+  constructor(routes: Routes[]) {
     this.app = express();
     this.port = process.env.PORT || 3000;
     this.env = process.env.NODE_ENV || 'development';
 
+    this.connectToDatabase();
     this.initializeMiddlewares();
+    this.initializeRoutes(routes);
     this.initializeSwagger();
   }
 
@@ -39,18 +44,13 @@ class App {
     return this.app;
   }
 
-  // private connectToDatabase(){
-  //   if (this.env !== 'production'){
-  //     mongoose.set('debug', true)
-  //   }
+  private connectToDatabase() {
+    if (this.env !== 'production') {
+      mongoose.set('debug', true);
+    }
 
-  //   mongoose.connect(DB, {
-  //     useNewUrlParser: true,
-  //     useCreateIndex: true,
-  //     useFindAndModify: false,
-  //     useUnifiedTopology: true
-  //   }).then(() => logger.info('DB connected successfully'));
-  // }
+    mongoose.connect(dbConnection.url, dbConnection.options).then(() => logger.info('DB connected successfully'));
+  }
 
   public initializeMiddlewares() {
     const limiter = rateLimit({
@@ -71,6 +71,12 @@ class App {
     this.app.use(express.json({ limit: '10kb' }));
     this.app.use(express.urlencoded({ extended: true, limit: '10kb' }));
     this.app.use(cookieParser());
+  }
+
+  private initializeRoutes(routes: Routes[]) {
+    routes.forEach(route => {
+      this.app.use('/api/v1/', route.router);
+    });
   }
 
   private initializeSwagger() {

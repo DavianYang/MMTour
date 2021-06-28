@@ -1,0 +1,20 @@
+tags:
+- name: users
+  description: users API
+
+paths:
+# [GET] users
+  /users:
+    get:
+      tags:
+      - users
+      summary: Find All Users
+      responses:
+        200:
+          description: 'OK'
+        500:
+          description: 'Server Error'
+
+schemes:
+  - https
+  - http

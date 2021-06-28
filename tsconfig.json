@@ -52,6 +52,9 @@
     "paths": {
       "@/*": ["*"],
       "@databases/*": ["databases/*"],
+      "@interfaces/*": ["interfaces/*"],
+      "@controllers/*": ["controllers/*"],
+      "@routes/*": ["routes/*"],
       "@utils/*": ["utils/*"]
     },                                 /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
     // "rootDirs": [],                              /* List of root folders whose combined content represents the structure of the project at runtime. */
@@ -74,7 +77,7 @@
 
     /* Advanced Options */
     "skipLibCheck": true,                           /* Skip type checking of declaration files. */
-    "forceConsistentCasingInFileNames": true        /* Disallow inconsistently-cased references to the same file. */
+    "forceConsistentCasingInFileNames": true        /* Disallow in, "src/interfaces/routesInterfacests"consistently-cased references to the same file. */
   },
   "include": ["src/**/*.ts", "src/**/*.json", ".env", "src/app.ts"],
   "exclude": ["node_modules"]
