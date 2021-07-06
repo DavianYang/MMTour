@@ -1,4 +1,5 @@
 import { Schema, model, Document, Types } from 'mongoose';
+import { Tour } from '@interfaces/tours.interface';
 
 const tourSchema: Schema = new Schema(
   {
@@ -31,7 +32,7 @@ const tourSchema: Schema = new Schema(
       default: 4.5,
       min: [1, 'Rating must be above 1.0'],
       max: [5, 'Rating must be less 5.0'],
-      set: (val: number | string): number => Math.round(val * 10) / 10,
+      set: (val: number): number => Math.round(val * 10) / 10,
     },
     ratingsQuantity: {
       type: Number,
@@ -100,6 +101,6 @@ const tourSchema: Schema = new Schema(
   },
 );
 
-const tourModel = model<Document>('Tour', tourSchema);
+const tourModel = model<Tour & Document>('Tour', tourSchema);
 
 export default tourModel;
