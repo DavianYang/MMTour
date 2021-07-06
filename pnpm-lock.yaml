@@ -44,6 +44,7 @@ specifiers:
   node-gyp: ^8.1.0
   nodemailer: ^6.6.2
   nodemon: ^2.0.7
+  pnpm: ^6.9.1
   prettier: ^2.3.1
   pug: ^3.0.2
   shelljs: ^0.8.4
@@ -78,6 +79,7 @@ dependencies:
   mongoose: 5.12.14
   morgan: 1.10.0
   nodemailer: 6.6.2
+  pnpm: 6.9.1
   pug: 3.0.2
   slugify: 1.5.3
   swagger-jsdoc: 6.1.0
@@ -3136,6 +3138,12 @@ packages:
     dependencies:
       semver-compare: 1.0.0
     dev: true
+
+  /pnpm/6.9.1:
+    resolution: {integrity: sha512-2qlbvmHB+ULAoTCMpJ75oADYoVQnsxD1ipCemdDJA2KW4auGwoTUzyowVYEiAe4DIDOqw3axhHVkNAo7P6goZA==}
+    engines: {node: '>=12.17'}
+    hasBin: true
+    dev: false
 
   /prelude-ls/1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
