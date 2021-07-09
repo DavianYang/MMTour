@@ -1,11 +1,9 @@
 import dotenv from 'dotenv';
 
-dotenv.config({ path: '../../.env' });
-
-const DB = process.env.DATABASE || '';
+dotenv.config({ path: '.env' });
 
 export const dbConnection = {
-  url: DB,
+  url: process.env.DATABASE || '',
   options: {
     useNewUrlParser: true,
     useCreateIndex: true,

@@ -48,7 +48,6 @@ class App {
     if (this.env !== 'production') {
       mongoose.set('debug', true);
     }
-
     mongoose.connect(dbConnection.url, dbConnection.options).then(() => logger.info('DB connected successfully'));
   }
 

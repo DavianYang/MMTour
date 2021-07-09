@@ -4,7 +4,7 @@ tags:
 
 paths:
 # [GET] users
-  /users:
+  /api/v1/users:
     get:
       tags:
       - users
