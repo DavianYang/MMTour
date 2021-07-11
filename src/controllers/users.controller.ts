@@ -7,8 +7,8 @@ import { USER_WITH_ID_NOT_FOUND, USER_ROUTE_NOT_DEFINED } from '@resources/strin
 class UsersController {
   public userService = new userService();
 
-  public getUserAll = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    const users = await this.userService.findAllUser();
+  public getAllUsers = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    const users = await this.userService.findAllUsers(req);
 
     res.status(200).json({
       status: 'success',
@@ -49,7 +49,7 @@ class UsersController {
     res.status(200).json({
       status: 'success',
       data: {
-        data: null,
+        data: updatedUser,
       },
     });
   });

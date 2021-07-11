@@ -1,5 +1,4 @@
 import { Schema, model, Document, Types } from 'mongoose';
-import { Tour } from '@interfaces/tours.interface';
 
 const tourSchema: Schema = new Schema(
   {
@@ -23,8 +22,8 @@ const tourSchema: Schema = new Schema(
       type: String,
       required: [true, 'A tour must have a difficulty'],
       enum: {
-        values: ['easy', 'medium', 'difficulty'],
-        message: 'Dfficulty is either: easy, medium, hard',
+        values: ['easy', 'medium', 'hard'],
+        message: 'Difficulty is either: easy, medium, hard',
       },
     },
     ratingsAverage: {
@@ -90,7 +89,7 @@ const tourSchema: Schema = new Schema(
     ],
     guides: [
       {
-        types: Types.ObjectId,
+        type: Types.ObjectId,
         ref: 'User',
       },
     ],
@@ -101,6 +100,6 @@ const tourSchema: Schema = new Schema(
   },
 );
 
-const tourModel = model<Tour & Document>('Tour', tourSchema);
+const tourModel = model<Document>('Tour', tourSchema);
 
-export default tourModel;
+export { tourModel };

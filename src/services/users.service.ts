@@ -1,13 +1,12 @@
 import { Request } from 'express';
-import userModel from '@models/users.model';
-import { findOne, updateOne, deleteOne } from '@services/factory.service';
+import { userModel } from '@models/users.model';
+import { findAll, findOne, updateOne, deleteOne } from '@services/factory.service';
 
 class UsersService {
   public users = userModel;
 
-  public async findAllUser() {
-    const users = await this.users.find();
-    return users;
+  public async findAllUsers(req: Request) {
+    return await findAll(this.users, req.query);
   }
 
   public async findUser(req: Request) {

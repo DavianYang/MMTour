@@ -36,6 +36,7 @@ class App {
       logger.info(`=================================`);
       logger.info(`======= ENV: ${this.env} =======`);
       logger.info(`🚀 App listening on the port http://127.0.0.1:${this.port}/`);
+      logger.info(`📗 For API Documentation http://127.0.0.1:${this.port}/api-docs`);
       logger.info(`=================================`);
     });
   }

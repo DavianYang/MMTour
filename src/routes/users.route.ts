@@ -10,7 +10,13 @@ class UsersRoute {
     this.initializeRoutes();
   }
   private initializeRoutes() {
-    this.router.get(`${this.path}`, this.usersController.getUserAll);
+    this.router.route(`${this.path}/`).get(this.usersController.getAllUsers).post(this.usersController.createUser);
+
+    this.router
+      .route(`${this.path}/:id`)
+      .get(this.usersController.getUser)
+      .patch(this.usersController.updateUser)
+      .delete(this.usersController.deleteUser);
   }
 }
 
