@@ -55,6 +55,7 @@ specifiers:
   ts-jest: ^27.0.3
   ts-node: ^10.0.0
   tsconfig-paths: ^3.9.0
+  tslib: ^2.3.0
   typescript: ^4.3.4
   validator: ^13.6.0
   winston: ^3.3.3
@@ -86,6 +87,7 @@ dependencies:
   swagger-ui-express: 4.1.6_express@4.17.1
   ts-jest: 27.0.3_typescript@4.3.4
   ts-node: 10.0.0_83f53b0a0c5616d3fa00ed4e30b9ce1b
+  tslib: 2.3.0
   typescript: 4.3.4
   validator: 13.6.0
   winston: 3.3.3
@@ -4058,6 +4060,10 @@ packages:
   /tslib/1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
     dev: true
+
+  /tslib/2.3.0:
+    resolution: {integrity: sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg==}
+    dev: false
 
   /tsutils/3.21.0_typescript@4.3.4:
     resolution: {integrity: sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==}

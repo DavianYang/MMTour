@@ -15,6 +15,123 @@ paths:
         500:
           description: 'Server Error'
 
+# [POST] users
+    post:
+      tags:
+      - users
+      summary: Add User
+      parameters:
+      - name: body
+        in: body
+        description: user Data
+        required: true
+        schema:
+          $ref: '#/definitions/users'
+      responses:
+        418:
+          description: 'This route is not yet defined! Please use /signup instead'
+        500:
+          description: 'Server Error'
+
+# [GET] users/id
+  /api/v1/users/{id}:
+    get:
+      tags:
+      - users
+      summary: Find All Users
+      parameters:
+        - name: id
+          in: path
+          description: User Id
+          required: true
+      responses:
+        200:
+          description: 'OK'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+# [PUT] users/id
+    put:
+      tags:
+      - users
+      summary: Update User By Id
+      parameters:
+      - name: id
+        in: path
+        description: user Id
+        required: true
+      - name: body
+        in: body
+        description: user Data
+        required: true
+        schema:
+          $ref: '#/definitions/users'
+      responses:
+        200:
+          description: 'OK'
+        400:
+          description: 'Bad Request'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+# [DELETE] users/id
+    delete:
+      tags:
+      - users
+      summary: Delete User By Id
+      parameters:
+      - name: id
+        in: path
+        description: user Id
+        required: true
+      responses:
+        204:
+          description: 'OK'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+# definitions
+definitions:
+  users:
+    type: object
+    required:
+        - id
+        - name
+        - email
+        - password
+        - role
+        - passwordConfirm
+    properties:
+      id:
+        description: user Id
+      name:
+        type: string
+      email:
+        type: string
+      photo:
+        type: string
+      role:
+        type: string
+        enum: ['user', 'guide', 'lead-guide', 'admin']
+      password:
+        type: string
+      passwordConfirm:
+        type: string
+      passwordChangedAt:
+        type: date
+      passwordResetToken:
+        type: string
+      passwordResetExpire:
+        type: datae
+      active:
+        type: boolean
+
 schemes:
   - https
   - http
