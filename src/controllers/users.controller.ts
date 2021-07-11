@@ -1,11 +1,39 @@
 import { NextFunction, Request, Response } from 'express';
 import userService from '@services/users.service';
+import { GetMeRequest } from '@interfaces/users.interface';
 import AppError from '@utils/appError';
 import catchAsync from '@utils/catchAsync';
-import { USER_WITH_ID_NOT_FOUND, USER_ROUTE_NOT_DEFINED } from '@resources/strings';
+import { USER_WITH_ID_NOT_FOUND, USER_ROUTE_NOT_DEFINED, USER_ROUTE_NOT_FOR_UPDATE } from '@resources/strings';
 
 class UsersController {
-  public userService = new userService();
+  private userService = new userService();
+
+  public getMe = (req: GetMeRequest, res: Response, next: NextFunction) => {
+    req.params.id = req.user.id;
+    next();
+  };
+
+  public updateMe = catchAsync(async (req: GetMeRequest, res: Response, next: NextFunction) => {
+    if (req.body.password || req.body.passwordConfirm) {
+      return next(new AppError(USER_ROUTE_NOT_FOR_UPDATE, 404));
+    }
+
+    const updatedUser = await this.userService.updateCurrentUser(req);
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        user: updatedUser,
+      },
+    });
+  });
+
+  public deleteMe = catchAsync(async (req: GetMeRequest, res: Response, next: NextFunction) => {
+    res.status(204).json({
+      status: 'success',
+      data: null,
+    });
+  });
 
   public getAllUsers = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const users = await this.userService.findAllUsers(req);

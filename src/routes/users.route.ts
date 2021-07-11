@@ -10,13 +10,20 @@ class UsersRoute {
     this.initializeRoutes();
   }
   private initializeRoutes() {
+    this.router
+      .route(`${this.path}/me`)
+      .get(this.usersController.getMe) // protect in auth would fix this error
+      .get(this.usersController.getUser)
+      .patch(this.usersController.updateMe)
+      .delete(this.usersController.deleteUser);
+
     this.router.route(`${this.path}/`).get(this.usersController.getAllUsers).post(this.usersController.createUser);
 
     this.router
       .route(`${this.path}/:id`)
       .get(this.usersController.getUser)
-      .patch(this.usersController.updateUser)
-      .delete(this.usersController.deleteUser);
+      .patch(this.usersController.updateUser) // Only Admin Role
+      .delete(this.usersController.deleteUser); // Only Admin Role
   }
 }
 

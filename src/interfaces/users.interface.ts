@@ -1,3 +1,5 @@
+import { Request } from 'express';
+
 export interface User {
   _id: string;
   name: string;
@@ -10,4 +12,8 @@ export interface User {
   passwordResetToken: string;
   passwordResetExpire: Date;
   active: boolean;
+}
+
+export interface GetMeRequest extends Request {
+  user: any; // or any other type
 }
