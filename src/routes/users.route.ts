@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import UsersController from '@controllers/users.controller';
+import { UserController } from '@controllers/users.controller';
 
-class UsersRoute {
+class UserRoute {
   public path = '/users';
   public router = Router();
-  public usersController = new UsersController();
+  public userController = new UserController();
 
   constructor() {
     this.initializeRoutes();
@@ -12,19 +12,19 @@ class UsersRoute {
   private initializeRoutes() {
     this.router
       .route(`${this.path}/me`)
-      .get(this.usersController.getMe) // protect in auth would fix this error
-      .get(this.usersController.getUser)
-      .patch(this.usersController.updateMe)
-      .delete(this.usersController.deleteUser);
+      .get(this.userController.getMe) // protect in auth would fix this error
+      .get(this.userController.getUser)
+      .patch(this.userController.updateMe)
+      .delete(this.userController.deleteUser);
 
-    this.router.route(`${this.path}/`).get(this.usersController.getAllUsers).post(this.usersController.createUser);
+    this.router.route(`${this.path}/`).get(this.userController.getAllUsers).post(this.userController.createUser);
 
     this.router
       .route(`${this.path}/:id`)
-      .get(this.usersController.getUser)
-      .patch(this.usersController.updateUser) // Only Admin Role
-      .delete(this.usersController.deleteUser); // Only Admin Role
+      .get(this.userController.getUser)
+      .patch(this.userController.updateUser) // Only Admin Role
+      .delete(this.userController.deleteUser); // Only Admin Role
   }
 }
 
-export default UsersRoute;
+export { UserRoute };

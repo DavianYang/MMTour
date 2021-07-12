@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
-import userService from '@services/users.service';
+import { UserService } from '@services/users.service';
 import { GetMeRequest } from '@interfaces/users.interface';
 import AppError from '@utils/appError';
 import catchAsync from '@utils/catchAsync';
 import { USER_WITH_ID_NOT_FOUND, USER_ROUTE_NOT_DEFINED, USER_ROUTE_NOT_FOR_UPDATE } from '@resources/strings';
 
-class UsersController {
-  private userService = new userService();
+class UserController {
+  private userService = new UserService();
 
   public getMe = (req: GetMeRequest, res: Response, next: NextFunction) => {
     req.params.id = req.user.id;
@@ -92,4 +92,4 @@ class UsersController {
   });
 }
 
-export default UsersController;
+export { UserController };

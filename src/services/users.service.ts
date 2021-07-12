@@ -3,7 +3,7 @@ import { userModel } from '@models/users.model';
 import { GetMeRequest } from '@interfaces/users.interface';
 import { findAll, findOne, updateOne, deleteOne } from '@services/factory.service';
 
-class UsersService {
+class UserService {
   public users = userModel;
 
   private filterObj = (obj: string, ...allowedFields: string[]) => {
@@ -43,6 +43,7 @@ class UsersService {
   public async findUser(req: Request) {
     return await findOne(this.users, req.params.id);
   }
+
   public async updateUser(req: Request) {
     return await updateOne(this.users, req.params.id, req.body);
   }
@@ -52,4 +53,4 @@ class UsersService {
   }
 }
 
-export default UsersService;
+export { UserService };

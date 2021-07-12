@@ -16,4 +16,4 @@ class IndexRoute implements Route {
   }
 }
 
-export default IndexRoute;
+export { IndexRoute };
