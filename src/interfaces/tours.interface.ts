@@ -1,6 +1,6 @@
-import { Types } from 'mongoose';
+import { Document, Types } from 'mongoose';
 
-export interface Tour {
+export interface TourDocument extends Document {
   _id: string;
   name: string;
   slug: string;

@@ -1,6 +1,8 @@
 tags:
 - name: users
   description: users API
+- name: tours
+  description: tours API
 
 paths:
 # [GET] users
@@ -9,6 +11,18 @@ paths:
       tags:
       - users
       summary: Find All Users
+      responses:
+        200:
+          description: 'OK'
+        500:
+          description: 'Server Error'
+
+  # [GET] users
+  /api/v1/tours:
+    get:
+      tags:
+      - tours
+      summary: Find All Tours
       responses:
         200:
           description: 'OK'

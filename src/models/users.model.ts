@@ -1,6 +1,6 @@
 import { Schema, model, Document } from 'mongoose';
 import validator from 'validator';
-import { User } from '@interfaces/users.interface';
+import { UserDocument } from '@interfaces/users.interface';
 
 const userSchema: Schema = new Schema({
   name: {
@@ -29,7 +29,7 @@ const userSchema: Schema = new Schema({
     type: String,
     required: [true, 'Please confirm your password'],
     validate: {
-      validator: function (this: User, el: string): boolean {
+      validator: function (this: UserDocument, el: string): boolean {
         return el == this.password;
       },
       message: 'Password are not the same!!',
@@ -45,6 +45,6 @@ const userSchema: Schema = new Schema({
   },
 });
 
-const userModel = model<Document>('User', userSchema);
+const userModel = model<UserDocument>('User', userSchema);
 
 export { userModel };

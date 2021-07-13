@@ -1,4 +1,5 @@
 import { Schema, model, Document, Types } from 'mongoose';
+import { TourDocument } from '@interfaces/tours.interface';
 
 const tourSchema: Schema = new Schema(
   {
@@ -100,6 +101,6 @@ const tourSchema: Schema = new Schema(
   },
 );
 
-const tourModel = model<Document>('Tour', tourSchema);
+const tourModel = model<TourDocument>('Tour', tourSchema);
 
 export { tourModel };

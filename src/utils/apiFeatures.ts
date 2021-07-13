@@ -1,10 +1,11 @@
-import { Query, Document } from 'mongoose';
+import { FilterQuery, Document } from 'mongoose';
+import { QueryString } from '@interfaces/queries.interface';
 
-class APIFeatures {
+class APIFeatures<Q> {
   public query;
   public queryString;
 
-  constructor(query: Query<Document[], Document>, queryString: object) {
+  constructor(query: FilterQuery<Q>, queryString: QueryString) {
     this.query = query;
     this.queryString = queryString;
   }
@@ -44,8 +45,8 @@ class APIFeatures {
   }
 
   public paginate() {
-    const page = this.queryString.page * 1 || 1;
-    const limit = this.queryString.limit * 1 || 100;
+    const page = parseInt(this.queryString.page) || 1;
+    const limit = parseInt(this.queryString.limit) || 100;
 
     const skip = (page - 1) * limit;
     this.query = this.query.skip(skip).limit(limit);

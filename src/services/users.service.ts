@@ -1,16 +1,17 @@
 import { Request } from 'express';
+import { DocumentDefinition } from 'mongoose';
 import { userModel } from '@models/users.model';
-import { GetMeRequest } from '@interfaces/users.interface';
+import { GetMeRequest, UserDocument } from '@interfaces/users.interface';
 import { findAll, findOne, updateOne, deleteOne } from '@services/factory.service';
 
 class UserService {
   public users = userModel;
 
-  private filterObj = (obj: string, ...allowedFields: string[]) => {
-    // interface filteredObj {
-    //   [key: string]: string | undefined;
-    // }
-    const newObj = {};
+  private filterObj = (obj: DocumentDefinition<UserDocument>, ...allowedFields: string[]) => {
+    interface filteredObj {
+      [key: string]: string | undefined;
+    }
+    const newObj: filteredObj = {};
 
     Object.keys(obj).forEach(el => {
       if (allowedFields.includes(el)) newObj[el] = obj[el];

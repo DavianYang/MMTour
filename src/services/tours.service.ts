@@ -1,12 +1,13 @@
 import { Request } from 'express';
 import { tourModel } from '@models/tours.model';
 import { findAll, findOne, createOne, updateOne, deleteOne } from '@services/factory.service';
+import { QueryString } from '@interfaces/queries.interface';
 
 class TourService {
   public tours = tourModel;
 
   public async findAllTours(req: Request) {
-    return await findAll(this.tours, req.query);
+    return await findAll(this.tours, req.query as QueryString);
   }
 
   public async findTour(req: Request) {

@@ -1,7 +1,7 @@
+import { Document } from 'mongoose';
 import { Request } from 'express';
 
-export interface User {
-  _id: string;
+export interface UserDocument extends Document {
   name: string;
   email: string;
   photo: string;
