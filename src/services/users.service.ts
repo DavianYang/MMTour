@@ -1,6 +1,5 @@
 import { Request } from 'express';
 import { userModel } from '@models/users.model';
-import { GetMeRequest } from '@interfaces/users.interface';
 import { QueryString, filterObj } from '@interfaces/queries.interface';
 import { findAll, findOne, updateOne, deleteOne } from '@services/factory.service';
 
@@ -17,7 +16,7 @@ class UserService {
     return newObj;
   };
 
-  public async updateCurrentUser(req: GetMeRequest) {
+  public async updateCurrentUser(req: Request) {
     const filteredObj = this.filterObj(req.body, 'name', 'email');
 
     const updatedUser = await this.users.findByIdAndUpdate(req.user.id, filteredObj, {
@@ -28,7 +27,7 @@ class UserService {
     return updatedUser;
   }
 
-  public async deleteCurrentUser(req: GetMeRequest) {
+  public async deleteCurrentUser(req: Request) {
     return this.users.findByIdAndUpdate(req.user.id, {
       active: false,
     });

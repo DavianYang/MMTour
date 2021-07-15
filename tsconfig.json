@@ -53,6 +53,7 @@
       "@/*": ["*"],
       "@controllers/*": ["controllers/*"],
       "@databases/*": ["databases/*"],
+      "@dts/*": ["dts/*"],
       "@interfaces/*": ["interfaces/*"],
       "@models/*": ["models/*"],
       "@resources/*": ["resources/*"],

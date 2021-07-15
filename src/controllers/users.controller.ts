@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
 import { UserService } from '@services/users.service';
-import { GetMeRequest } from '@interfaces/users.interface';
 import AppError from '@utils/appError';
 import catchAsync from '@utils/catchAsync';
 import { USER_WITH_ID_NOT_FOUND, USER_ROUTE_NOT_DEFINED, USER_ROUTE_NOT_FOR_UPDATE } from '@resources/strings';
@@ -8,12 +7,12 @@ import { USER_WITH_ID_NOT_FOUND, USER_ROUTE_NOT_DEFINED, USER_ROUTE_NOT_FOR_UPDA
 class UserController {
   private userService = new UserService();
 
-  public getMe = (req: GetMeRequest, res: Response, next: NextFunction) => {
+  public getMe = (req: Request, res: Response, next: NextFunction) => {
     req.params.id = req.user.id;
     next();
   };
 
-  public updateMe = catchAsync(async (req: GetMeRequest, res: Response, next: NextFunction) => {
+  public updateMe = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     if (req.body.password || req.body.passwordConfirm) {
       return next(new AppError(USER_ROUTE_NOT_FOR_UPDATE, 404));
     }
@@ -28,7 +27,7 @@ class UserController {
     });
   });
 
-  public deleteMe = catchAsync(async (req: GetMeRequest, res: Response, next: NextFunction) => {
+  public deleteMe = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     res.status(204).json({
       status: 'success',
       data: null,
