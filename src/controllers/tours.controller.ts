@@ -83,6 +83,23 @@ class TourController {
       },
     });
   });
+
+  public getMonthlyWeeklyPlan = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    const year = parseInt(req.params.year as string);
+    let month = null;
+
+    if (req.params.month) {
+      month = parseInt(req.params.month as string);
+    }
+    const plan = await this.tourService.findMonthlyPlan(year, month);
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        plan,
+      },
+    });
+  });
 }
 
 export { TourController };

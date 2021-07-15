@@ -49,6 +49,44 @@ class TourService {
       },
     ]);
   }
+
+  public async findMonthlyPlan(year: number, month?: number | null) {
+    return await this.tours.aggregate([
+      {
+        $unwind: '$startDates',
+      },
+      {
+        $match: {
+          startDates: {
+            $gte: new Date(`${year}-${month == null ? 1 : month}-01`),
+            $lte: new Date(`${year}-${month == null ? 12 : month}-31`),
+          },
+        },
+      },
+      {
+        $group: {
+          _id: { $month: '$startDates' },
+          numTourStarts: { $sum: 1 },
+          tours: { $push: '$name' },
+        },
+      },
+      {
+        $addFields: {
+          month: '$_id',
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+        },
+      },
+      {
+        $sort: {
+          numTourStarts: -1,
+        },
+      },
+    ]);
+  }
 }
 
 export { TourService };

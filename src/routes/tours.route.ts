@@ -10,8 +10,6 @@ class TourRoute {
     this.initializeRoutes();
   }
   private initializeRoutes() {
-    this.router.route(`${this.path}/top/:number`).get(this.tourController.aliasTopTours, this.tourController.getAllTours);
-    this.router.route(`${this.path}/stats`).get(this.tourController.getTourStats);
     this.router.route(`${this.path}/`).get(this.tourController.getAllTours).post(this.tourController.createTour);
 
     this.router
@@ -19,6 +17,12 @@ class TourRoute {
       .get(this.tourController.getTour)
       .patch(this.tourController.updateTour)
       .delete(this.tourController.deleteTour);
+
+    this.router.route(`${this.path}/top/:number`).get(this.tourController.aliasTopTours, this.tourController.getAllTours);
+
+    this.router.route(`${this.path}/stats`).get(this.tourController.getTourStats);
+
+    this.router.route(`${this.path}/plan/:year/:month`).get(this.tourController.getMonthlyWeeklyPlan);
   }
 }
 
