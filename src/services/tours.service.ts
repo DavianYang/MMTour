@@ -25,6 +25,30 @@ class TourService {
   public async deleteTour(req: Request) {
     return await deleteOne(this.tours, req.params.id);
   }
+
+  public async findTourStats() {
+    return await this.tours.aggregate([
+      {
+        $match: { ratingAverage: { $gte: 4.5 } },
+      },
+      {
+        $group: {
+          _id: { $toUpper: '$difficulty' },
+          numTours: { $sum: 1 },
+          numRatings: { $sum: '$ratingsQuantity' },
+          avgRating: { $avg: '$ratingsQuantity' },
+          avgPrice: { $avg: '$price' },
+          minPrice: { $min: '$price' },
+          maxPrice: { $max: '$price' },
+        },
+      },
+      {
+        $sort: {
+          avgPrice: -1,
+        },
+      },
+    ]);
+  }
 }
 
 export { TourService };

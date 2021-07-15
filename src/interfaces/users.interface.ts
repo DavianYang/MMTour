@@ -15,5 +15,7 @@ export interface UserDocument extends Document {
 }
 
 export interface GetMeRequest extends Request {
-  user: any; // or any other type
+  user: {
+    id: string;
+  }; // or any other type
 }

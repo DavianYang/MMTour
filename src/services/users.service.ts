@@ -2,6 +2,7 @@ import { Request } from 'express';
 import { DocumentDefinition } from 'mongoose';
 import { userModel } from '@models/users.model';
 import { GetMeRequest, UserDocument } from '@interfaces/users.interface';
+import { QueryString } from '@interfaces/queries.interface';
 import { findAll, findOne, updateOne, deleteOne } from '@services/factory.service';
 
 class UserService {
@@ -38,7 +39,7 @@ class UserService {
   }
 
   public async findAllUsers(req: Request) {
-    return await findAll(this.users, req.query);
+    return await findAll(this.users, req.query as QueryString);
   }
 
   public async findUser(req: Request) {
