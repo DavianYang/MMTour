@@ -58,8 +58,8 @@ class TourService {
       {
         $match: {
           startDates: {
-            $gte: new Date(`${year}-${month == null ? 1 : month}-01`),
-            $lte: new Date(`${year}-${month == null ? 12 : month}-31`),
+            $gte: new Date(`${year}-${month === null ? 1 : month}-01`),
+            $lte: new Date(`${year}-${month === null ? 12 : month}-31`),
           },
         },
       },

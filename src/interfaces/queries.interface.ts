@@ -5,3 +5,7 @@ export interface QueryString {
   page: string;
   limit: string;
 }
+
+export interface filterObj {
+  [key: string]: string | undefined;
+}
