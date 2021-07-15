@@ -11,6 +11,7 @@ class TourRoute {
   }
   private initializeRoutes() {
     this.router.route(`${this.path}/top/:number`).get(this.tourController.aliasTopTours, this.tourController.getAllTours);
+    this.router.route(`${this.path}/stats`).get(this.tourController.getTourStats);
     this.router.route(`${this.path}/`).get(this.tourController.getAllTours).post(this.tourController.createTour);
 
     this.router
