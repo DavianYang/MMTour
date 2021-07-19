@@ -67,6 +67,7 @@
     "xss-clean": "^0.1.1"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "@types/config": "^0.0.38",
     "@types/cookie-parser": "^1.4.2",
     "@types/cors": "^2.8.10",

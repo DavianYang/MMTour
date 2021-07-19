@@ -1,5 +1,6 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model, HookNextFunction, Query } from 'mongoose';
 import validator from 'validator';
+import bcrypt from 'bcryptjs';
 import { UserDocument } from '@interfaces/users.interface';
 
 const userSchema: Schema = new Schema({
@@ -43,6 +44,28 @@ const userSchema: Schema = new Schema({
     default: true,
     select: true,
   },
+});
+
+userSchema.pre<UserDocument>('save', async function (next: HookNextFunction) {
+  if (!this.isModified('password')) return next();
+
+  this.password = await bcrypt.hash(this.password, 12);
+
+  this.passwordConfirm = undefined;
+  next();
+});
+
+userSchema.pre<UserDocument>('save', function (next: HookNextFunction) {
+  if (!this.isModified('password') || this.isNew) return next();
+
+  this.passwordChangedAt = Date.now() - 1000;
+  next();
+});
+
+userSchema.pre<Query<UserDocument, UserDocument>>(/^find/, function (next: HookNextFunction) {
+  this.find({ active: { $ne: false } });
+
+  next();
 });
 
 const userModel = model<UserDocument>('User', userSchema);

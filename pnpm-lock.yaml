@@ -1,6 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
+  '@types/bcryptjs': ^2.4.2
   '@types/config': ^0.0.38
   '@types/cookie-parser': ^1.4.2
   '@types/cors': ^2.8.10
@@ -95,6 +96,7 @@ dependencies:
   xss-clean: 0.1.1
 
 devDependencies:
+  '@types/bcryptjs': 2.4.2
   '@types/config': 0.0.38
   '@types/cookie-parser': 1.4.2
   '@types/cors': 2.8.10
@@ -300,6 +302,10 @@ packages:
   /@tsconfig/node16/1.0.1:
     resolution: {integrity: sha512-FTgBI767POY/lKNDNbIzgAX6miIDBs6NTCbdlDb8TrWovHsSvaVIZDlTqym29C6UqhzwcJx4CYr+AlrMywA0cA==}
     dev: false
+
+  /@types/bcryptjs/2.4.2:
+    resolution: {integrity: sha512-LiMQ6EOPob/4yUL66SZzu6Yh77cbzJFYll+ZfaPiPPFswtIlA/Fs1MzdKYA7JApHU49zQTbJGX3PDmCpIdDBRQ==}
+    dev: true
 
   /@types/body-parser/1.19.0:
     resolution: {integrity: sha512-W98JrE0j2K78swW4ukqMleo8R7h/pFETjM2DQ90MF6XK2i4LO4W3gQ71Lt4w3bfm2EvVSyWHplECvB5sK22yFQ==}

@@ -6,8 +6,8 @@ export interface UserDocument extends Document {
   photo: string;
   role: string;
   password: string;
-  passwordConfirm: string;
-  passwordChangedAt: Date;
+  passwordConfirm: string | undefined;
+  passwordChangedAt: number;
   passwordResetToken: string;
   passwordResetExpire: Date;
   active: boolean;
