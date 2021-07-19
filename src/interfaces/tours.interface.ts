@@ -4,7 +4,7 @@ export interface TourDocument extends Document {
   _id: string;
   name: string;
   slug: string;
-  duration: string;
+  duration: number;
   maxGroupSize: number;
   difficulty: string;
   ratingsAverage: number;

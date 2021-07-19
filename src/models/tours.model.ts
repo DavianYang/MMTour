@@ -1,4 +1,5 @@
-import { Schema, model, Document, Types } from 'mongoose';
+import { Schema, model, Types, HookNextFunction, Query } from 'mongoose';
+import slugify from 'slugify';
 import { TourDocument } from '@interfaces/tours.interface';
 
 const tourSchema: Schema = new Schema(
@@ -100,6 +101,29 @@ const tourSchema: Schema = new Schema(
     toObject: { virtuals: true },
   },
 );
+
+tourSchema.virtual('duratinWeek').get(function (this: TourDocument) {
+  return this.duration / 7;
+});
+
+tourSchema.pre<TourDocument>('save', function (next: HookNextFunction) {
+  this.slug = slugify(this.name, { lower: true });
+  next();
+});
+
+tourSchema.pre<Query<TourDocument, TourDocument>>(/^find/, function (next: HookNextFunction) {
+  this.find({ secretTour: { $ne: true } });
+
+  next();
+});
+
+tourSchema.pre<Query<TourDocument, TourDocument>>(/^find/, function (next: HookNextFunction) {
+  this.populate({
+    path: 'guides',
+    select: '-__v -passwordChangedAt',
+  });
+  next();
+});
 
 const tourModel = model<TourDocument>('Tour', tourSchema);
 
