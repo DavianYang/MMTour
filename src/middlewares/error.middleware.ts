@@ -1,8 +1,26 @@
 import { NextFunction, Response, Request } from 'express';
-import AppError from '@/exceptions/AppError';
+import AppError from '@exceptions/AppError';
+import { CastError, ErrorEventsInter } from '@interfaces/errors.interface';
 import { logger } from '@utils/logger';
 
+const handleCastErrorDB = (err: CastError) => {
+  const message = `Invalid ${err.path}: ${err.value}`;
+  return new AppError(message, 400);
+};
+
+const handleValidationErrorDB = err => {};
+
+const handleMongoErrorDB = err => {
+  // Duplicate Error
+  if (err.code === 11000) {
+    const value = err.message.match(/(["'])(\\?.)*?\1/)[0];
+    const message = `Duplicate Field value: ${value}.Please use another value!`;
+    return new AppError(message, 400);
+  }
+};
+
 const sendErrorDev = (err: AppError, req: Request, res: Response) => {
+  console.log('Dev Error', err.statusCode);
   // API
   if (req.originalUrl.startsWith('/api')) {
     return res.status(err.statusCode).json({
@@ -14,7 +32,7 @@ const sendErrorDev = (err: AppError, req: Request, res: Response) => {
   }
 
   // RENDER WEBSITE
-  console.log('ERROR 🐛:', err);
+  logger.error(`[${req.method}] ${req.path} >> StatusCode:: ${err.statusCode}, Message:: ${err.message}`);
   return res.status(err.statusCode).json({
     title: 'Something went wrong',
     message: err.message,
@@ -49,13 +67,31 @@ const sendErrorProd = (err: AppError, req: Request, res: Response) => {
   }
 };
 
-export const errorMiddleware = (error: AppError, req: Request, res: Response, next: NextFunction) => {
-  error.statusCode = error.statusCode || 500;
-  error.status = error.status || 'error';
+const ErrorEvents: ErrorEventsInter = {
+  CastError: handleCastErrorDB,
+  ValidationError: handleValidationErrorDB,
+  MongoError: handleMongoErrorDB,
+};
+
+export const errorMiddleware = (err: AppError, req: Request, res: Response, next: NextFunction) => {
+  err.statusCode = err.statusCode || 500;
+  err.status = err.status || 'error';
 
   if (process.env.NODE_ENV === 'development') {
-    sendErrorDev(error, req, res);
+    for (const errevent in ErrorEvents) {
+      if (errevent === err.name) {
+        console.log('It is True');
+        err = ErrorEvents[errevent](err);
+      }
+    }
+    sendErrorDev(err, req, res);
   } else if (process.env.NODE_ENV === 'production') {
-    sendErrorProd(error, req, res);
+    // for (const errevent in ErrorEvents) {
+    //   if (errevent === err.name) {
+    //     console.log('It is True');
+    //     err = ErrorEvents[errevent](err);
+    //   }
+    // }
+    // sendErrorProd(error, req, res);
   }
 };
