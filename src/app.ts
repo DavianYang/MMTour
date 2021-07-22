@@ -29,6 +29,7 @@ class App {
     this.initializeMiddlewares();
     this.initializeRoutes(routes);
     this.initializeSwagger();
+    this.initializeErrorHandling();
   }
 
   public listen() {
@@ -93,6 +94,14 @@ class App {
 
     const specs = swaggerJSDoc(options);
     this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+  }
+  private initializeErrorHandling() {
+    this.app.all('*', (req, res, next) => {
+      res.status(404).json({
+        status: 'fail',
+        message: `Can't find ${req.originalUrl} on this server`,
+      });
+    });
   }
 }
 
