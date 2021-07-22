@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { UserService } from '@services/users.service';
-import AppError from '@utils/appError';
+import AppError from '@exceptions/AppError';
 import catchAsync from '@utils/catchAsync';
 import { USER_WITH_ID_NOT_FOUND, USER_ROUTE_NOT_DEFINED, USER_ROUTE_NOT_FOR_UPDATE } from '@resources/strings';
 

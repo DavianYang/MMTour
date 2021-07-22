@@ -13,6 +13,7 @@ import swaggerUi from 'swagger-ui-express';
 
 import Routes from '@interfaces/routes.interface';
 import { dbConnection } from '@databases/mongodb';
+import { errorMiddleware } from '@middlwares/error.middleware';
 import { logger, stream } from '@utils/logger';
 
 class App {
@@ -102,6 +103,7 @@ class App {
         message: `Can't find ${req.originalUrl} on this server`,
       });
     });
+    this.app.use(errorMiddleware);
   }
 }
 

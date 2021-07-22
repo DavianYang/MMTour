@@ -1,13 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
+import catchAsync from '@utils/catchAsync';
 
 class IndexController {
-  public index = (req: Request, res: Response, next: NextFunction) => {
-    try {
-      res.sendStatus(200);
-    } catch (err) {
-      next(err);
-    }
-  };
+  public index = catchAsync((req: Request, res: Response, next: NextFunction) => {
+    res.sendStatus(200);
+  });
 }
 
 export default IndexController;

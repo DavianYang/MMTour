@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { TourService } from '@services/tours.service';
-import AppError from '@utils/appError';
+import AppError from '@exceptions/AppError';
 import catchAsync from '@utils/catchAsync';
 import { TOUR_WITH_ID_NOT_FOUND } from '@resources/strings';
 
