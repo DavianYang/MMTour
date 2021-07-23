@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import { userModel } from '@models/users.model';
 import { QueryString, filterObj } from '@interfaces/queries.interface';
-import { findAll, findOne, updateOne, deleteOne } from '@services/factory.service';
+import { findAll, findOne, createOne, updateOne, deleteOne } from '@services/factory.service';
 
 class UserService {
   public users = userModel;
@@ -33,12 +33,25 @@ class UserService {
     });
   }
 
+  public async createUser(req: Request) {
+    return await this.users.create({
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+      passwordConfirm: req.body.passwordConfirm,
+    });
+  }
+
   public async findAllUsers(req: Request) {
     return await findAll(this.users, req.query as QueryString);
   }
 
   public async findUser(req: Request) {
     return await findOne(this.users, req.params.id);
+  }
+
+  public async findUserByEmail(email: string) {
+    return await this.users.findOne({ email }).select('+password');
   }
 
   public async updateUser(req: Request) {

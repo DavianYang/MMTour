@@ -6,3 +6,6 @@ export const USER_ROUTE_NOT_FOR_UPDATE = 'This route is not for password updates
 
 export const INVALID_TOKEN = 'Invalid Token. Please log in again.';
 export const EXPIRED_TOKEN = 'Your token has expired! Please log in again.';
+
+export const PROVIDE_EMAIL_PASSWORD = 'Please provide email and password!';
+export const INCORRECT_EMAIL_PASSWORD = 'Incorrect email or password';

@@ -75,6 +75,7 @@
     "@types/express-rate-limit": "^5.1.2",
     "@types/hpp": "^0.2.1",
     "@types/json2csv": "^5.0.2",
+    "@types/jsonwebtoken": "^8.5.4",
     "@types/morgan": "^1.9.2",
     "@types/node": "^15.12.4",
     "@types/shelljs": "^0.8.8",

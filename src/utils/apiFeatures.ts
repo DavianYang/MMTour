@@ -1,4 +1,4 @@
-import { FilterQuery, Document } from 'mongoose';
+import { FilterQuery } from 'mongoose';
 import { QueryString } from '@interfaces/queries.interface';
 
 class APIFeatures<Q> {

@@ -47,10 +47,12 @@ const userSchema: Schema = new Schema({
 });
 
 userSchema.pre<UserDocument>('save', async function (next: HookNextFunction) {
+  // Only run this function if password was modified
   if (!this.isModified('password')) return next();
 
   this.password = await bcrypt.hash(this.password, 12);
 
+  // Delete the passwordConfirm field
   this.passwordConfirm = undefined;
   next();
 });
@@ -67,6 +69,10 @@ userSchema.pre<Query<UserDocument, UserDocument>>(/^find/, function (next: HookN
 
   next();
 });
+
+userSchema.methods.correctPassword = async function (candidatePassword: string, userPassword: string) {
+  return await bcrypt.compare(candidatePassword, userPassword);
+};
 
 const userModel = model<UserDocument>('User', userSchema);
 
