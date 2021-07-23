@@ -30,7 +30,7 @@ class UserController {
     this.sendJWTToken(req, res, token, newUser, 201);
   });
 
-  public login = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  public logIn = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
