@@ -9,6 +9,15 @@ export interface CastError {
   message: string;
 }
 
+export interface ValidationError {
+  errors: Object;
+}
+
+export interface MongoError {
+  code: number;
+  message: string;
+}
+
 export interface ErrorEventsInter {
   [key: string]: Function;
 }

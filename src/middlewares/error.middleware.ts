@@ -1,16 +1,21 @@
 import { NextFunction, Response, Request } from 'express';
 import AppError from '@exceptions/AppError';
-import { CastError, ErrorEventsInter } from '@interfaces/errors.interface';
+import { CastError, ValidationError, MongoError, ErrorEventsInter } from '@interfaces/errors.interface';
 import { logger } from '@utils/logger';
+import { INVALID_TOKEN, EXPIRED_TOKEN } from '@resources/strings';
 
 const handleCastErrorDB = (err: CastError) => {
-  const message = `Invalid ${err.path}: ${err.value}`;
+  const message = `Invalid ${err.path}: ${err.value}.`;
   return new AppError(message, 400);
 };
 
-const handleValidationErrorDB = err => {};
+const handleValidationErrorDB = (err: ValidationError) => {
+  const error = Object.values(err.errors).map(el => el.message);
+  const message = `Invalid  input data. ${error.join('. ')}.`;
+  return new AppError(message, 404);
+};
 
-const handleMongoErrorDB = err => {
+const handleMongoErrorDB = (err: MongoError) => {
   // Duplicate Error
   if (err.code === 11000) {
     const value = err.message.match(/(["'])(\\?.)*?\1/)[0];
@@ -18,6 +23,10 @@ const handleMongoErrorDB = err => {
     return new AppError(message, 400);
   }
 };
+
+const handleJWTError = () => new AppError(INVALID_TOKEN, 401);
+
+const handleExpiredJWTError = () => new AppError(EXPIRED_TOKEN, 401);
 
 const sendErrorDev = (err: AppError, req: Request, res: Response) => {
   console.log('Dev Error', err.statusCode);
@@ -71,6 +80,8 @@ const ErrorEvents: ErrorEventsInter = {
   CastError: handleCastErrorDB,
   ValidationError: handleValidationErrorDB,
   MongoError: handleMongoErrorDB,
+  JsonWebTokenError: handleJWTError,
+  TokenExpiredError: handleExpiredJWTError,
 };
 
 export const errorMiddleware = (err: AppError, req: Request, res: Response, next: NextFunction) => {
@@ -78,20 +89,15 @@ export const errorMiddleware = (err: AppError, req: Request, res: Response, next
   err.status = err.status || 'error';
 
   if (process.env.NODE_ENV === 'development') {
+    console.log(err);
+    sendErrorDev(err, req, res);
+  } else if (process.env.NODE_ENV === 'production') {
     for (const errevent in ErrorEvents) {
       if (errevent === err.name) {
         console.log('It is True');
         err = ErrorEvents[errevent](err);
       }
     }
-    sendErrorDev(err, req, res);
-  } else if (process.env.NODE_ENV === 'production') {
-    // for (const errevent in ErrorEvents) {
-    //   if (errevent === err.name) {
-    //     console.log('It is True');
-    //     err = ErrorEvents[errevent](err);
-    //   }
-    // }
-    // sendErrorProd(error, req, res);
+    sendErrorProd(err, req, res);
   }
 };

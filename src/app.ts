@@ -34,7 +34,7 @@ class App {
   }
 
   public listen() {
-    this.app.listen(this.port, () => {
+    return this.app.listen(this.port, () => {
       logger.info(`=================================`);
       logger.info(`======= ENV: ${this.env} =======`);
       logger.info(`🚀 App listening on the port http://127.0.0.1:${this.port}/`);
