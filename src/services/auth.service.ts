@@ -2,8 +2,6 @@ import { Request } from 'express';
 import jwt from 'jsonwebtoken';
 import { userModel } from '@models/users.model';
 import { UserDocument } from '@interfaces/users.interface';
-import AppError from '@exceptions/AppError';
-import catchAsync from '@utils/catchAsync';
 
 class AuthService {
   public users = userModel;
