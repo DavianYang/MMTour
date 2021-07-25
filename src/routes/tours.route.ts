@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { TourController } from '@controllers/tours.controller';
+import { protect } from '@middlwares/auth.middleware';
 
 class TourRoute {
   public path = '/tours';
@@ -10,7 +11,7 @@ class TourRoute {
     this.initializeRoutes();
   }
   private initializeRoutes() {
-    this.router.route(`${this.path}/`).get(this.tourController.getAllTours).post(this.tourController.createTour);
+    this.router.route(`${this.path}/`).get(protect, this.tourController.getAllTours).post(this.tourController.createTour);
 
     this.router
       .route(`${this.path}/:id`)

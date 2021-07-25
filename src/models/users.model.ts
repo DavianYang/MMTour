@@ -1,9 +1,9 @@
-import { Schema, model, HookNextFunction, Query } from 'mongoose';
+import { Schema, model, Model, HookNextFunction, Query, Document } from 'mongoose';
 import validator from 'validator';
 import bcrypt from 'bcryptjs';
-import { UserDocument } from '@interfaces/users.interface';
+import { UserDocument, User } from '@interfaces/users.interface';
 
-const userSchema: Schema = new Schema({
+const userSchema = new Schema<UserDocument>({
   name: {
     type: String,
     required: [true, 'Please tell us your name!'],
@@ -60,7 +60,7 @@ userSchema.pre<UserDocument>('save', async function (next: HookNextFunction) {
 userSchema.pre<UserDocument>('save', function (next: HookNextFunction) {
   if (!this.isModified('password') || this.isNew) return next();
 
-  this.passwordChangedAt = Date.now() - 1000;
+  this.passwordChangedAt = new Date(Date.now() - 1000);
   next();
 });
 
@@ -72,6 +72,16 @@ userSchema.pre<Query<UserDocument, UserDocument>>(/^find/, function (next: HookN
 
 userSchema.methods.correctPassword = async function (candidatePassword: string, userPassword: string) {
   return await bcrypt.compare(candidatePassword, userPassword);
+};
+
+userSchema.methods.changedPasswordAfter = function (this: UserDocument, JWTTimeStamp: number) {
+  if (this.passwordChangedAt) {
+    const changedTimestamp = parseInt(`${this.passwordChangedAt.getTime() / 1000}`, 10);
+
+    return JWTTimeStamp < changedTimestamp;
+  }
+
+  return false;
 };
 
 const userModel = model<UserDocument>('User', userSchema);

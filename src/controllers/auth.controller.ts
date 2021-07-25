@@ -5,7 +5,7 @@ import AppError from '@exceptions/AppError';
 import catchAsync from '@utils/catchAsync';
 import { PROVIDE_EMAIL_PASSWORD, INCORRECT_EMAIL_PASSWORD } from '@resources/strings';
 
-class UserController {
+class AuthController {
   private authService = new AuthService();
 
   private sendJWTToken = (req: Request, res: Response, token: string, user: UserDocument, statusCode: number) => {
@@ -47,4 +47,4 @@ class UserController {
   });
 }
 
-export { UserController };
+export { AuthController };

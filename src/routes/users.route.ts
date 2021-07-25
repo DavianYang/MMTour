@@ -1,15 +1,21 @@
 import { Router } from 'express';
 import { UserController } from '@controllers/users.controller';
+import { AuthController } from '@controllers/auth.controller';
 
 class UserRoute {
   public path = '/users';
   public router = Router();
   public userController = new UserController();
+  public authController = new AuthController();
 
   constructor() {
     this.initializeRoutes();
   }
+
   private initializeRoutes() {
+    this.router.post(`${this.path}/signup`, this.authController.signUp);
+    this.router.post(`${this.path}/login`, this.authController.logIn);
+
     this.router
       .route(`${this.path}/me`)
       .get(this.userController.getMe) // protect in auth would fix this error
