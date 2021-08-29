@@ -1,7 +1,8 @@
 import { Schema, model, Model, HookNextFunction, Query, Document } from 'mongoose';
+import crypto from 'crypto';
 import validator from 'validator';
 import bcrypt from 'bcryptjs';
-import { UserDocument, User } from '@interfaces/users.interface';
+import { UserDocument, User, UserModel } from '@interfaces/users.interface';
 
 const userSchema = new Schema<UserDocument>({
   name: {
@@ -84,6 +85,16 @@ userSchema.methods.changedPasswordAfter = function (this: UserDocument, JWTTimeS
   return false;
 };
 
-const userModel = model<UserDocument>('User', userSchema);
+userSchema.methods.createPasswordResetToken = function (this: UserDocument) {
+  const resetToken = crypto.randomBytes(32).toString('hex');
+
+  this.passwordResetToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+
+  this.passwordResetExpire = new Date(Date.now() + 10 * 60 * 1000); // min * sec * millisec;
+
+  return resetToken;
+};
+
+const userModel = model<UserDocument, UserModel>('User', userSchema);
 
 export { userModel };

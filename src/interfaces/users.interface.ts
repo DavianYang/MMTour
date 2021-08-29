@@ -1,4 +1,4 @@
-import { Document } from 'mongoose';
+import { Document, Model } from 'mongoose';
 
 export interface User {
   name: string;
@@ -14,6 +14,9 @@ export interface User {
 }
 
 export interface UserDocument extends User, Document {
-  correctPassword(candidatePassword: string, userPassword: string): Promise<unknown>;
   changedPasswordAfter(JWTTimeStamp: number): boolean;
+}
+
+export interface UserModel extends Model<UserDocument> {
+  correctPassword(candidatePassword: string, userPassword: string): Promise<boolean>;
 }
