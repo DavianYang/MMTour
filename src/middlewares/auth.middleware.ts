@@ -4,7 +4,8 @@ import { userModel } from '@models/users.model';
 import { DataStoredInToken } from '@interfaces/auth.interface';
 import AppError from '@exceptions/AppError';
 import catchAsync from '@utils/catchAsync';
-import { NOT_LOGGED_IN, PASSWORD_RECENT_CHANGED } from '@resources/strings';
+import { NOT_LOGGED_IN, PASSWORD_RECENT_CHANGED, DONT_HAVE_PERMISSION } from '@resources/strings';
+import { nextTick } from 'process';
 
 export const protect = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   let token;
@@ -29,3 +30,12 @@ export const protect = catchAsync(async (req: Request, res: Response, next: Next
   req.user = currentUser;
   res.locals.user = currentUser;
 });
+
+export const restrictTo = (...roles: string[]) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    if (!roles.includes(req.user.role)) {
+      return next(new AppError(DONT_HAVE_PERMISSION, 403));
+    }
+    next();
+  };
+};

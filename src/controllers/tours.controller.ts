@@ -84,7 +84,7 @@ class TourController {
     });
   });
 
-  public getMonthlyWeeklyPlan = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  public getMonthlyPlan = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const year = parseInt(req.params.year as string);
     let month = null;
 

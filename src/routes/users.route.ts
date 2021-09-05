@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { UserController } from '@controllers/users.controller';
 import { AuthController } from '@controllers/auth.controller';
-import { protect } from '@middlwares/auth.middleware';
+import { protect, restrictTo } from '@middlwares/auth.middleware';
 
 class UserRoute {
   public path = '/users';
@@ -32,8 +32,8 @@ class UserRoute {
     this.router
       .route(`${this.path}/:id`)
       .get(this.userController.getUser)
-      .patch(this.userController.updateUser) // Only Admin Role
-      .delete(this.userController.deleteUser); // Only Admin Role
+      .patch(restrictTo('admin'), this.userController.updateUser)
+      .delete(restrictTo('admin'), this.userController.deleteUser);
   }
 }
 

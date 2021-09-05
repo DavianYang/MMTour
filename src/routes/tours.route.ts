@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { TourController } from '@controllers/tours.controller';
-import { protect } from '@middlwares/auth.middleware';
+import { protect, restrictTo } from '@middlwares/auth.middleware';
 
 class TourRoute {
   public path = '/tours';
@@ -11,19 +11,20 @@ class TourRoute {
     this.initializeRoutes();
   }
   private initializeRoutes() {
-    this.router.route(`${this.path}/`).get(protect, this.tourController.getAllTours).post(this.tourController.createTour);
+    this.router.route(`${this.path}/top/:number`).get(this.tourController.aliasTopTours, this.tourController.getAllTours);
+    this.router.route(`${this.path}/stats`).get(this.tourController.getTourStats);
+    this.router.route(`${this.path}/plan/:year/:month`).get(protect, restrictTo('admin', 'lead-guide', 'guide'), this.tourController.getMonthlyPlan);
+
+    this.router
+      .route(`${this.path}/`)
+      .get(this.tourController.getAllTours)
+      .post(protect, restrictTo('admin', 'lead-guide'), this.tourController.createTour);
 
     this.router
       .route(`${this.path}/:id`)
       .get(this.tourController.getTour)
-      .patch(this.tourController.updateTour)
-      .delete(this.tourController.deleteTour);
-
-    this.router.route(`${this.path}/top/:number`).get(this.tourController.aliasTopTours, this.tourController.getAllTours);
-
-    this.router.route(`${this.path}/stats`).get(this.tourController.getTourStats);
-
-    this.router.route(`${this.path}/plan/:year/:month`).get(this.tourController.getMonthlyWeeklyPlan);
+      .patch(protect, restrictTo('admin', 'lead-guide'), this.tourController.updateTour)
+      .delete(protect, restrictTo('admin', 'lead-guide'), this.tourController.deleteTour);
   }
 }
 

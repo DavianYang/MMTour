@@ -12,3 +12,5 @@ export const INCORRECT_EMAIL_PASSWORD = 'Incorrect email or password.';
 
 export const NOT_LOGGED_IN = 'You are not logged in! Please log in to get access.';
 export const PASSWORD_RECENT_CHANGED = 'User recently changed password! Please log in again.';
+
+export const DONT_HAVE_PERMISSION = 'You do not have permission to perform this action';
