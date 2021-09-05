@@ -45,6 +45,14 @@ class AuthController {
 
     this.sendJWTToken(req, res, token, user, 200);
   });
+
+  public logOut = (req: Request, res: Response) => {
+    res.cookie('jwt', 'loggedout', {
+      expires: new Date(Date.now() + 10 * 1000),
+      httpOnly: true,
+    });
+    res.status(200).json({ status: 'success' });
+  };
 }
 
 export { AuthController };
