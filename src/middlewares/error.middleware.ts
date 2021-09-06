@@ -2,7 +2,7 @@ import { NextFunction, Response, Request } from 'express';
 import AppError from '@exceptions/AppError';
 import { CastError, ValidationError, MongoError, ErrorEventsInter } from '@interfaces/errors.interface';
 import { logger } from '@utils/logger';
-import { INVALID_TOKEN, EXPIRED_TOKEN } from '@resources/strings';
+import { INVALID_TOKEN_LOGIN_AGAIN, EXPIRED_TOKEN_LOGIN_AGAIN } from '@resources/strings';
 
 const handleCastErrorDB = (err: CastError) => {
   const message = `Invalid ${err.path}: ${err.value}.`;
@@ -24,9 +24,9 @@ const handleMongoErrorDB = (err: MongoError) => {
   }
 };
 
-const handleJWTError = () => new AppError(INVALID_TOKEN, 401);
+const handleJWTError = () => new AppError(INVALID_TOKEN_LOGIN_AGAIN, 401);
 
-const handleExpiredJWTError = () => new AppError(EXPIRED_TOKEN, 401);
+const handleExpiredJWTError = () => new AppError(EXPIRED_TOKEN_LOGIN_AGAIN, 401);
 
 const sendErrorDev = (err: AppError, req: Request, res: Response) => {
   console.log('Dev Error', err.statusCode);

@@ -1,8 +1,8 @@
-import { Schema, model, Model, HookNextFunction, Query, Document } from 'mongoose';
 import crypto from 'crypto';
+import { Schema, model, HookNextFunction, Query } from 'mongoose';
 import validator from 'validator';
 import bcrypt from 'bcryptjs';
-import { UserDocument, User, UserModel } from '@interfaces/users.interface';
+import { UserDocument, UserModel } from '@interfaces/users.interface';
 
 const userSchema = new Schema<UserDocument>({
   name: {
@@ -20,6 +20,7 @@ const userSchema = new Schema<UserDocument>({
   role: {
     type: String,
     enum: ['user', 'guide', 'lead-guide', 'admin'],
+    default: 'user',
   },
   password: {
     type: String,

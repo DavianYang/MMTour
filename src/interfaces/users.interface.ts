@@ -1,10 +1,17 @@
 import { Document, Model } from 'mongoose';
 
+enum Role {
+  Admin = 'admin',
+  LeadGuide = 'lead-guide',
+  Guide = 'guide',
+  User = 'user',
+}
+
 export interface User {
   name: string;
   email: string;
   photo: string;
-  role: string;
+  role: Role;
   password: string;
   passwordConfirm: string | undefined;
   passwordChangedAt: Date;
@@ -15,8 +22,8 @@ export interface User {
 
 export interface UserDocument extends User, Document {
   changedPasswordAfter(JWTTimeStamp: number): boolean;
-}
-
-export interface UserModel extends Model<UserDocument> {
+  createPasswordResetToken(): string;
   correctPassword(candidatePassword: string, userPassword: string): Promise<boolean>;
 }
+
+export type UserModel = Model<UserDocument>;

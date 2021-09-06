@@ -5,7 +5,6 @@ import { DataStoredInToken } from '@interfaces/auth.interface';
 import AppError from '@exceptions/AppError';
 import catchAsync from '@utils/catchAsync';
 import { NOT_LOGGED_IN, PASSWORD_RECENT_CHANGED, DONT_HAVE_PERMISSION } from '@resources/strings';
-import { nextTick } from 'process';
 
 export const protect = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   let token;

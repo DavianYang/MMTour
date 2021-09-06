@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import { userModel } from '@models/users.model';
 import { QueryString, filterObj } from '@interfaces/queries.interface';
-import { findAll, findOne, createOne, updateOne, deleteOne } from '@services/factory.service';
+import { findAll, findOne, updateOne, deleteOne } from '@services/factory.service';
 
 class UserService {
   public users = userModel;
@@ -52,6 +52,10 @@ class UserService {
 
   public async findUserByEmail(email: string) {
     return await this.users.findOne({ email }).select('+password');
+  }
+
+  public async findUserByToken(hashToken: string) {
+    return await this.users.findOne({ passwordResetToken: hashToken, passwordResetExpire: { $gte: Date.now() } });
   }
 
   public async updateUser(req: Request) {
