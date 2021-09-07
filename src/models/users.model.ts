@@ -44,7 +44,7 @@ const userSchema = new Schema<UserDocument>({
   active: {
     type: Boolean,
     default: true,
-    select: true,
+    select: false,
   },
 });
 

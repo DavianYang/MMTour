@@ -16,6 +16,42 @@ class UserService {
     return newObj;
   };
 
+  // CREATE
+  public async createUser(req: Request) {
+    return await this.users.create({
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+      passwordConfirm: req.body.passwordConfirm,
+    });
+  }
+
+  // FIND
+  public async findAllUsers(req: Request) {
+    return await findAll(this.users, req.query as QueryString);
+  }
+
+  public async findUser(req: Request) {
+    return await findOne(this.users, req.params.id);
+  }
+
+  public async findUserById(id: string) {
+    return await this.users.findOne({ id }).select('+password');
+  }
+
+  public async findUserByEmail(email: string) {
+    return await this.users.findOne({ email }).select('+password');
+  }
+
+  public async findUserByToken(hashToken: string) {
+    return await this.users.findOne({ passwordResetToken: hashToken, passwordResetExpire: { $gt: new Date() } });
+  }
+
+  // UPDATE
+  public async updateUser(req: Request) {
+    return await updateOne(this.users, req.params.id, req.body);
+  }
+
   public async updateCurrentUser(req: Request) {
     const filteredObj = this.filterObj(req.body, 'name', 'email');
 
@@ -27,43 +63,15 @@ class UserService {
     return updatedUser;
   }
 
+  // DELETE
+  public async deleteUser(req: Request) {
+    return await deleteOne(this.users, req.params.id);
+  }
+
   public async deleteCurrentUser(req: Request) {
     return this.users.findByIdAndUpdate(req.user.id, {
       active: false,
     });
-  }
-
-  public async createUser(req: Request) {
-    return await this.users.create({
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password,
-      passwordConfirm: req.body.passwordConfirm,
-    });
-  }
-
-  public async findAllUsers(req: Request) {
-    return await findAll(this.users, req.query as QueryString);
-  }
-
-  public async findUser(req: Request) {
-    return await findOne(this.users, req.params.id);
-  }
-
-  public async findUserByEmail(email: string) {
-    return await this.users.findOne({ email }).select('+password');
-  }
-
-  public async findUserByToken(hashToken: string) {
-    return await this.users.findOne({ passwordResetToken: hashToken, passwordResetExpire: { $gte: Date.now() } });
-  }
-
-  public async updateUser(req: Request) {
-    return await updateOne(this.users, req.params.id, req.body);
-  }
-
-  public async deleteUser(req: Request) {
-    return await deleteOne(this.users, req.params.id);
   }
 }
 

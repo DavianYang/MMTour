@@ -18,8 +18,9 @@ class UserRoute {
     this.router.post(`${this.path}/login`, this.authController.logIn);
     this.router.post(`${this.path}/logout`, this.authController.logOut);
 
-    this.router.post(`${this.path}/forgotPassword`, this.authController.forgotPassword);
-    this.router.post(`${this.path}/resetPassword`, this.authController.resetPassword);
+    this.router.post(`${this.path}/forgotPassword`, this.authController.forgotPassword); // Not tested yet
+    this.router.post(`${this.path}/resetPassword`, this.authController.resetPassword); // Not tested yet
+    this.router.post(`${this.path}/updateMyPassword`, this.authController.updatePassword); // Not tested yet
 
     this.router.use(protect);
 

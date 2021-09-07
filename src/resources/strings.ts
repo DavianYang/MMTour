@@ -8,12 +8,13 @@ export const USER_ROUTE_NOT_DEFINED = 'This route is not yet defined! Please use
 export const USER_ROUTE_NOT_FOR_UPDATE = 'This route is not for password updates. Please use /updateMyPassword.';
 export const PROVIDE_EMAIL_PASSWORD = 'Please provide email and password!';
 
-// INVALID & EXPIRED
+// INVALID & INCORRECT & EXPIRED
 export const INVALID_TOKEN = 'Token is invalid or has expired';
 export const INVALID_TOKEN_LOGIN_AGAIN = 'Invalid Token. Please log in again.';
 export const EXPIRED_TOKEN_LOGIN_AGAIN = 'Your token has expired! Please log in again.';
 export const INCORRECT_EMAIL_PASSWORD = 'Incorrect email or password.';
 export const PASSWORD_RECENT_CHANGED = 'User recently changed password! Please log in again.';
+export const INCORRECT_CURRENT_PASSWORD = 'Your current password is wrong';
 
 // ERROR DURING PROCESS
 export const TROUBLE_SENDING_EMAIL = 'There was an error sending the email. Try again later!';

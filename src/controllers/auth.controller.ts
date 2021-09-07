@@ -12,6 +12,7 @@ import {
   TROUBLE_SENDING_EMAIL,
   USER_WITH_EMAIL_NOT_FOUND,
   INVALID_TOKEN,
+  INCORRECT_CURRENT_PASSWORD,
 } from '@resources/strings';
 
 class AuthController {
@@ -123,6 +124,24 @@ class AuthController {
 
     // Update changePasswordAt property for user
     // Log the user in, send JWT
+    this.sendJWTToken(req, res, user, 200);
+  });
+
+  public updatePassword = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    // Get user from collection
+    const user = await this.userService.findUserById(req.user.id);
+
+    // Check if POSTed current password is correct
+    if (!(await user.correctPassword(req.body.passwordCurrent, req.body.password))) {
+      return next(new AppError(INCORRECT_CURRENT_PASSWORD, 401));
+    }
+
+    // If so, update password
+    user.password = req.body.password;
+    user.passwordConfirm = req.body.passwordConfirm;
+    await user.save();
+
+    // Log user in, send JWT
     this.sendJWTToken(req, res, user, 200);
   });
 }

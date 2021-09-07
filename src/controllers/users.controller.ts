@@ -28,6 +28,7 @@ class UserController {
   });
 
   public deleteMe = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    await this.userService.deleteCurrentUser(req);
     res.status(204).json({
       status: 'success',
       data: null,
