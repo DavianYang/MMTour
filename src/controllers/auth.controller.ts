@@ -5,8 +5,10 @@ import { AuthService } from '@services/auth.service';
 import { UserService } from '@services/users.service';
 import { UserDocument } from '@interfaces/users.interface';
 import AppError from '@exceptions/AppError';
+import Email from '@utils/email';
 import catchAsync from '@utils/catchAsync';
 import {
+  YOUR_PASSWORD_RESET_TOKEN,
   PROVIDE_EMAIL_PASSWORD,
   INCORRECT_EMAIL_PASSWORD,
   TROUBLE_SENDING_EMAIL,
@@ -92,7 +94,8 @@ class AuthController {
     // Send it to user's email
     try {
       const resetURL = `${req.protocol}://${req.get('host')}/api/v1/users/resetPassword/${resetToken}`;
-      // Create Email
+      await new Email(user, resetURL).send('passwordReset', YOUR_PASSWORD_RESET_TOKEN);
+
       res.status(200).json({
         status: 'success',
         message: 'Token sent to email',

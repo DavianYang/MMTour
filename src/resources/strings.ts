@@ -1,3 +1,6 @@
+// INFORM USER
+export const YOUR_PASSWORD_RESET_TOKEN = 'Your password reset token (valid for only 10 minutes)';
+
 // NOT FOUND
 export const USER_WITH_ID_NOT_FOUND = 'No user found with that ID.';
 export const TOUR_WITH_ID_NOT_FOUND = 'No tour found with that ID.';
