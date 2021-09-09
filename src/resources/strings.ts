@@ -15,6 +15,7 @@ export const EXPIRED_TOKEN_LOGIN_AGAIN = 'Your token has expired! Please log in 
 export const INCORRECT_EMAIL_PASSWORD = 'Incorrect email or password.';
 export const PASSWORD_RECENT_CHANGED = 'User recently changed password! Please log in again.';
 export const INCORRECT_CURRENT_PASSWORD = 'Your current password is wrong';
+export const REQUEST_OVERLOAD_TRY_AGAIN_IN_AN_HOUR = 'Too many requests from this IP, please try again in an hour';
 
 // ERROR DURING PROCESS
 export const TROUBLE_SENDING_EMAIL = 'There was an error sending the email. Try again later!';

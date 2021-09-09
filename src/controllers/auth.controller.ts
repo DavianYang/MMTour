@@ -36,7 +36,7 @@ class AuthController {
       secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
     });
 
-    // Remove password from output
+    // Remove password which was from query from output
     user.password = undefined;
 
     res.status(statusCode).json({

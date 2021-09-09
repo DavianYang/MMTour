@@ -5,6 +5,8 @@ import cors from 'cors';
 import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
+import ExpressMongoSanitize from 'express-mongo-sanitize';
+import xss from 'xss-clean';
 import hpp from 'hpp';
 import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
@@ -15,6 +17,7 @@ import Routes from '@interfaces/routes.interface';
 import { dbConnection } from '@databases/mongodb';
 import { errorMiddleware } from '@middlwares/error.middleware';
 import { logger, stream } from '@utils/logger';
+import { REQUEST_OVERLOAD_TRY_AGAIN_IN_AN_HOUR } from '@resources/strings';
 
 class App {
   public app: express.Application;
@@ -56,7 +59,9 @@ class App {
 
   public initializeMiddlewares() {
     const limiter = rateLimit({
-      max: 70, // limit each ip to 100 request per windowMS
+      max: 100, // limit each ip to 100 request per windowMS
+      windowMs: 60 * 60 * 1000,
+      message: REQUEST_OVERLOAD_TRY_AGAIN_IN_AN_HOUR,
     });
 
     if (this.env === 'production') {
@@ -68,11 +73,26 @@ class App {
       this.app.use(cors({ origin: true, credentials: true }));
     }
 
-    this.app.use(hpp());
+    // Set security for HTTP headers
     this.app.use(helmet());
+
+    // Body, parser, reading data from req.body
     this.app.use(express.json({ limit: '10kb' }));
     this.app.use(express.urlencoded({ extended: true, limit: '10kb' }));
     this.app.use(cookieParser());
+
+    // Data sanitization against NoSQL query injection
+    this.app.use(ExpressMongoSanitize());
+
+    // Data sanitization against XSS
+    this.app.use(xss());
+
+    // Prevent parameter pollution
+    this.app.use(
+      hpp({
+        whitelist: ['duration', 'ratingsQuantity', 'ratingsAverage', 'maxGroupSize', 'difficulty', 'price'],
+      }),
+    );
   }
 
   private initializeRoutes(routes: Routes[]) {
