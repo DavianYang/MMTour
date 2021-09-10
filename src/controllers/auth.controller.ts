@@ -1,7 +1,6 @@
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import { NextFunction, Request, Response } from 'express';
-import { AuthService } from '@services/auth.service';
 import { UserService } from '@services/users.service';
 import { UserDocument } from '@interfaces/users.interface';
 import AppError from '@exceptions/AppError';
@@ -18,7 +17,6 @@ import {
 } from '@resources/strings';
 
 class AuthController {
-  private authService = new AuthService();
   private userService = new UserService();
 
   private signJWTToken = (user: UserDocument) => {
