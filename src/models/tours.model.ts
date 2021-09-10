@@ -2,7 +2,7 @@ import { Schema, model, Types, HookNextFunction, Query } from 'mongoose';
 import slugify from 'slugify';
 import { TourDocument } from '@interfaces/tours.interface';
 
-const tourSchema: Schema = new Schema(
+const tourSchema = new Schema<TourDocument>(
   {
     name: {
       type: String,
