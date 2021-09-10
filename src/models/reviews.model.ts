@@ -1,4 +1,4 @@
-import { Types } from 'mongoose';
+import { Schema, Types, model } from 'mongoose';
 
 const reviewSchema = new Schema(
   {
@@ -31,3 +31,7 @@ const reviewSchema = new Schema(
     toObject: { virtuals: true },
   },
 );
+
+const reviewModel = model('Review', reviewSchema);
+
+export { reviewModel };

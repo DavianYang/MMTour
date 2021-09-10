@@ -4,6 +4,8 @@ import App from '@/app';
 import { IndexRoute } from '@routes/index.route';
 import { UserRoute } from '@routes/users.route';
 import { TourRoute } from '@routes/tours.route';
+import { ReviewRoute } from '@routes/reviews.route';
+
 import { logger } from '@utils/logger';
 
 process.on('uncaughtException', (err: Error) => {
@@ -13,7 +15,7 @@ process.on('uncaughtException', (err: Error) => {
   process.exit(1);
 });
 
-const app = new App([new IndexRoute(), new UserRoute(), new TourRoute()]);
+const app = new App([new IndexRoute(), new UserRoute(), new TourRoute(), new ReviewRoute()]);
 
 const server = app.listen();
 
