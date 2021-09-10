@@ -1,7 +1,6 @@
 import { Document, Types } from 'mongoose';
 
 export interface TourDocument extends Document {
-  _id: string;
   name: string;
   slug: string;
   duration: number;

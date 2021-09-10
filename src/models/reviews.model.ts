@@ -1,6 +1,7 @@
 import { Schema, Types, model } from 'mongoose';
+import { ReviewDocument } from '@interfaces/reviews.interface';
 
-const reviewSchema = new Schema(
+const reviewSchema = new Schema<ReviewDocument>(
   {
     review: {
       type: String,
@@ -32,6 +33,6 @@ const reviewSchema = new Schema(
   },
 );
 
-const reviewModel = model('Review', reviewSchema);
+const reviewModel = model<ReviewDocument>('Review', reviewSchema);
 
 export { reviewModel };
