@@ -4,7 +4,7 @@
   "description": "MMTour API",
   "main": "src/app.js",
   "directories": {
-    "test": "test"
+    "test": "jest"
   },
   "scripts": {
     "build-ts": "tsc && npx tsc-alias",
