@@ -28,6 +28,7 @@ export const protect = catchAsync(async (req: Request, res: Response, next: Next
 
   req.user = currentUser;
   res.locals.user = currentUser;
+  next();
 });
 
 export const restrictTo = (...roles: string[]) => {

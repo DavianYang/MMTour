@@ -15,7 +15,7 @@ process.on('uncaughtException', (err: Error) => {
   process.exit(1);
 });
 
-const app = new App([new IndexRoute(), new UserRoute(), new TourRoute(), new ReviewRoute()]);
+const app = new App([new IndexRoute(), new TourRoute(), new UserRoute(), new ReviewRoute()]);
 
 const server = app.listen();
 

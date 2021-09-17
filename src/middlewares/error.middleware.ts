@@ -94,7 +94,6 @@ export const errorMiddleware = (err: AppError, req: Request, res: Response, next
   } else if (process.env.NODE_ENV === 'production') {
     for (const errevent in ErrorEvents) {
       if (errevent === err.name) {
-        console.log('It is True');
         err = ErrorEvents[errevent](err);
       }
     }

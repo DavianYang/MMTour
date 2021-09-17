@@ -19,7 +19,7 @@ import {
 class AuthController {
   private userService = new UserService();
 
-  private signJWTToken = (user: UserDocument) => {
+  public signJWTToken = (user: UserDocument) => {
     const id: string = user._id;
     const token = jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE_IN });
 

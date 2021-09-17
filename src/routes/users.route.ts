@@ -14,6 +14,8 @@ class UserRoute {
   }
 
   private initializeRoutes() {
+    this.router.route(`${this.path}/`).get(this.userController.getAllUsers).post(this.userController.createUser);
+
     this.router.post(`${this.path}/signup`, this.authController.signUp);
     this.router.post(`${this.path}/login`, this.authController.logIn);
     this.router.post(`${this.path}/logout`, this.authController.logOut);
@@ -31,7 +33,7 @@ class UserRoute {
       .patch(this.userController.updateMe)
       .delete(this.userController.deleteUser);
 
-    this.router.route(`${this.path}/`).get(this.userController.getAllUsers).post(this.userController.createUser);
+    // add restrict to admin
 
     this.router
       .route(`${this.path}/:id`)
