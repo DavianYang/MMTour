@@ -29,24 +29,25 @@ class TourService {
   public async findTourStats() {
     return await this.tours.aggregate([
       {
-        $match: { ratingAverage: { $gte: 4.5 } },
+        $match: { ratingsAverage: { $gte: 4.5 } },
       },
       {
         $group: {
           _id: { $toUpper: '$difficulty' },
           numTours: { $sum: 1 },
           numRatings: { $sum: '$ratingsQuantity' },
-          avgRating: { $avg: '$ratingsQuantity' },
+          avgRating: { $avg: '$ratingsAverage' },
           avgPrice: { $avg: '$price' },
           minPrice: { $min: '$price' },
           maxPrice: { $max: '$price' },
         },
       },
       {
-        $sort: {
-          avgPrice: -1,
-        },
+        $sort: { avgPrice: 1 },
       },
+      // {
+      //   $match: { _id: { $ne: 'EASY' } }
+      // }
     ]);
   }
 

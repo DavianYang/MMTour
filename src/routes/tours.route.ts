@@ -12,8 +12,8 @@ class TourRoute {
   }
   private initializeRoutes() {
     this.router.route(`${this.path}/top/:number`).get(this.tourController.aliasTopTours, this.tourController.getAllTours);
-    this.router.route(`${this.path}/stats`).get(this.tourController.getTourStats);
-    this.router.route(`${this.path}/plan/:year/:month`).get(protect, restrictTo('admin', 'lead-guide', 'guide'), this.tourController.getMonthlyPlan);
+    this.router.route(`${this.path}/stats`).get(protect, restrictTo('admin', 'lead-guide', 'guide'), this.tourController.getTourStats);
+    this.router.route(`${this.path}/plan/:year/:month?`).get(protect, restrictTo('admin', 'lead-guide', 'guide'), this.tourController.getMonthlyPlan);
 
     this.router
       .route(`${this.path}/`)

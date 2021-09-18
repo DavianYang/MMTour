@@ -14,8 +14,6 @@ class UserRoute {
   }
 
   private initializeRoutes() {
-    this.router.route(`${this.path}/`).get(this.userController.getAllUsers).post(this.userController.createUser);
-
     this.router.post(`${this.path}/signup`, this.authController.signUp);
     this.router.post(`${this.path}/login`, this.authController.logIn);
     this.router.post(`${this.path}/logout`, this.authController.logOut);
@@ -25,6 +23,8 @@ class UserRoute {
     this.router.post(`${this.path}/updateMyPassword`, this.authController.updatePassword); // Not tested yet
 
     this.router.use(protect);
+
+    this.router.route(`${this.path}/`).get(this.userController.getAllUsers).post(this.userController.createUser);
 
     this.router
       .route(`${this.path}/me`)

@@ -9,8 +9,9 @@ class TourController {
 
   public aliasTopTours = (req: Request, res: Response, next: NextFunction) => {
     req.query.limit = req.params.number;
-    req.query.sort = '-ratingAverage, price';
-    req.query.fields = 'name, price, ratingsAverage, summary, difficult';
+    req.query.sort = '-ratingAverage,price';
+    req.query.fields = 'name,price,ratingsAverage,summary,difficult';
+    next();
   };
 
   public getAllTours = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
@@ -75,7 +76,6 @@ class TourController {
 
   public getTourStats = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const stats = await this.tourService.findTourStats();
-
     res.status(200).json({
       status: 'success',
       data: {

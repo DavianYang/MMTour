@@ -2,9 +2,9 @@ import { DocumentDefinition, FilterQuery } from 'mongoose';
 import { QueryString } from '@interfaces/queries.interface';
 import { APIFeatures } from '@utils/apiFeatures';
 
-export const findAll = async <T>(Model: FilterQuery<T>, query: QueryString, id?: string) => {
+export const findAll = async <T>(Model: FilterQuery<T>, query: QueryString) => {
   let filter = {};
-  if (id) filter = { tour: id };
+  if (query.id) filter = { tour: query.id };
 
   const features = new APIFeatures(Model.find(filter), query).filter().sort().limitFields().paginate();
 
