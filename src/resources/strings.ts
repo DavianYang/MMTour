@@ -27,3 +27,6 @@ export const TROUBLE_SENDING_EMAIL = 'There was an error sending the email. Try 
 // PERMISSION REQUIRED
 export const DONT_HAVE_PERMISSION = 'You do not have permission to perform this action';
 export const NOT_LOGGED_IN = 'You are not logged in! Please log in to get access.';
+
+// ALREADY TAKEN
+export const EMAIL_ALREADY_TAKEN = 'This email has already taken! Please try to sign up with another email address';
