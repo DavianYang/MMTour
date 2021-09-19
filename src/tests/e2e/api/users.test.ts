@@ -9,17 +9,17 @@ describe('Testing Users', () => {
     // afterEach(async () => await clearDB);
     // afterAll(async () => await closeDB());
 
-    test('GET: / should return a list of users with access token', async () => {
-      const userRoute = new UserRoute();
-      const app = new App([userRoute]);
+    // it('GET: / should return a list of users with access token', async () => {
+    //   const userRoute = new UserRoute();
+    //   const app = new App([userRoute]);
 
-      const res = await request(app.getServer())
-        .get('/api/v1/users')
-        .set('Authorization', `Bearer ${process.env.TEST_ADMIN_ACCESS_TOKEN}`)
-        .expect('Content-Type', /json/)
-        .expect(200);
+    //   const res = await request(app.getServer())
+    //     .get('/api/v1/users')
+    //     .set('Authorization', `Bearer ${process.env.TEST_ADMIN_ACCESS_TOKEN}`)
+    //     .expect('Content-Type', /json/)
+    //     .expect(200);
 
-      expect(res.body.results).toBeGreaterThan(20);
-    });
+    //   expect(res.body.results).toBeGreaterThan(20);
+    // });
   });
 });

@@ -19,12 +19,11 @@ class UserRoute {
     this.router.post(`${this.path}/logout`, this.authController.logOut);
 
     this.router.post(`${this.path}/forgotPassword`, this.authController.forgotPassword); // Not tested yet
-    this.router.post(`${this.path}/resetPassword`, this.authController.resetPassword); // Not tested yet
-    this.router.post(`${this.path}/updateMyPassword`, this.authController.updatePassword); // Not tested yet
+    this.router.post(`${this.path}/resetPassword/:token`, this.authController.resetPassword); // Not tested yet
 
     this.router.use(protect);
 
-    this.router.route(`${this.path}/`).get(this.userController.getAllUsers).post(this.userController.createUser);
+    this.router.post(`${this.path}/updateMyPassword`, this.authController.updatePassword); // Not tested yet
 
     this.router
       .route(`${this.path}/me`)
@@ -33,13 +32,15 @@ class UserRoute {
       .patch(this.userController.updateMe)
       .delete(this.userController.deleteUser);
 
-    // add restrict to admin
+    this.router.use(restrictTo('admin'));
+
+    this.router.route(`${this.path}/`).get(this.userController.getAllUsers).post(this.userController.createUser);
 
     this.router
       .route(`${this.path}/:id`)
       .get(this.userController.getUser)
-      .patch(restrictTo('admin'), this.userController.updateUser)
-      .delete(restrictTo('admin'), this.userController.deleteUser);
+      .patch(this.userController.updateUser)
+      .delete(this.userController.deleteUser);
   }
 }
 

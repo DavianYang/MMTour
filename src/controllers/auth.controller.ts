@@ -49,6 +49,7 @@ class AuthController {
   };
 
   public signUp = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    // If given email is already registered
     if (await this.userService.users.isEmailTaken(req.body.email)) {
       return next(new AppError(EMAIL_ALREADY_TAKEN, 400));
     }
@@ -135,7 +136,7 @@ class AuthController {
     const user = await this.userService.findUserById(req.user.id);
 
     // Check if POSTed current password is correct
-    if (!(await user.correctPassword(req.body.passwordCurrent, req.body.password))) {
+    if (!(await user.isPasswordMatch(req.body.passwordCurrent, req.body.password))) {
       return next(new AppError(INCORRECT_CURRENT_PASSWORD, 401));
     }
 

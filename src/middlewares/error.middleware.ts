@@ -11,6 +11,7 @@ const handleCastErrorDB = (err: CastError) => {
 
 const handleValidationErrorDB = (err: ValidationError) => {
   const error = Object.values(err.errors).map(el => el.message);
+  console.log('Console error: ', error);
   const message = `Invalid  input data. ${error.join('. ')}.`;
   return new AppError(message, 404);
 };

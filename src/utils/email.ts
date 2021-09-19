@@ -40,6 +40,7 @@ export default class Email {
       from: this.from,
       to: this.to,
       subject,
+      text: this.url,
     };
 
     await this.newTransport().sendMail(mailOptions);
