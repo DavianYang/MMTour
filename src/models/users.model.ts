@@ -98,8 +98,7 @@ userSchema.methods.createPasswordResetToken = function (this: UserDocument) {
 };
 
 userSchema.statics.isEmailTaken = async function (email: string) {
-  const user = await this.findOne({ email });
-  return !!user;
+  return !!(await this.findOne({ email }));
 };
 
 const userModel = model<UserDocument, UserModel>('User', userSchema);
