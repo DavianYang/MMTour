@@ -2,6 +2,7 @@ import crypto from 'crypto';
 import { Schema, model, HookNextFunction, Query } from 'mongoose';
 import validator from 'validator';
 import bcrypt from 'bcryptjs';
+import AppError from '@exceptions/AppError';
 import { UserDocument, UserModel } from '@interfaces/users.interface';
 
 const userSchema = new Schema<UserDocument>({
@@ -72,7 +73,7 @@ userSchema.pre<Query<UserDocument, UserDocument>>(/^find/, function (next: HookN
   next();
 });
 
-userSchema.methods.correctPassword = async function (candidatePassword: string, userPassword: string) {
+userSchema.methods.isPasswordMatch = async function (candidatePassword: string, userPassword: string) {
   return await bcrypt.compare(candidatePassword, userPassword);
 };
 
@@ -94,6 +95,11 @@ userSchema.methods.createPasswordResetToken = function (this: UserDocument) {
   this.passwordResetExpire = new Date(Date.now() + 10 * 60 * 1000); // min * sec * millisec;
 
   return resetToken;
+};
+
+userSchema.statics.isEmailTaken = async function (email: string) {
+  const user = await this.findOne({ email });
+  return !!user;
 };
 
 const userModel = model<UserDocument, UserModel>('User', userSchema);

@@ -14,13 +14,13 @@ import {
   USER_WITH_EMAIL_NOT_FOUND,
   INVALID_TOKEN,
   INCORRECT_CURRENT_PASSWORD,
+  EMAIL_ALREADY_TAKEN,
 } from '@resources/strings';
 
 class AuthController {
   private userService = new UserService();
 
-  public signJWTToken = (user: UserDocument) => {
-    const id: string = user._id;
+  public signJWTToken = (id: string) => {
     const token = jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE_IN });
 
     return token;
@@ -49,6 +49,9 @@ class AuthController {
   };
 
   public signUp = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    if (await this.userService.users.isEmailTaken(req.body.email)) {
+      return next(new AppError(EMAIL_ALREADY_TAKEN, 400));
+    }
     const newUser = await this.userService.createUser(req);
     this.sendJWTToken(req, res, newUser, 201);
   });
@@ -61,9 +64,8 @@ class AuthController {
     }
 
     const user = await this.userService.findUserByEmail(email);
-    const correctPassword = await user.correctPassword(password, user.password);
 
-    if (!user || !correctPassword) {
+    if (!user || !(await user.isPasswordMatch(password, user.password))) {
       return next(new AppError(INCORRECT_EMAIL_PASSWORD, 401));
     }
 
@@ -94,7 +96,7 @@ class AuthController {
       const resetURL = `${req.protocol}://${req.get('host')}/api/v1/users/resetPassword/${resetToken}`;
       await new Email(user, resetURL).send('passwordReset', YOUR_PASSWORD_RESET_TOKEN);
 
-      res.status(200).json({
+      res.status(204).json({
         status: 'success',
         message: 'Token sent to email',
       });

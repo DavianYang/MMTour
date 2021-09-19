@@ -23,7 +23,9 @@ export interface User {
 export interface UserDocument extends User, Document {
   changedPasswordAfter(JWTTimeStamp: number): boolean;
   createPasswordResetToken(): string;
-  correctPassword(candidatePassword: string, userPassword: string): Promise<boolean>;
+  isPasswordMatch(candidatePassword: string, userPassword: string): Promise<boolean>;
 }
 
-export type UserModel = Model<UserDocument>;
+export interface UserModel extends Model<UserDocument> {
+  isEmailTaken(email: string): boolean;
+}
