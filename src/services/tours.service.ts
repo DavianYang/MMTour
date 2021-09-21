@@ -45,9 +45,6 @@ class TourService {
       {
         $sort: { avgPrice: 1 },
       },
-      // {
-      //   $match: { _id: { $ne: 'EASY' } }
-      // }
     ]);
   }
 

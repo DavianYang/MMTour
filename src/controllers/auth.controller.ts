@@ -2,9 +2,9 @@ import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import { NextFunction, Request, Response } from 'express';
 import { UserService } from '@services/users.service';
+import Email from '@services/email.service';
 import { UserDocument } from '@interfaces/users.interface';
 import AppError from '@exceptions/AppError';
-import Email from '@utils/email';
 import catchAsync from '@utils/catchAsync';
 import * as strings from '@resources/strings';
 
@@ -73,6 +73,8 @@ class AuthController {
   };
 
   public forgotPassword = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    if (!req.body.email) next(new AppError(strings.PROVIDE_EMAIL_ADDRESS, 400));
+
     // Get user based on POSTed email
     const user = await this.userService.findUserByEmail(req.body.email);
     if (!user) {
@@ -102,6 +104,8 @@ class AuthController {
   });
 
   public resetPassword = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    if (req.params.token) next(new AppError(strings.PROVIDE_TOKEN, 404));
+
     // Get user based on the token
     const hashedToken = crypto.createHash('sha256').update(req.params.token).digest('hex');
 

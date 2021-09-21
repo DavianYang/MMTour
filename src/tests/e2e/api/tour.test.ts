@@ -8,8 +8,7 @@ describe('Testing Tours', () => {
   // afterEach(async () => await clearDB);
   // afterAll(async () => await closeDB())
 
-  const tourRoute = new TourRoute();
-  const app = new App([tourRoute]).getServer();
+  const app = new App([new TourRoute()]).getServer();
 
   describe('/api/v1/tours/', () => {
     it('GET: / should return a list of tours', async () => {
@@ -35,16 +34,16 @@ describe('Testing Tours', () => {
     });
   });
 
-  describe('/api/v1/tours/stats', () => {
-    it('GET: / should return the tour statistics', async () => {
-      const res = await request(app)
-        .get('/api/v1/tours/stats')
-        .set('Authorization', `Bearer ${process.env.TEST_ADMIN_ACCESS_TOKEN}`)
-        .expect('Content-Type', /json/)
-        .expect(200);
+  // describe('/api/v1/tours/stats', () => {
+  //   it('GET: / should return the tour statistics', async () => {
+  //     const res = await request(app)
+  //       .get('/api/v1/tours/stats')
+  //       .set('Authorization', `Bearer ${process.env.TEST_ADMIN_ACCESS_TOKEN}`)
+  //       .expect('Content-Type', /json/)
+  //       .expect(200);
 
-      expect(res.body.status).toMatch('success');
-      expect(res.body.data.stats).toHaveLength(3);
-    });
-  });
+  //     expect(res.body.status).toMatch('success');
+  //     expect(res.body.data.stats).toHaveLength(3);
+  //   });
+  // });
 });

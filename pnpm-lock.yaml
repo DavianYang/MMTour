@@ -37,6 +37,7 @@ specifiers:
   express: ^4.17.1
   express-mongo-sanitize: ^2.1.0
   express-rate-limit: ^5.2.6
+  faker: ^5.5.3
   helmet: ^4.6.0
   hpp: ^0.2.3
   husky: ^6.0.0
@@ -132,6 +133,7 @@ devDependencies:
   eslint-config-prettier: 8.3.0_eslint@7.29.0
   eslint-plugin-node: 11.1.0_eslint@7.29.0
   eslint-plugin-prettier: 3.4.0_de2986b0c29d2faa795004f5443c76d1
+  faker: 5.5.3
   husky: 6.0.0
   jest: 27.2.0_ts-node@10.0.0
   lint-staged: 11.0.0
@@ -2698,6 +2700,10 @@ packages:
       utils-merge: 1.0.1
       vary: 1.1.2
     dev: false
+
+  /faker/5.5.3:
+    resolution: {integrity: sha512-wLTv2a28wjUyWkbnX7u/ABZBkUkIF2fCd73V6P2oFqEGEktDfzWx4UxrSqtPRw0xPRAcjeAOIiJWqZm3pP4u3g==}
+    dev: true
 
   /fast-deep-equal/3.1.3:
     resolution: {integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==}

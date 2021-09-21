@@ -7,13 +7,6 @@ import * as strings from '@resources/strings';
 class TourController {
   private tourService = new TourService();
 
-  public aliasTopTours = (req: Request, res: Response, next: NextFunction) => {
-    req.query.limit = req.params.number;
-    req.query.sort = '-ratingAverage,price';
-    req.query.fields = 'name,price,ratingsAverage,summary,difficult';
-    next();
-  };
-
   public getAllTours = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const tours = await this.tourService.findAllTours(req);
 

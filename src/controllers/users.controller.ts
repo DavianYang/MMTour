@@ -51,7 +51,6 @@ class UserController {
     if (!user) {
       return next(new AppError(strings.USER_WITH_ID_NOT_FOUND, 404));
     }
-    console.log(user);
 
     res.status(200).json({
       status: 'success',

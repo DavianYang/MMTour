@@ -10,7 +10,7 @@ export const connectToDB = async () => {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,
-    useUnifiedTopology: true,
+    useUnifiedTopology: false,
   };
   await mongoose.connect(uri, mongooseOps);
 };

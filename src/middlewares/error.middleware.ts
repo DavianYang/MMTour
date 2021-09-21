@@ -11,7 +11,6 @@ const handleCastErrorDB = (err: CastError) => {
 
 const handleValidationErrorDB = (err: ValidationError) => {
   const error = Object.values(err.errors).map(el => el.message);
-  console.log('Console error: ', error);
   const message = `Invalid  input data. ${error.join('. ')}.`;
   return new AppError(message, 404);
 };
@@ -30,7 +29,6 @@ const handleJWTError = () => new AppError(strings.INVALID_TOKEN_LOGIN_AGAIN, 401
 const handleExpiredJWTError = () => new AppError(strings.EXPIRED_TOKEN_LOGIN_AGAIN, 401);
 
 const sendErrorDev = (err: AppError, req: Request, res: Response) => {
-  console.log('Dev Error', err.statusCode);
   // API
   if (req.originalUrl.startsWith('/api')) {
     return res.status(err.statusCode).json({
@@ -90,7 +88,6 @@ export const errorMiddleware = (err: AppError, req: Request, res: Response, next
   err.status = err.status || 'error';
 
   if (process.env.NODE_ENV === 'development') {
-    console.log(err);
     sendErrorDev(err, req, res);
   } else if (process.env.NODE_ENV === 'production') {
     for (const errevent in ErrorEvents) {

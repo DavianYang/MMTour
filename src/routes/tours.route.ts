@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { TourController } from '@controllers/tours.controller';
 import { protect, restrictTo } from '@middlwares/auth.middleware';
+import { aliasTopTours } from '@middlwares/tour.middleware';
 
 class TourRoute {
   public path = '/tours';
@@ -11,7 +12,7 @@ class TourRoute {
     this.initializeRoutes();
   }
   private initializeRoutes() {
-    this.router.route(`${this.path}/top/:number`).get(this.tourController.aliasTopTours, this.tourController.getAllTours);
+    this.router.route(`${this.path}/top/:number`).get(aliasTopTours, this.tourController.getAllTours);
     this.router.route(`${this.path}/stats`).get(protect, restrictTo('admin', 'lead-guide', 'guide'), this.tourController.getTourStats);
     this.router.route(`${this.path}/plan/:year/:month?`).get(protect, restrictTo('admin', 'lead-guide', 'guide'), this.tourController.getMonthlyPlan);
 
