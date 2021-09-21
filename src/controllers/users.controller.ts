@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { UserService } from '@services/users.service';
 import AppError from '@exceptions/AppError';
 import catchAsync from '@utils/catchAsync';
-import { USER_WITH_ID_NOT_FOUND, USER_ROUTE_NOT_DEFINED, USER_ROUTE_NOT_FOR_UPDATE } from '@resources/strings';
+import * as strings from '@resources/strings';
 
 class UserController {
   private userService = new UserService();
@@ -14,7 +14,7 @@ class UserController {
 
   public updateMe = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     if (req.body.password || req.body.passwordConfirm) {
-      return next(new AppError(USER_ROUTE_NOT_FOR_UPDATE, 404));
+      return next(new AppError(strings.USER_ROUTE_NOT_FOR_UPDATE, 404));
     }
 
     const updatedUser = await this.userService.updateCurrentUser(req);
@@ -49,7 +49,7 @@ class UserController {
     const user = await this.userService.findUser(req);
 
     if (!user) {
-      return next(new AppError(USER_WITH_ID_NOT_FOUND, 404));
+      return next(new AppError(strings.USER_WITH_ID_NOT_FOUND, 404));
     }
     console.log(user);
 
@@ -64,7 +64,7 @@ class UserController {
   public createUser = async (req: Request, res: Response) => {
     res.status(418).json({
       status: 'error',
-      message: USER_ROUTE_NOT_DEFINED,
+      message: strings.USER_ROUTE_NOT_DEFINED,
     });
   };
 
@@ -72,7 +72,7 @@ class UserController {
     const updatedUser = await this.userService.updateUser(req);
 
     if (!updatedUser) {
-      return next(new AppError(USER_WITH_ID_NOT_FOUND, 404));
+      return next(new AppError(strings.USER_WITH_ID_NOT_FOUND, 404));
     }
 
     res.status(200).json({

@@ -6,16 +6,7 @@ import { UserDocument } from '@interfaces/users.interface';
 import AppError from '@exceptions/AppError';
 import Email from '@utils/email';
 import catchAsync from '@utils/catchAsync';
-import {
-  YOUR_PASSWORD_RESET_TOKEN,
-  PROVIDE_EMAIL_PASSWORD,
-  INCORRECT_EMAIL_PASSWORD,
-  TROUBLE_SENDING_EMAIL,
-  USER_WITH_EMAIL_NOT_FOUND,
-  INVALID_TOKEN,
-  INCORRECT_CURRENT_PASSWORD,
-  EMAIL_ALREADY_TAKEN,
-} from '@resources/strings';
+import * as strings from '@resources/strings';
 
 class AuthController {
   private userService = new UserService();
@@ -51,7 +42,7 @@ class AuthController {
   public signUp = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     // If given email is already registered
     if (await this.userService.users.isEmailTaken(req.body.email)) {
-      return next(new AppError(EMAIL_ALREADY_TAKEN, 400));
+      return next(new AppError(strings.EMAIL_ALREADY_TAKEN, 400));
     }
     const newUser = await this.userService.createUser(req);
     this.sendJWTToken(req, res, newUser, 201);
@@ -61,13 +52,13 @@ class AuthController {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return next(new AppError(PROVIDE_EMAIL_PASSWORD, 400));
+      return next(new AppError(strings.PROVIDE_EMAIL_PASSWORD, 400));
     }
 
     const user = await this.userService.findUserByEmail(email);
 
     if (!user || !(await user.isPasswordMatch(password, user.password))) {
-      return next(new AppError(INCORRECT_EMAIL_PASSWORD, 401));
+      return next(new AppError(strings.INCORRECT_EMAIL_PASSWORD, 401));
     }
 
     this.sendJWTToken(req, res, user, 200);
@@ -85,7 +76,7 @@ class AuthController {
     // Get user based on POSTed email
     const user = await this.userService.findUserByEmail(req.body.email);
     if (!user) {
-      return next(new AppError(USER_WITH_EMAIL_NOT_FOUND, 404));
+      return next(new AppError(strings.USER_WITH_EMAIL_NOT_FOUND, 404));
     }
 
     // Generate the random reset token
@@ -95,7 +86,7 @@ class AuthController {
     // Send it to user's email
     try {
       const resetURL = `${req.protocol}://${req.get('host')}/api/v1/users/resetPassword/${resetToken}`;
-      await new Email(user, resetURL).send('passwordReset', YOUR_PASSWORD_RESET_TOKEN);
+      await new Email(user, resetURL).send('passwordReset', strings.YOUR_PASSWORD_RESET_TOKEN);
 
       res.status(204).json({
         status: 'success',
@@ -106,7 +97,7 @@ class AuthController {
       user.passwordResetExpire = undefined;
       await user.save({ validateBeforeSave: false });
 
-      return next(new AppError(TROUBLE_SENDING_EMAIL, 500));
+      return next(new AppError(strings.TROUBLE_SENDING_EMAIL, 500));
     }
   });
 
@@ -118,7 +109,7 @@ class AuthController {
 
     // If token has not expired and there is user, set the new password
     if (!user) {
-      return next(new AppError(INVALID_TOKEN, 400));
+      return next(new AppError(strings.INVALID_TOKEN, 400));
     }
     user.password = req.body.password;
     user.passwordConfirm = req.body.passwordConfirm;
@@ -137,7 +128,7 @@ class AuthController {
 
     // Check if POSTed current password is correct
     if (!(await user.isPasswordMatch(req.body.passwordCurrent, req.body.password))) {
-      return next(new AppError(INCORRECT_CURRENT_PASSWORD, 401));
+      return next(new AppError(strings.INCORRECT_CURRENT_PASSWORD, 401));
     }
 
     // If so, update password

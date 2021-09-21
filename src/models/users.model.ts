@@ -2,7 +2,6 @@ import crypto from 'crypto';
 import { Schema, model, HookNextFunction, Query } from 'mongoose';
 import validator from 'validator';
 import bcrypt from 'bcryptjs';
-import AppError from '@exceptions/AppError';
 import { UserDocument, UserModel } from '@interfaces/users.interface';
 
 const userSchema = new Schema<UserDocument>({

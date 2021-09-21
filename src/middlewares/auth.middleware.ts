@@ -4,7 +4,7 @@ import { userModel } from '@models/users.model';
 import { DataStoredInToken } from '@interfaces/auth.interface';
 import AppError from '@exceptions/AppError';
 import catchAsync from '@utils/catchAsync';
-import { NOT_LOGGED_IN, PASSWORD_RECENT_CHANGED, DONT_HAVE_PERMISSION } from '@resources/strings';
+import * as strings from '@resources/strings';
 
 export const protect = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   let token;
@@ -13,7 +13,7 @@ export const protect = catchAsync(async (req: Request, res: Response, next: Next
   }
 
   if (!token) {
-    return next(new AppError(NOT_LOGGED_IN, 401));
+    return next(new AppError(strings.NOT_LOGGED_IN, 401));
   }
 
   const decoded = (await jwt.verify(token, process.env.JWT_SECRET)) as DataStoredInToken;
@@ -23,7 +23,7 @@ export const protect = catchAsync(async (req: Request, res: Response, next: Next
 
   // Check if user changed password after token was issued
   if (currentUser.changedPasswordAfter(decoded.iat)) {
-    return next(new AppError(PASSWORD_RECENT_CHANGED, 401));
+    return next(new AppError(strings.PASSWORD_RECENT_CHANGED, 401));
   }
 
   req.user = currentUser;
@@ -34,7 +34,7 @@ export const protect = catchAsync(async (req: Request, res: Response, next: Next
 export const restrictTo = (...roles: string[]) => {
   return (req: Request, res: Response, next: NextFunction) => {
     if (!roles.includes(req.user.role)) {
-      return next(new AppError(DONT_HAVE_PERMISSION, 403));
+      return next(new AppError(strings.DONT_HAVE_PERMISSION, 403));
     }
     next();
   };

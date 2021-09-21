@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { TourService } from '@services/tours.service';
 import AppError from '@exceptions/AppError';
 import catchAsync from '@utils/catchAsync';
-import { TOUR_WITH_ID_NOT_FOUND } from '@resources/strings';
+import * as strings from '@resources/strings';
 
 class TourController {
   private tourService = new TourService();
@@ -28,7 +28,7 @@ class TourController {
     const tour = await this.tourService.findTour(req);
 
     if (!tour) {
-      return next(new AppError(TOUR_WITH_ID_NOT_FOUND, 404));
+      return next(new AppError(strings.TOUR_WITH_ID_NOT_FOUND, 404));
     }
 
     res.status(200).json({
@@ -54,7 +54,7 @@ class TourController {
     const updatedTour = await this.tourService.updateTour(req);
 
     if (!updatedTour) {
-      return next(new AppError(TOUR_WITH_ID_NOT_FOUND, 404));
+      return next(new AppError(strings.TOUR_WITH_ID_NOT_FOUND, 404));
     }
 
     res.status(200).json({

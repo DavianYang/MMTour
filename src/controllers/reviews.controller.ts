@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { ReviewService } from '@services/reviews.service';
 import AppError from '@exceptions/AppError';
 import catchAsync from '@utils/catchAsync';
-import { REVIEW_WITH_ID_NOT_FOUND } from '@resources/strings';
+import * as strings from '@resources/strings';
 
 class ReviewController {
   private reviewService = new ReviewService();
@@ -28,7 +28,7 @@ class ReviewController {
     const review = await this.reviewService.findReview(req);
 
     if (!review) {
-      return next(new AppError(REVIEW_WITH_ID_NOT_FOUND, 404));
+      return next(new AppError(strings.REVIEW_WITH_ID_NOT_FOUND, 404));
     }
 
     res.status(200).json({
@@ -54,7 +54,7 @@ class ReviewController {
     const updatedReview = await this.reviewService.updateReview(req);
 
     if (!updatedReview) {
-      return next(new AppError(REVIEW_WITH_ID_NOT_FOUND, 404));
+      return next(new AppError(strings.REVIEW_WITH_ID_NOT_FOUND, 404));
     }
 
     res.status(200).json({
