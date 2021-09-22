@@ -12,7 +12,7 @@ const handleCastErrorDB = (err: CastError) => {
 const handleValidationErrorDB = (err: ValidationError) => {
   const error = Object.values(err.errors).map(el => el.message);
   const message = `Invalid  input data. ${error.join('. ')}.`;
-  return new AppError(message, 404);
+  return new AppError(message, 400);
 };
 
 const handleMongoErrorDB = (err: MongoError) => {
@@ -87,14 +87,19 @@ export const errorMiddleware = (err: AppError, req: Request, res: Response, next
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
 
+  for (const errevent in ErrorEvents) {
+    if (errevent === err.name) {
+      err = ErrorEvents[errevent](err);
+    }
+  }
   if (process.env.NODE_ENV === 'development') {
     sendErrorDev(err, req, res);
   } else if (process.env.NODE_ENV === 'production') {
-    for (const errevent in ErrorEvents) {
-      if (errevent === err.name) {
-        err = ErrorEvents[errevent](err);
-      }
-    }
+    // for (const errevent in ErrorEvents) {
+    //   if (errevent === err.name) {
+    //     err = ErrorEvents[errevent](err);
+    //   }
+    // }
     sendErrorProd(err, req, res);
   }
 };

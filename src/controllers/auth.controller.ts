@@ -44,7 +44,7 @@ class AuthController {
     if (await this.userService.users.isEmailTaken(req.body.email)) {
       return next(new AppError(strings.EMAIL_ALREADY_TAKEN, 400));
     }
-    const newUser = await this.userService.createUser(req);
+    const newUser = await this.userService.createUser(req.body);
     this.sendJWTToken(req, res, newUser, 201);
   });
 
@@ -69,7 +69,7 @@ class AuthController {
       expires: new Date(Date.now() + 10 * 1000),
       httpOnly: true,
     });
-    res.status(200).json({ status: 'success' });
+    res.status(204).json({ status: 'success' });
   };
 
   public forgotPassword = catchAsync(async (req: Request, res: Response, next: NextFunction) => {

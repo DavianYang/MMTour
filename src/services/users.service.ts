@@ -2,6 +2,7 @@ import { Request } from 'express';
 import { userModel } from '@models/users.model';
 import { QueryString, filterObj } from '@interfaces/queries.interface';
 import { findAll, findOne, updateOne, deleteOne } from '@services/factory.service';
+import { UserInCreate } from '@interfaces/users.interface';
 
 class UserService {
   public users = userModel;
@@ -17,22 +18,22 @@ class UserService {
   };
 
   // CREATE
-  public async createUser(req: Request) {
+  public async createUser(userBody: UserInCreate) {
     return await this.users.create({
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password,
-      passwordConfirm: req.body.passwordConfirm,
+      name: userBody.name,
+      email: userBody.email,
+      password: userBody.password,
+      passwordConfirm: userBody.passwordConfirm,
     });
   }
 
   // FIND
-  public async findAllUsers(req: Request) {
-    return await findAll(this.users, req.query as QueryString);
+  public async findAllUsers(query: object) {
+    return await findAll(this.users, query as QueryString);
   }
 
-  public async findUser(req: Request) {
-    return await findOne(this.users, req.params.id);
+  public async findUser(id: string) {
+    return await findOne(this.users, id);
   }
 
   public async findUserById(id: string) {
@@ -48,14 +49,14 @@ class UserService {
   }
 
   // UPDATE
-  public async updateUser(req: Request) {
-    return await updateOne(this.users, req.params.id, req.body);
+  public async updateUser(id: string, body: object) {
+    return await updateOne(this.users, id, body);
   }
 
-  public async updateCurrentUser(req: Request) {
-    const filteredObj = this.filterObj(req.body, 'name', 'email');
+  public async updateCurrentUser(id: string, body: object) {
+    const filteredObj = this.filterObj(body as filterObj, 'name', 'email');
 
-    const updatedUser = await this.users.findByIdAndUpdate(req.user.id, filteredObj, {
+    const updatedUser = await this.users.findByIdAndUpdate(id, filteredObj, {
       runValidators: true,
       new: true,
     });
@@ -64,12 +65,12 @@ class UserService {
   }
 
   // DELETE
-  public async deleteUser(req: Request) {
-    return await deleteOne(this.users, req.params.id);
+  public async deleteUser(id: string) {
+    return await deleteOne(this.users, id);
   }
 
-  public async deleteCurrentUser(req: Request) {
-    return this.users.findByIdAndUpdate(req.user.id, {
+  public async deleteCurrentUser(id: string) {
+    return this.users.findByIdAndUpdate(id, {
       active: false,
     });
   }

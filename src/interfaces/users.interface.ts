@@ -29,3 +29,10 @@ export interface UserDocument extends User, Document {
 export interface UserModel extends Model<UserDocument> {
   isEmailTaken(email: string): boolean;
 }
+
+export interface UserInCreate {
+  name: string;
+  email: string;
+  password: string;
+  passwordConfirm: string;
+}

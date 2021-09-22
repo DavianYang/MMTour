@@ -12,7 +12,7 @@
     "serve": "node dist/server.js",
     "start": "pnpm run build && NODE_ENV=production pnpm run serve",
     "dev": "NODE_ENV=development nodemon",
-    "test": "jest --forceExit --detectOpenHandles --coverage --verbose false",
+    "test": "jest src/tests/e2e/api/auth.test.ts --forceExit --detectOpenHandles",
     "watch-node": "nodemon dist/server.js",
     "watch-ts": "tsc -w",
     "watch-test": "pnpm run test -- --watchAll",
