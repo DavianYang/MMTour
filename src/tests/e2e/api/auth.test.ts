@@ -1,7 +1,7 @@
 import request from 'supertest';
 import faker from 'faker';
 import App from '@/app';
-import { connectToDB, closeDB, clearDB } from '@tests/utils/setupTestDB';
+import { connectToDB, closeDB } from '@tests/utils/setupTestDB';
 import { userModel } from '@/models/users.model';
 import { UserService } from '@/services/users.service';
 import { UserRoute } from '@routes/users.route';
