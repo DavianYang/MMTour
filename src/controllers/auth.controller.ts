@@ -1,6 +1,7 @@
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import { NextFunction, Request, Response } from 'express';
+import { Types } from 'mongoose';
 import { UserService } from '@services/users.service';
 import Email from '@services/email.service';
 import { UserDocument } from '@interfaces/users.interface';
@@ -11,7 +12,7 @@ import * as strings from '@resources/strings';
 class AuthController {
   private userService = new UserService();
 
-  public signJWTToken = (id: string) => {
+  public signJWTToken = (id: Types.ObjectId) => {
     const token = jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE_IN });
 
     return token;
