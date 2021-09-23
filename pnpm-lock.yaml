@@ -59,7 +59,7 @@ specifiers:
   pug: ^3.0.2
   shelljs: ^0.8.4
   slugify: ^1.5.3
-  supertest: ^6.1.3
+  supertest: 6.0.1
   swagger-jsdoc: ^6.1.0
   swagger-ui-express: ^4.1.6
   ts-jest: ^27.0.3
@@ -143,7 +143,7 @@ devDependencies:
   nodemon: 2.0.7
   prettier: 2.3.1
   shelljs: 0.8.4
-  supertest: 6.1.3
+  supertest: 6.0.1
   tsconfig-paths: 3.9.0
 
 packages:
@@ -2734,6 +2734,11 @@ packages:
 
   /fast-safe-stringify/2.0.7:
     resolution: {integrity: sha512-Utm6CdzT+6xsDk2m8S6uL8VHxNwI6Jub+e9NYTcAms28T84pTa25GJQV9j0CY0N1rM8hK4x6grpF2BQf+2qwVA==}
+    dev: false
+
+  /fast-safe-stringify/2.1.1:
+    resolution: {integrity: sha512-W+KJc2dmILlPplD/H4K9l9LcAHAfPtP6BY84uVLXQ6Evcz9Lcg33Y2z1IVblT6xdY54PXYVHEv+0Wpq8Io6zkA==}
+    dev: true
 
   /fastq/1.11.0:
     resolution: {integrity: sha512-7Eczs8gIPDrVzT+EksYBcupqMyxSHXXrHOLRRxU2/DicV8789MRBRR8+Hc2uWzUupOs4YS4JzBmBxjjCVBxD/g==}
@@ -2839,7 +2844,7 @@ packages:
     dependencies:
       asynckit: 0.4.0
       combined-stream: 1.0.8
-      mime-types: 2.1.31
+      mime-types: 2.1.32
     dev: true
 
   /formidable/1.2.2:
@@ -4376,12 +4381,26 @@ packages:
   /mime-db/1.48.0:
     resolution: {integrity: sha512-FM3QwxV+TnZYQ2aRqhlKBMHxk10lTbMt3bBkMAp54ddrNeVSfcQYOOKuGuy3Ddrm38I04If834fOUSq1yzslJQ==}
     engines: {node: '>= 0.6'}
+    dev: false
+
+  /mime-db/1.49.0:
+    resolution: {integrity: sha512-CIc8j9URtOVApSFCQIF+VBkX1RwXp/oMMOrqdyXSBXq5RWNEsRfyj1kiRnQgmNXmHxPoFIxOroKA3zcU9P+nAA==}
+    engines: {node: '>= 0.6'}
+    dev: true
 
   /mime-types/2.1.31:
     resolution: {integrity: sha512-XGZnNzm3QvgKxa8dpzyhFTHmpP3l5YNusmne07VUOXxou9CqUqYa/HBy124RqtVh/O2pECas/MOcsDgpilPOPg==}
     engines: {node: '>= 0.6'}
     dependencies:
       mime-db: 1.48.0
+    dev: false
+
+  /mime-types/2.1.32:
+    resolution: {integrity: sha512-hJGaVS4G4c9TSMYh2n6SQAGrC4RnfU+daP8G7cSCmaqNjiOoUY0VHCMS42pxnQmVF1GWwFhbHWn3RIxCqTmZ9A==}
+    engines: {node: '>= 0.6'}
+    dependencies:
+      mime-db: 1.49.0
+    dev: true
 
   /mime/1.6.0:
     resolution: {integrity: sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg==}
@@ -4858,8 +4877,8 @@ packages:
     engines: {node: '>= 6'}
     dev: false
 
-  /object-inspect/1.10.3:
-    resolution: {integrity: sha512-e5mCJlSH7poANfC8z8S9s9S2IN5/4Zb3aZ33f5s8YqoazCFzNLloLU8r5VCG+G7WoqLvAAZoVMcy3tp/3X0Plw==}
+  /object-inspect/1.11.0:
+    resolution: {integrity: sha512-jp7ikS6Sd3GxQfZJPyH3cjcbJF6GZPClgdV+EFygjFLQ5FmW/dRUnTd9PQ9k0JhoNDabWFbpF1yCdSWCC6gexg==}
     dev: true
 
   /on-finished/2.3.0:
@@ -5565,7 +5584,7 @@ packages:
     dependencies:
       call-bind: 1.0.2
       get-intrinsic: 1.1.1
-      object-inspect: 1.10.3
+      object-inspect: 1.11.0
     dev: true
 
   /sift/13.5.2:
@@ -5845,8 +5864,8 @@ packages:
     dependencies:
       component-emitter: 1.3.0
       cookiejar: 2.1.2
-      debug: 4.3.1
-      fast-safe-stringify: 2.0.7
+      debug: 4.3.2
+      fast-safe-stringify: 2.1.1
       form-data: 3.0.1
       formidable: 1.2.2
       methods: 1.1.2
@@ -5858,8 +5877,8 @@ packages:
       - supports-color
     dev: true
 
-  /supertest/6.1.3:
-    resolution: {integrity: sha512-v2NVRyP73XDewKb65adz+yug1XMtmvij63qIWHZzSX8tp6wiq6xBLUy4SUAd2NII6wIipOmHT/FD9eicpJwdgQ==}
+  /supertest/6.0.1:
+    resolution: {integrity: sha512-8yDNdm+bbAN/jeDdXsRipbq9qMpVF7wRsbwLgsANHqdjPsCoecmlTuqEcLQMGpmojFBhxayZ0ckXmLXYq7e+0g==}
     engines: {node: '>=6.0.0'}
     dependencies:
       methods: 1.1.2

@@ -1,7 +1,4 @@
 import mongoose from 'mongoose';
-import { MongoMemoryServer } from 'mongodb-memory-server';
-
-const mongod = new MongoMemoryServer();
 
 // Connect DB
 export const connectToDB = async () => {
@@ -19,7 +16,6 @@ export const connectToDB = async () => {
 export const closeDB = async () => {
   // await mongoose.connection.dropDatabase();
   await mongoose.connection.close();
-  await mongod.stop();
 };
 
 // Clear the DB, remove all data

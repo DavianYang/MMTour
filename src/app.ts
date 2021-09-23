@@ -16,8 +16,9 @@ import swaggerUi from 'swagger-ui-express';
 import Routes from '@interfaces/routes.interface';
 import { dbConnection } from '@databases/mongodb';
 import { errorMiddleware } from '@middlwares/error.middleware';
+import AppError from './exceptions/AppError';
 import { logger, stream } from '@utils/logger';
-import { REQUEST_OVERLOAD_TRY_AGAIN_IN_AN_HOUR } from '@resources/strings';
+import * as strings from '@resources/strings';
 
 class App {
   public app: express.Application;
@@ -61,7 +62,7 @@ class App {
     const limiter = rateLimit({
       max: 100, // limit each ip to 100 request per windowMS
       windowMs: 60 * 60 * 1000,
-      message: REQUEST_OVERLOAD_TRY_AGAIN_IN_AN_HOUR,
+      message: strings.REQUEST_OVERLOAD_TRY_AGAIN_IN_AN_HOUR,
     });
 
     if (this.env === 'production') {
@@ -118,10 +119,7 @@ class App {
   }
   private initializeErrorHandling() {
     this.app.all('*', (req, res, next) => {
-      res.status(404).json({
-        status: 'fail',
-        message: `Can't find ${req.originalUrl} on this server`,
-      });
+      next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
     });
     this.app.use(errorMiddleware);
   }

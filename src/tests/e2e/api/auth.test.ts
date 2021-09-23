@@ -51,6 +51,15 @@ describe('Testing Authorization', () => {
       expect(dbUser).toBeDefined();
       expect(dbUser.password).not.toBe(userSignup.password);
     });
+
+    it.only('OST: / should return 400 error if given email is invalid', async () => {
+      userSignup.email = 'invalidEmail';
+      try {
+        await request(app).post(path).send(userSignup).expect(400);
+      } catch (err) {
+        console.log('ERR ================: ', err);
+      }
+    });
   });
 
   describe('/api/v1/users/login', () => {
