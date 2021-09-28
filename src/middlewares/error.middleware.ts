@@ -1,4 +1,6 @@
+import { STATUS_CODES } from 'http';
 import { NextFunction, Response, Request } from 'express';
+import mongoose from 'mongoose';
 import AppError from '@exceptions/AppError';
 import { CastError, ValidationError, MongoError, ErrorEventsInter } from '@interfaces/errors.interface';
 import { logger } from '@utils/logger';
@@ -81,6 +83,17 @@ const ErrorEvents: ErrorEventsInter = {
   MongoError: handleMongoErrorDB,
   JsonWebTokenError: handleJWTError,
   TokenExpiredError: handleExpiredJWTError,
+};
+
+export const errorConverter = (err: Error, req: Request, res: Response, next: NextFunction) => {
+  let error: any = err;
+  if (!(error instanceof Error)) {
+    const statusCode = error.statusCode || error instanceof mongoose.Error ? 400 : 500;
+    const message = error.message || STATUS_CODES[statusCode];
+    error = new AppError(message, statusCode);
+  }
+
+  next(error);
 };
 
 export const errorMiddleware = (err: AppError, req: Request, res: Response, next: NextFunction) => {

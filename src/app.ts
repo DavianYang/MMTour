@@ -15,7 +15,7 @@ import swaggerUi from 'swagger-ui-express';
 
 import Routes from '@interfaces/routes.interface';
 import { dbConnection } from '@databases/mongodb';
-import { errorMiddleware } from '@middlwares/error.middleware';
+import { errorMiddleware, errorConverter } from '@middlwares/error.middleware';
 import AppError from './exceptions/AppError';
 import { logger, stream } from '@utils/logger';
 import * as strings from '@resources/strings';
@@ -121,6 +121,7 @@ class App {
     this.app.all('*', (req, res, next) => {
       next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
     });
+    this.app.use(errorConverter);
     this.app.use(errorMiddleware);
   }
 }
