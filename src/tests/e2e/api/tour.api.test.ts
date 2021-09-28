@@ -1,6 +1,6 @@
 import request from 'supertest';
 import App from '@/app';
-import { connectToDB, closeDB } from '@tests/utils/setupTestDB';
+import { connectToDB, closeDB } from '@tests/e2e/utils/setupTestDB';
 import { TourRoute } from '@routes/tours.route';
 
 beforeAll(async () => await connectToDB());

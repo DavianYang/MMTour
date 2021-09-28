@@ -1,9 +1,9 @@
 import request from 'supertest';
 import faker from 'faker';
 import App from '@/app';
-import { connectToDB, closeDB } from '@tests/utils/setupTestDB';
-import { userModel } from '@/models/users.model';
-import { UserService } from '@/services/users.service';
+import { connectToDB, closeDB } from '@tests/e2e/utils/setupTestDB';
+import { userModel } from '@models/users.model';
+import { UserService } from '@services/users.service';
 import { UserRoute } from '@routes/users.route';
 import { userOne, userTwo, inserUsers, deleteUser } from '@tests/fixtures/user.fixture';
 
