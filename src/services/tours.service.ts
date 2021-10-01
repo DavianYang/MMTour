@@ -6,24 +6,24 @@ import { QueryString } from '@interfaces/queries.interface';
 class TourService {
   public tours = tourModel;
 
-  public async findAllTours(req: Request) {
-    return await findAll(this.tours, req.query as QueryString);
+  public async findAllTours(query: object) {
+    return await findAll(this.tours, query as QueryString);
   }
 
-  public async findTour(req: Request) {
-    return await findOne(this.tours, req.params.id);
+  public async findTour(id: string) {
+    return await findOne(this.tours, id);
   }
 
-  public async createTour(req: Request) {
-    return await createOne(this.tours, req.body);
+  public async createTour(tourBody: object) {
+    return await createOne(this.tours, tourBody);
   }
 
-  public async updateTour(req: Request) {
-    return await updateOne(this.tours, req.params.id, req.body);
+  public async updateTour(id: string, body: object) {
+    return await updateOne(this.tours, id, body);
   }
 
-  public async deleteTour(req: Request) {
-    return await deleteOne(this.tours, req.params.id);
+  public async deleteTour(id: string) {
+    return await deleteOne(this.tours, id);
   }
 
   public async findTourStats() {

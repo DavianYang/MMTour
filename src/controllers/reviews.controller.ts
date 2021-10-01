@@ -16,7 +16,7 @@ class ReviewController {
 
   // GET
   public getAllReviews = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    const reviews = await this.reviewService.findAllReviews(req);
+    const reviews = await this.reviewService.findAllReviews(req.query);
 
     res.status(200).json({
       status: 'success',

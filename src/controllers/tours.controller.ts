@@ -8,7 +8,7 @@ class TourController {
   private tourService = new TourService();
 
   public getAllTours = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    const tours = await this.tourService.findAllTours(req);
+    const tours = await this.tourService.findAllTours(req.query);
 
     res.status(200).json({
       status: 'success',
@@ -18,7 +18,7 @@ class TourController {
   });
 
   public getTour = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    const tour = await this.tourService.findTour(req);
+    const tour = await this.tourService.findTour(req.params.id);
 
     if (!tour) {
       return next(new AppError(strings.TOUR_WITH_ID_NOT_FOUND, 404));
@@ -33,7 +33,7 @@ class TourController {
   });
 
   public createTour = catchAsync(async (req: Request, res: Response) => {
-    const createdTour = await this.tourService.createTour(req);
+    const createdTour = await this.tourService.createTour(req.body);
 
     res.status(200).json({
       status: 'success',
@@ -44,7 +44,7 @@ class TourController {
   });
 
   public updateTour = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    const updatedTour = await this.tourService.updateTour(req);
+    const updatedTour = await this.tourService.updateTour(req.params.id, req.body);
 
     if (!updatedTour) {
       return next(new AppError(strings.TOUR_WITH_ID_NOT_FOUND, 404));
@@ -59,7 +59,7 @@ class TourController {
   });
 
   public deleteTour = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    await this.tourService.deleteTour(req);
+    await this.tourService.deleteTour(req.params.id);
 
     res.status(204).json({
       status: 'success',
