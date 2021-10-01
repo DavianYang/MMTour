@@ -1,5 +1,5 @@
-import { Request } from 'express';
 import { reviewModel } from '@models/reviews.model';
+import { ReviewInCreate } from '@interfaces/reviews.interface';
 import { QueryString } from '@interfaces/queries.interface';
 import { findAll, findOne, createOne, updateOne, deleteOne } from '@services/factory.service';
 
@@ -7,27 +7,27 @@ class ReviewService {
   public reviews = reviewModel;
 
   // CREATE
-  public async createReview(req: Request) {
-    return createOne(this.reviews, req.body);
+  public async createReview(reviewBody: ReviewInCreate) {
+    return createOne(this.reviews, reviewBody);
   }
 
   // FIND
-  public async findAllReviews(req: Request) {
-    return await findAll(this.reviews, req.query as QueryString);
+  public async findAllReviews(query: object) {
+    return await findAll(this.reviews, query as QueryString);
   }
 
-  public async findReview(req: Request) {
-    return await findOne(this.reviews, req.params.id);
+  public async findReview(id: string) {
+    return await findOne(this.reviews, id);
   }
 
   // UPDATE
-  public async updateReview(req: Request) {
-    return await updateOne(this.reviews, req.params.id, req.body);
+  public async updateReview(id: string, body: object) {
+    return await updateOne(this.reviews, id, body);
   }
 
   // DELETE
-  public async deleteReview(req: Request) {
-    return await deleteOne(this.reviews, req.params.id);
+  public async deleteReview(id: string) {
+    return await deleteOne(this.reviews, id);
   }
 }
 

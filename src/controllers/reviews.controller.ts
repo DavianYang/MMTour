@@ -14,6 +14,7 @@ class ReviewController {
     next();
   };
 
+  // GET
   public getAllReviews = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const reviews = await this.reviewService.findAllReviews(req);
 
@@ -25,7 +26,7 @@ class ReviewController {
   });
 
   public getReview = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    const review = await this.reviewService.findReview(req);
+    const review = await this.reviewService.findReview(req.params.id);
 
     if (!review) {
       return next(new AppError(strings.REVIEW_WITH_ID_NOT_FOUND, 404));
@@ -39,8 +40,9 @@ class ReviewController {
     });
   });
 
+  // CREATE
   public createReview = catchAsync(async (req: Request, res: Response) => {
-    const createdReview = await this.reviewService.createReview(req);
+    const createdReview = await this.reviewService.createReview(req.body);
 
     res.status(200).json({
       status: 'success',
@@ -50,8 +52,9 @@ class ReviewController {
     });
   });
 
+  // UPDATE
   public updateReview = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    const updatedReview = await this.reviewService.updateReview(req);
+    const updatedReview = await this.reviewService.updateReview(req.params.id, req.body);
 
     if (!updatedReview) {
       return next(new AppError(strings.REVIEW_WITH_ID_NOT_FOUND, 404));
@@ -65,8 +68,9 @@ class ReviewController {
     });
   });
 
+  // DELETE
   public deleteReview = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    await this.reviewService.deleteReview(req);
+    await this.reviewService.deleteReview(req.params.id);
 
     res.status(204).json({
       status: 'success',

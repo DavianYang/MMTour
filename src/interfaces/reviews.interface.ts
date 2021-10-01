@@ -7,3 +7,8 @@ export interface ReviewDocument extends Document {
   tour: Types.ObjectId;
   user: Types.ObjectId;
 }
+
+export interface ReviewInCreate {
+  review: string;
+  rating: number;
+}

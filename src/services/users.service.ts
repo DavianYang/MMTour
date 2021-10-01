@@ -1,8 +1,7 @@
-import { Request } from 'express';
 import { userModel } from '@models/users.model';
 import { QueryString, filterObj } from '@interfaces/queries.interface';
-import { findAll, findOne, updateOne, deleteOne } from '@services/factory.service';
 import { UserInCreate } from '@interfaces/users.interface';
+import { findAll, findOne, updateOne, deleteOne } from '@services/factory.service';
 
 class UserService {
   public users = userModel;
