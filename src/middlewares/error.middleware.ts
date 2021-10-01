@@ -30,53 +30,6 @@ const handleJWTError = () => new AppError(strings.INVALID_TOKEN_LOGIN_AGAIN, 401
 
 const handleExpiredJWTError = () => new AppError(strings.EXPIRED_TOKEN_LOGIN_AGAIN, 401);
 
-const sendErrorDev = (err: AppError, req: Request, res: Response) => {
-  // API
-  if (req.originalUrl.startsWith('/api')) {
-    return res.status(err.statusCode).json({
-      status: err.status,
-      err: err,
-      message: err.message,
-      stack: err.stack,
-    });
-  }
-
-  // RENDER WEBSITE
-  logger.error(`[${req.method}] ${req.path} >> StatusCode:: ${err.statusCode}, Message:: ${err.message}`);
-  return res.status(err.statusCode).json({
-    title: 'Something went wrong',
-    message: err.message,
-  });
-};
-
-const sendErrorProd = (err: AppError, req: Request, res: Response) => {
-  // API
-  if (req.originalUrl.startsWith('/api')) {
-    // Trusted Error
-    if (err.isOperational) {
-      return res.status(err.statusCode).json({
-        status: err.status,
-        msg: err.message,
-      });
-    }
-
-    // LOG ERROR AND SEND GENERIC MESSAGE
-    logger.error(`[${req.method}] ${req.path} >> StatusCode:: ${err.statusCode}, Message:: ${err.message}`);
-    return res.status(500).json({
-      status: 'error',
-      message: 'Something went wrong',
-    });
-  }
-
-  // RENDER WEBISTE
-  if (err.isOperational) {
-    return res.status(err.statusCode).json({
-      title: 'Something went wrong',
-      msg: 'Please try again later',
-    });
-  }
-};
-
 const ErrorEvents: ErrorEventsInter = {
   CastError: handleCastErrorDB,
   ValidationError: handleValidationErrorDB,
@@ -87,17 +40,17 @@ const ErrorEvents: ErrorEventsInter = {
 
 export const errorConverter = (err: Error, req: Request, res: Response, next: NextFunction) => {
   let error: any = err;
-  if (!(error instanceof Error)) {
+
+  if (!(error instanceof AppError)) {
     const statusCode = error.statusCode || error instanceof mongoose.Error ? 400 : 500;
     const message = error.message || STATUS_CODES[statusCode];
-    error = new AppError(message, statusCode);
+    error = new AppError(message, statusCode, false);
   }
 
   next(error);
 };
 
-export const errorMiddleware = (err: AppError, req: Request, res: Response, next: NextFunction) => {
-  err.statusCode = err.statusCode || 500;
+export const errorHandler = (err: AppError, req: Request, res: Response, next?: NextFunction) => {
   err.status = err.status || 'error';
 
   for (const errevent in ErrorEvents) {
@@ -105,14 +58,26 @@ export const errorMiddleware = (err: AppError, req: Request, res: Response, next
       err = ErrorEvents[errevent](err);
     }
   }
-  if (process.env.NODE_ENV === 'development') {
-    sendErrorDev(err, req, res);
-  } else if (process.env.NODE_ENV === 'production') {
-    // for (const errevent in ErrorEvents) {
-    //   if (errevent === err.name) {
-    //     err = ErrorEvents[errevent](err);
-    //   }
-    // }
-    sendErrorProd(err, req, res);
+
+  let { statusCode, message } = err;
+
+  if (process.env.NODE_ENV === 'production' && !err.isOperational) {
+    statusCode = 500;
+    message = 'Please try again later';
   }
+
+  res.locals.errorMessage = err.message;
+
+  const response = {
+    title: 'Something went wrong',
+    message,
+    ...(process.env.NODE_ENV === 'development' && { error: err, stack: err.stack }),
+  };
+
+  if (process.env.NODE_ENV === 'development') {
+    // Log Error in terminal
+    logger.error(`[${req.method}] ${req.path} >> StatusCode:: ${err.statusCode}, Message:: ${err.message}`);
+  }
+
+  res.status(statusCode).json(response);
 };
