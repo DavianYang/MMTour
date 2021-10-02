@@ -1,4 +1,3 @@
-import { Request } from 'express';
 import { tourModel } from '@models/tours.model';
 import { findAll, findOne, createOne, updateOne, deleteOne } from '@services/factory.service';
 import { QueryString } from '@interfaces/queries.interface';

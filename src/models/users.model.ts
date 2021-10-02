@@ -27,6 +27,7 @@ const userSchema = new Schema<UserDocument>({
     required: [true, 'Please provide a password'],
     minlength: 8,
     select: false,
+    private: true,
   },
   passwordConfirm: {
     type: String,
