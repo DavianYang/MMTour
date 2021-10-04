@@ -5,7 +5,6 @@ import { APIFeatures } from '@utils/apiFeatures';
 export const findAll = async <T>(Model: FilterQuery<T>, query: QueryString) => {
   let filter = {};
   if (query.id) filter = { tour: query.id };
-
   const features = new APIFeatures(Model.find(filter), query).filter().sort().limitFields().paginate();
 
   const doc = await features.query;

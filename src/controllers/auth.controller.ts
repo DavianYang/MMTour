@@ -46,6 +46,7 @@ class AuthController {
       return next(new AppError(strings.EMAIL_ALREADY_TAKEN, 400));
     }
     const newUser = await this.userService.createUser(req.body);
+    console.log(newUser);
     this.sendJWTToken(req, res, newUser, 201);
   });
 
