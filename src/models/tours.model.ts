@@ -2,6 +2,10 @@ import { Schema, model, Types, HookNextFunction, Query } from 'mongoose';
 import slugify from 'slugify';
 import { TourDocument } from '@interfaces/tours.interface';
 
+const ObjectLimit = function <T>(this: TourDocument, value: Array<T>): boolean {
+  return value.length <= 5;
+};
+
 const tourSchema = new Schema<TourDocument>(
   {
     name: {
@@ -43,25 +47,34 @@ const tourSchema = new Schema<TourDocument>(
       type: Number,
       required: [true, 'A tour must have a price'],
     },
-    summary: {
-      type: String,
-      trim: true,
-    },
     description: {
       type: String,
       trim: true,
+      minLength: [10, 'A tour must have at least {{MINLENGTH}} words to write an description'],
+      maxLength: [160, 'A tour must have at least {{MAXENGTH}} words to write an description'],
     },
     imageCover: {
-      type: String,
-      required: [true, 'A tour must have a cover image'],
+      type: [
+        {
+          type: String,
+          match: [new RegExp('(https?://.*.(?:png|jpg))'), 'Please input correct image url'],
+        },
+      ],
+      validate: [ObjectLimit, 'Image Cover exceeds the limit of 5'],
     },
-    images: [String],
     createdAt: {
       type: Date,
       default: Date.now(),
       select: false,
     },
-    startDates: [Date],
+    startDates: {
+      type: [
+        {
+          type: Date,
+        },
+      ],
+      validate: [ObjectLimit, 'Start Dates exceeds the limit of 5'],
+    },
     secretTour: {
       type: Boolean,
       default: false,
@@ -76,17 +89,45 @@ const tourSchema = new Schema<TourDocument>(
       address: String,
       description: String,
     },
-    locations: [
+    introduction: String,
+    itinerary: [
       {
         type: {
           type: String,
           default: 'Point',
           enum: ['Point'],
         },
+        day: Number,
+        locationName: String,
+        description: {
+          type: String,
+          minLength: [10, 'A tour must have at least {{MINLENGTH}} words to write an description'],
+          maxLength: [160, 'A tour must have at least {{MAXENGTH}} words to write an description'],
+        },
+        images: {
+          type: [
+            {
+              type: String,
+              match: [new RegExp('(https?://.*.(?:png|jpg))'), 'Please input correct image url'],
+            },
+          ],
+          validate: [ObjectLimit, 'Image Cover exceeds the limit of 5'],
+        },
         coordinates: [Number],
         address: String,
-        description: String,
-        day: Number,
+      },
+    ],
+    whatisincluded: [
+      {
+        type: Array,
+        accommodation: String,
+        covidsecure: String,
+        meal: String,
+        additionalservice: String,
+        transport: String,
+        flights: String,
+        insurance: String,
+        Optional: String,
       },
     ],
     guides: [
