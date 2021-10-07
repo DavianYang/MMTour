@@ -162,7 +162,7 @@ const tourSchema = new Schema<TourDocument>(
         },
         remark: {
           type: String,
-          maxLength: [500, 'Itinerary remark must have at least {MAXENGTH} characters'],
+          maxLength: [500, 'Itinerary remark must have at most {MAXENGTH} characters'],
         },
       },
     ],

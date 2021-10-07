@@ -7,14 +7,17 @@ describe('Tour model', () => {
       await expect(new tourModel(tourFullOne).validate()).resolves.toBeUndefined();
     });
 
-    test('should throw a validation error if given image url is incorrect for imageCover field', async () => {
-      tourFullOne.imageCover = ['imagecoverurl'];
-      await expect(new tourModel(tourFullOne).validate()).rejects.toThrow();
-    });
+    // Images
+    describe('Validate Images', () => {
+      test('should throw a validation error if given image url is incorrect for imageCover field', async () => {
+        tourFullOne.imageCover = ['imagecoverurl'];
+        await expect(new tourModel(tourFullOne).validate()).rejects.toThrow();
+      });
 
-    test('should throw a validation error if given image url is incorrect for images field', async () => {
-      tourFullOne.images = ['manyimages'];
-      await expect(new tourModel(tourFullOne).validate()).rejects.toThrow();
+      test('should throw a validation error if given image url is incorrect for images field', async () => {
+        tourFullOne.images = [{ image: 'imageurl', placeName: 'Bruh' }];
+        await expect(new tourModel(tourFullOne).validate()).rejects.toThrow();
+      });
     });
   });
 });
