@@ -54,7 +54,7 @@ export interface TourDocument extends Document {
     {
       name: string;
       day: number;
-      images: [string];
+      placeImages: [string];
       placeDescription: string;
       remark: string;
     },

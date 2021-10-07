@@ -82,7 +82,7 @@ const tourSchema = new Schema<TourDocument>(
     images: {
       type: [
         {
-          image: { type: String, match: [new RegExp('(https?://.*.(?:png|jpg))'), 'Please input correct image url'] },
+          image: { type: String, match: [new RegExp('(https?://.*.(?:png|jpeg|jpg))'), 'Please input correct image url'] },
           placeName: String,
         },
       ],
@@ -92,7 +92,7 @@ const tourSchema = new Schema<TourDocument>(
       type: [
         {
           type: String,
-          match: [new RegExp('(https?://.*.(?:png|jpg))'), 'Please input correct image url'],
+          match: [new RegExp('(https?://.*.(?:png|jpeg|jpg))'), 'Please input correct image url'],
         },
       ],
       validate: [ImageLimit, 'Image Cover exceeds the limit of 5'],
@@ -146,14 +146,14 @@ const tourSchema = new Schema<TourDocument>(
           maxLength: [250, 'Itinerary name must have at most {MAXENGTH} characters'],
         },
         day: { type: Number, required: [true, 'An itinerary must have a day'] },
-        image: {
+        placeImages: {
           type: [
             {
-              type: { type: String, match: [new RegExp('(https?://.*.(?:png|jpg))'), 'Please input correct image url'] },
-              placeName: String,
+              type: String,
+              match: [new RegExp('(https?://.*.(?:png|jpeg|jpg))'), 'Please input correct image url'],
             },
           ],
-          validate: [ImageLimit, 'Images exceeds the limit of 5'],
+          validate: [ImageLimit, 'Image Cover exceeds the limit of 5'],
         },
         placeDescription: {
           type: String,

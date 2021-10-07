@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import faker from 'faker';
-import { userModel } from '@/models/users.model';
+import { userModel } from '@models/users.model';
 
 const password = 'pass1123456';
 
