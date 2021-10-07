@@ -12,6 +12,7 @@ export interface TourDocument extends Document {
   ratingsAverage: number;
   ratingsQuantity: number;
   price: number;
+  priceDiscount: number;
   summary: string;
   description: string;
   images: [string];

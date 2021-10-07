@@ -64,6 +64,15 @@ const tourSchema = new Schema<TourDocument>(
       type: Number,
       required: [true, 'A tour must have a price'],
     },
+    priceDiscount: {
+      type: Number,
+      validate: {
+        validator: function (this: TourDocument, val: Number): boolean {
+          return val < this.price;
+        },
+        message: 'Discount price {{VALUE}} should be below regular price',
+      },
+    },
     description: {
       type: String,
       trim: true,
