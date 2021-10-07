@@ -2,8 +2,14 @@ import { Schema, model, Types, HookNextFunction, Query } from 'mongoose';
 import slugify from 'slugify';
 import { TourDocument } from '@interfaces/tours.interface';
 
-const ObjectLimit = function <T>(this: TourDocument, value: Array<T>): boolean {
-  return value.length <= 5;
+const ImageLimit = function <T>(this: TourDocument, value: Array<T>): boolean {
+  const imageNum = 5;
+  return value.length <= imageNum;
+};
+
+const DateLimit = function <T>(this: TourDocument, value: Array<T>): boolean {
+  const DateNum = 10;
+  return value.length <= DateNum;
 };
 
 const tourSchema = new Schema<TourDocument>(
@@ -23,6 +29,17 @@ const tourSchema = new Schema<TourDocument>(
     maxGroupSize: {
       type: Number,
       required: [true, 'A tour must have a group size'],
+    },
+    accommodation: String,
+    covidSecure: String,
+    meal: {
+      type: String,
+      badge: {
+        type: String,
+        enum: {
+          values: ['Jain Food', 'Vegetarian Food', 'Halal Food', 'Kosher Food'],
+        },
+      },
     },
     difficulty: {
       type: String,
@@ -50,8 +67,15 @@ const tourSchema = new Schema<TourDocument>(
     description: {
       type: String,
       trim: true,
-      minLength: [10, 'A tour must have at least {{MINLENGTH}} words to write an description'],
-      maxLength: [160, 'A tour must have at least {{MAXENGTH}} words to write an description'],
+    },
+    images: {
+      type: [
+        {
+          type: { type: String, match: [new RegExp('(https?://.*.(?:png|jpg))'), 'Please input correct image url'] },
+          placeName: String,
+        },
+      ],
+      validate: [ImageLimit, 'Images exceeds the limit of 5'],
     },
     imageCover: {
       type: [
@@ -60,11 +84,15 @@ const tourSchema = new Schema<TourDocument>(
           match: [new RegExp('(https?://.*.(?:png|jpg))'), 'Please input correct image url'],
         },
       ],
-      validate: [ObjectLimit, 'Image Cover exceeds the limit of 5'],
+      validate: [ImageLimit, 'Image Cover exceeds the limit of 5'],
     },
     createdAt: {
       type: Date,
       default: Date.now(),
+      select: false,
+    },
+    updatedAt: {
+      type: Date,
       select: false,
     },
     startDates: {
@@ -73,13 +101,17 @@ const tourSchema = new Schema<TourDocument>(
           type: Date,
         },
       ],
-      validate: [ObjectLimit, 'Start Dates exceeds the limit of 5'],
+      validate: [DateLimit, 'Start Dates exceed the limit of 10'],
     },
-    secretTour: {
-      type: Boolean,
-      default: false,
+    endDates: {
+      type: [
+        {
+          type: Date,
+        },
+      ],
+      validate: [DateLimit, 'End Dates exceed the limit of 10'],
     },
-    startLocations: {
+    startLocation: {
       type: {
         type: String,
         default: 'Point',
@@ -89,47 +121,47 @@ const tourSchema = new Schema<TourDocument>(
       address: String,
       description: String,
     },
-    introduction: String,
-    itinerary: [
+    locations: [
       {
         type: {
           type: String,
           default: 'Point',
           enum: ['Point'],
         },
-        day: Number,
-        locationName: String,
-        description: {
-          type: String,
-          minLength: [10, 'A tour must have at least {{MINLENGTH}} words to write an description'],
-          maxLength: [160, 'A tour must have at least {{MAXENGTH}} words to write an description'],
-        },
-        images: {
-          type: [
-            {
-              type: String,
-              match: [new RegExp('(https?://.*.(?:png|jpg))'), 'Please input correct image url'],
-            },
-          ],
-          validate: [ObjectLimit, 'Image Cover exceeds the limit of 5'],
-        },
         coordinates: [Number],
         address: String,
+        description: String,
+        day: Number,
       },
     ],
-    whatisincluded: [
+    itinerary: [
       {
-        type: Array,
-        accommodation: String,
-        covidsecure: String,
-        meal: String,
-        additionalservice: String,
-        transport: String,
-        flights: String,
-        insurance: String,
-        Optional: String,
+        name: {
+          type: String,
+          required: [true, 'An itinerary must have a name'],
+          minLength: [20, 'Itinerary name must have at least {{MINLENGTH}} characters'],
+          maxLength: [250, 'Itinerary name must have at most {{MAXENGTH}} characters'],
+        },
+        day: { type: Number, required: [true, 'An itinerary must have a day'] },
+        image: { type: String, validate: [ImageLimit, 'Itinerary images exceed the limit of 5'] },
+        placeDescription: {
+          type: String,
+          minLength: [300, 'Itinerary description must have at least {{MINLENGTH}} characters'],
+          maxLength: [2000, 'Itinerary description must have at most {{MAXENGTH}} characters'],
+        },
+        remark: {
+          type: String,
+          maxLength: [500, 'Itinerary remark must have at least {{MAXENGTH}} characters'],
+        },
       },
     ],
+    additionalService: String,
+    flights: String,
+    optional: String,
+    secretTour: {
+      type: Boolean,
+      default: false,
+    },
     guides: [
       {
         type: Types.ObjectId,
