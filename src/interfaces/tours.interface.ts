@@ -5,17 +5,21 @@ export interface TourDocument extends Document {
   slug: string;
   duration: number;
   maxGroupSize: number;
+  accommodation: string;
+  covidSecure: String;
+  meal: String;
   difficulty: string;
   ratingsAverage: number;
   ratingsQuantity: number;
   price: number;
   summary: string;
   description: string;
-  imageCover: string;
   images: [string];
+  imageCover: string;
   createdAt: Date;
+  updatedAt: Date;
   startDates: [Date];
-  secretTour: boolean;
+  endDates: [Date];
   startLocations: {
     coordinates: [number];
     address: string;
@@ -29,5 +33,18 @@ export interface TourDocument extends Document {
       day: number;
     },
   ];
+  itinerary: [
+    {
+      name: string;
+      day: number;
+      image: string;
+      placeDescription: string;
+      remark: string;
+    },
+  ];
+  additionalService: string;
+  flights: string;
+  optional: string;
+  secretTour: boolean;
   guides: [Types.ObjectId];
 }
