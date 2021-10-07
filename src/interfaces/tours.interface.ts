@@ -1,5 +1,22 @@
 import { Document, Types } from 'mongoose';
 
+enum Badge {
+  'Jain Food',
+  'Vegetarian Food',
+  'Halal Food',
+  'Kosher Food',
+}
+
+interface Meal {
+  name: String;
+  badge: Badge[];
+}
+
+interface Images {
+  image: String;
+  placeName: String;
+}
+
 export interface TourDocument extends Document {
   name: string;
   slug: string;
@@ -7,7 +24,7 @@ export interface TourDocument extends Document {
   maxGroupSize: number;
   accommodation: string;
   covidSecure: String;
-  meal: String;
+  meal: Meal;
   difficulty: string;
   ratingsAverage: number;
   ratingsQuantity: number;
@@ -15,12 +32,11 @@ export interface TourDocument extends Document {
   priceDiscount: number;
   summary: string;
   description: string;
-  images: [string];
-  imageCover: string;
+  images: Images[];
+  imageCover: [string];
   createdAt: Date;
   updatedAt: Date;
   startDates: [Date];
-  endDates: [Date];
   startLocations: {
     coordinates: [number];
     address: string;
@@ -38,7 +54,7 @@ export interface TourDocument extends Document {
     {
       name: string;
       day: number;
-      image: string;
+      images: [string];
       placeDescription: string;
       remark: string;
     },

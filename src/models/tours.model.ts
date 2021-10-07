@@ -33,13 +33,15 @@ const tourSchema = new Schema<TourDocument>(
     accommodation: String,
     covidSecure: String,
     meal: {
-      type: String,
-      badge: {
-        type: String,
-        enum: {
-          values: ['Jain Food', 'Vegetarian Food', 'Halal Food', 'Kosher Food'],
+      name: String,
+      badge: [
+        {
+          type: String,
+          enum: {
+            values: ['Jain Food', 'Vegetarian Food', 'Halal Food', 'Kosher Food'],
+          },
         },
-      },
+      ],
     },
     difficulty: {
       type: String,
@@ -80,7 +82,7 @@ const tourSchema = new Schema<TourDocument>(
     images: {
       type: [
         {
-          type: { type: String, match: [new RegExp('(https?://.*.(?:png|jpg))'), 'Please input correct image url'] },
+          image: { type: String, match: [new RegExp('(https?://.*.(?:png|jpg))'), 'Please input correct image url'] },
           placeName: String,
         },
       ],
@@ -112,14 +114,6 @@ const tourSchema = new Schema<TourDocument>(
       ],
       validate: [DateLimit, 'Start Dates exceed the limit of 10'],
     },
-    endDates: {
-      type: [
-        {
-          type: Date,
-        },
-      ],
-      validate: [DateLimit, 'End Dates exceed the limit of 10'],
-    },
     startLocation: {
       type: {
         type: String,
@@ -148,19 +142,27 @@ const tourSchema = new Schema<TourDocument>(
         name: {
           type: String,
           required: [true, 'An itinerary must have a name'],
-          minLength: [20, 'Itinerary name must have at least {{MINLENGTH}} characters'],
-          maxLength: [250, 'Itinerary name must have at most {{MAXENGTH}} characters'],
+          minLength: [20, 'Itinerary name must have at least {MINLENGTH} characters'],
+          maxLength: [250, 'Itinerary name must have at most {MAXENGTH} characters'],
         },
         day: { type: Number, required: [true, 'An itinerary must have a day'] },
-        image: { type: String, validate: [ImageLimit, 'Itinerary images exceed the limit of 5'] },
+        image: {
+          type: [
+            {
+              type: { type: String, match: [new RegExp('(https?://.*.(?:png|jpg))'), 'Please input correct image url'] },
+              placeName: String,
+            },
+          ],
+          validate: [ImageLimit, 'Images exceeds the limit of 5'],
+        },
         placeDescription: {
           type: String,
-          minLength: [300, 'Itinerary description must have at least {{MINLENGTH}} characters'],
-          maxLength: [2000, 'Itinerary description must have at most {{MAXENGTH}} characters'],
+          minLength: [300, 'Itinerary description must have at least {MINLENGTH} characters'],
+          maxLength: [2000, 'Itinerary description must have at most {MAXENGTH} characters'],
         },
         remark: {
           type: String,
-          maxLength: [500, 'Itinerary remark must have at least {{MAXENGTH}} characters'],
+          maxLength: [500, 'Itinerary remark must have at least {MAXENGTH} characters'],
         },
       },
     ],
