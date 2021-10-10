@@ -1,8 +1,8 @@
-import { Schema, Types, model, Model } from 'mongoose';
+import { Schema, Types, model, Model, Query } from 'mongoose';
 import { tourModel } from '@models/tours.model';
-import { ReviewDocument } from '@interfaces/reviews.interface';
+import { ReviewDocument, ReviewModel, ReviewPopulatedDocument, ReviewBaseDocument } from '@interfaces/reviews.interface';
 
-const reviewSchema = new Schema<ReviewDocument>(
+const reviewSchema = new Schema<ReviewDocument, ReviewModel>(
   {
     review: {
       type: String,
@@ -13,10 +13,16 @@ const reviewSchema = new Schema<ReviewDocument>(
       min: 1,
       max: 5,
     },
+    itineraryRating: {
+      type: Number,
+      min: 1,
+      max: 5,
+    },
     createdAt: {
       type: Date,
       default: Date.now,
     },
+    updatedAt: { type: Date },
     tour: {
       type: Types.ObjectId,
       ref: 'Tour',
@@ -36,7 +42,7 @@ const reviewSchema = new Schema<ReviewDocument>(
 
 reviewSchema.index({ tour: 1, user: 1 }, { unique: true });
 
-reviewSchema.pre(/^find/, function (next) {
+reviewSchema.pre<Query<ReviewPopulatedDocument, ReviewPopulatedDocument>>(/^find/, function (next) {
   this.populate({
     path: 'user',
     select: 'name photo',
@@ -56,6 +62,10 @@ reviewSchema.statics.calcAverageRatings = async function (this: Model<ReviewDocu
   });
 };
 
-const reviewModel = model<ReviewDocument>('Review', reviewSchema);
+reviewSchema.post<ReviewDocument>('save', function (this: ReviewDocument) {
+  (this.constructor as ReviewModel).calcAverageRatings(this.tour);
+});
+
+const reviewModel = model<ReviewDocument, ReviewModel>('Review', reviewSchema);
 
 export { reviewModel };

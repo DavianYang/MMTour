@@ -2,7 +2,7 @@ import crypto from 'crypto';
 import { Schema, model, HookNextFunction, Query } from 'mongoose';
 import validator from 'validator';
 import bcrypt from 'bcryptjs';
-import { UserDocument, UserModel } from '@interfaces/users.interface';
+import { UserDocument, UserModel, UserBaseDocument } from '@interfaces/users.interface';
 
 const userSchema = new Schema<UserDocument>({
   name: {
@@ -60,7 +60,7 @@ userSchema.pre<UserDocument>('save', async function (next: HookNextFunction) {
   next();
 });
 
-userSchema.pre<UserDocument>('save', function (next: HookNextFunction) {
+userSchema.pre<UserBaseDocument>('save', function (next: HookNextFunction) {
   if (!this.isModified('password') || this.isNew) return next();
 
   this.passwordChangedAt = new Date(Date.now() - 1000);
