@@ -1,5 +1,5 @@
 import { Document, Types } from 'mongoose';
-import { UserDocument } from '@interfaces/users.interface';
+import { UserBaseDocument } from '@interfaces/users.interface';
 
 enum Badge {
   'Jain Food',
@@ -77,9 +77,9 @@ export interface TourBaseDocument extends Tour, Document {
 }
 
 export interface TourDocument extends TourBaseDocument {
-  guides?: Types.Array<UserDocument['_id']>;
+  guides?: Types.Array<UserBaseDocument['_id']>;
 }
 
 export interface TourPopulatedDocument extends TourBaseDocument {
-  guides?: Types.Array<UserDocument>;
+  guides?: Types.Array<UserBaseDocument>;
 }

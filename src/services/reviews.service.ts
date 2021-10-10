@@ -1,5 +1,5 @@
 import { reviewModel } from '@models/reviews.model';
-import { ReviewInCreate } from '@interfaces/reviews.interface';
+import { Review } from '@interfaces/reviews.interface';
 import { QueryString } from '@interfaces/queries.interface';
 import { findAll, findOne, createOne, updateOne, deleteOne } from '@services/factory.service';
 
@@ -7,7 +7,7 @@ class ReviewService {
   public reviews = reviewModel;
 
   // CREATE
-  public async createReview(reviewBody: ReviewInCreate) {
+  public async createReview(reviewBody: Review) {
     return createOne(this.reviews, reviewBody);
   }
 

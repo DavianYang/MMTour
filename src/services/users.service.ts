@@ -1,6 +1,6 @@
 import { userModel } from '@models/users.model';
 import { QueryString, filterObj } from '@interfaces/queries.interface';
-import { UserInCreate } from '@interfaces/users.interface';
+import { User } from '@interfaces/users.interface';
 import { findAll, findOne, updateOne, deleteOne } from '@services/factory.service';
 
 class UserService {
@@ -17,7 +17,7 @@ class UserService {
   };
 
   // CREATE
-  public async createUser(userBody: UserInCreate) {
+  public async createUser(userBody: User) {
     return await this.users.create({
       name: userBody.name,
       email: userBody.email,
