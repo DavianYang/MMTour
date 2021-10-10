@@ -1,4 +1,5 @@
 import { Document, Types } from 'mongoose';
+import { UserDocument } from '@interfaces/users.interface';
 
 enum Badge {
   'Jain Food',
@@ -63,9 +64,22 @@ export interface Tour {
   secretTour?: boolean;
 }
 
-export interface TourDocument extends Tour, Document {
+export interface TourBaseDocument extends Tour, Document {
   slug: string;
   createdAt: Date;
   updatedAt: Date;
-  guides: [Types.ObjectId];
+  images?: Types.Array<Images>;
+  imageCover?: Types.Array<string>;
+  startDates?: Types.Array<Date>;
+  locations?: Types.Array<Location>;
+  itinerary?: Types.Array<Itinerary>;
+  duratinWeek: number;
+}
+
+export interface TourDocument extends TourBaseDocument {
+  guides?: Types.Array<UserDocument['_id']>;
+}
+
+export interface TourPopulatedDocument extends TourBaseDocument {
+  guides?: Types.Array<UserDocument>;
 }
