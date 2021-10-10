@@ -10,21 +10,23 @@ enum Role {
 export interface User {
   name: string;
   email: string;
-  photo: string;
-  role: Role;
+  photo?: string;
   password: string;
   passwordConfirm: string | undefined;
+}
+
+export interface UserBaseDocument extends User, Document {
+  role: Role;
   passwordChangedAt: Date;
   passwordResetToken: string;
   passwordResetExpire: Date;
   active: boolean;
-}
-
-export interface UserDocument extends User, Document {
+  isPasswordMatch(candidatePassword: string, userPassword: string): Promise<boolean>;
   changedPasswordAfter(JWTTimeStamp: number): boolean;
   createPasswordResetToken(): string;
-  isPasswordMatch(candidatePassword: string, userPassword: string): Promise<boolean>;
 }
+
+export type UserDocument = UserBaseDocument;
 
 export interface UserModel extends Model<UserDocument> {
   isEmailTaken(email: string): boolean;
