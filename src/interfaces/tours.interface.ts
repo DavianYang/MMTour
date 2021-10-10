@@ -8,60 +8,64 @@ enum Badge {
 }
 
 interface Meal {
-  name: String;
-  badge: Badge[];
+  name: string;
+  badge: Array<Badge>;
 }
 
 interface Images {
-  image: String;
-  placeName: String;
+  image: string;
+  placeName: string;
 }
 
-export interface TourDocument extends Document {
+interface StartLocation {
+  coordinates: Array<number>;
+  address: string;
+  description: string;
+}
+
+interface Location {
+  coordinates: Array<number>;
+  address: string;
+  description: string;
+  day: number;
+}
+
+interface Itinerary {
   name: string;
-  slug: string;
+  day: number;
+  placeImages: Array<string>;
+  placeDescription: string;
+  remark: string;
+}
+
+export interface Tour {
+  name: string;
   duration: number;
   maxGroupSize: number;
-  accommodation: string;
-  covidSecure: String;
-  meal: Meal;
+  accommodation?: string;
+  covidSecure?: String;
+  meal?: Meal;
   difficulty: string;
-  ratingsAverage: number;
-  ratingsQuantity: number;
+  ratingsAverage?: number;
+  ratingsQuantity?: number;
   price: number;
-  priceDiscount: number;
-  summary: string;
-  description: string;
-  images: Images[];
-  imageCover: [string];
+  priceDiscount?: number;
+  description?: string;
+  images?: Array<Images>;
+  imageCover?: Array<string>;
+  startDates?: Array<Date>;
+  startLocations?: StartLocation;
+  locations?: Array<Location>;
+  itinerary?: Array<Itinerary>;
+  additionalService?: string;
+  flights?: string;
+  optional?: string;
+  secretTour?: boolean;
+}
+
+export interface TourDocument extends Tour, Document {
+  slug: string;
   createdAt: Date;
   updatedAt: Date;
-  startDates: [Date];
-  startLocations: {
-    coordinates: [number];
-    address: string;
-    description: string;
-  };
-  locations: [
-    {
-      coordinates: [number];
-      address: string;
-      description: string;
-      day: number;
-    },
-  ];
-  itinerary: [
-    {
-      name: string;
-      day: number;
-      placeImages: [string];
-      placeDescription: string;
-      remark: string;
-    },
-  ];
-  additionalService: string;
-  flights: string;
-  optional: string;
-  secretTour: boolean;
   guides: [Types.ObjectId];
 }

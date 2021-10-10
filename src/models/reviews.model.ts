@@ -1,4 +1,4 @@
-import { Schema, Types, model } from 'mongoose';
+import { Schema, Types, model, Model } from 'mongoose';
 import { ReviewDocument } from '@interfaces/reviews.interface';
 
 const reviewSchema = new Schema<ReviewDocument>(
@@ -32,6 +32,20 @@ const reviewSchema = new Schema<ReviewDocument>(
     toObject: { virtuals: true },
   },
 );
+
+reviewSchema.index({ tour: 1, user: 1 }, { unique: true });
+
+reviewSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'user',
+    select: 'name photo',
+  });
+  next();
+});
+
+reviewSchema.statics.calcAverageRatings = async function (this: Model<ReviewDocument>, tourId: string) {
+  const stats = await this.aggregate([{ $match: { tour: tourId } }]);
+};
 
 const reviewModel = model<ReviewDocument>('Review', reviewSchema);
 

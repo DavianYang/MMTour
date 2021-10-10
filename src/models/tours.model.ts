@@ -186,6 +186,9 @@ const tourSchema = new Schema<TourDocument>(
   },
 );
 
+tourSchema.index({ price: 1, ratingsAverage: -1 });
+tourSchema.index({ slug: 1 });
+
 tourSchema.virtual('duratinWeek').get(function (this: TourDocument) {
   return this.duration / 7;
 });
