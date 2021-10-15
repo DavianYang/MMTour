@@ -18,9 +18,18 @@ const tourFullOne = {
   price: 300,
   description: faker.lorem.paragraphs(),
   images: [
-    { image: `${faker.image.imageUrl()}.jpeg`, placeName: faker.name.findName() },
-    { image: `${faker.image.imageUrl()}.jpg`, placeName: faker.name.findName() },
-    { image: `${faker.image.imageUrl()}.png`, placeName: faker.name.findName() },
+    {
+      image: `${faker.image.imageUrl()}.jpeg`,
+      placeName: faker.name.findName(),
+    },
+    {
+      image: `${faker.image.imageUrl()}.jpg`,
+      placeName: faker.name.findName(),
+    },
+    {
+      image: `${faker.image.imageUrl()}.png`,
+      placeName: faker.name.findName(),
+    },
   ],
   imageCover: [`${faker.image.imageUrl()}.jpeg`, `${faker.image.imageUrl()}.jpg`, `${faker.image.imageUrl()}.png`],
   startDates: [faker.date.future(), faker.date.future(), faker.date.future()],

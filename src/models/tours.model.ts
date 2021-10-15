@@ -82,7 +82,10 @@ const tourSchema = new Schema<TourDocument>(
     images: {
       type: [
         {
-          image: { type: String, match: [new RegExp('(https?://.*.(?:png|jpeg|jpg))'), 'Please input correct image url'] },
+          image: {
+            type: String,
+            match: [new RegExp('(https?://.*.(?:png|jpeg|jpg))'), 'Please input correct image url'],
+          },
           placeName: String,
         },
       ],

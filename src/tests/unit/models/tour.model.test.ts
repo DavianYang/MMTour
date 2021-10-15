@@ -19,12 +19,30 @@ describe('Tour model', () => {
 
       test('should throw a validation error if given imageCover exceed limit of 5', async () => {
         tourFullOne.images = [
-          { image: `${faker.image.imageUrl()}.jpg`, placeName: faker.name.findName() },
-          { image: `${faker.image.imageUrl()}.jpg`, placeName: faker.name.findName() },
-          { image: `${faker.image.imageUrl()}.jpg`, placeName: faker.name.findName() },
-          { image: `${faker.image.imageUrl()}.jpg`, placeName: faker.name.findName() },
-          { image: `${faker.image.imageUrl()}.jpg`, placeName: faker.name.findName() },
-          { image: `${faker.image.imageUrl()}.jpg`, placeName: faker.name.findName() },
+          {
+            image: `${faker.image.imageUrl()}.jpg`,
+            placeName: faker.name.findName(),
+          },
+          {
+            image: `${faker.image.imageUrl()}.jpg`,
+            placeName: faker.name.findName(),
+          },
+          {
+            image: `${faker.image.imageUrl()}.jpg`,
+            placeName: faker.name.findName(),
+          },
+          {
+            image: `${faker.image.imageUrl()}.jpg`,
+            placeName: faker.name.findName(),
+          },
+          {
+            image: `${faker.image.imageUrl()}.jpg`,
+            placeName: faker.name.findName(),
+          },
+          {
+            image: `${faker.image.imageUrl()}.jpg`,
+            placeName: faker.name.findName(),
+          },
         ];
 
         tourFullOne.imageCover = [

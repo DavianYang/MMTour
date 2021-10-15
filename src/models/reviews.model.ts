@@ -53,7 +53,13 @@ reviewSchema.pre<Query<ReviewPopulatedDocument, ReviewPopulatedDocument>>(/^find
 reviewSchema.statics.calcAverageRatings = async function (this: Model<ReviewDocument>, tourId: string) {
   const stats = await this.aggregate([
     { $match: { tour: tourId } },
-    { $group: { _id: '$tour', nRating: { $sum: 1 }, avgRating: { $avg: '$rating' } } },
+    {
+      $group: {
+        _id: '$tour',
+        nRating: { $sum: 1 },
+        avgRating: { $avg: '$rating' },
+      },
+    },
   ]);
 
   await tourModel.findByIdAndUpdate(tourId, {

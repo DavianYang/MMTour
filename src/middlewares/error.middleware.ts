@@ -71,7 +71,10 @@ export const errorHandler = (err: AppError, req: Request, res: Response, next?: 
   const response = {
     title: 'Something went wrong',
     message,
-    ...(process.env.NODE_ENV === 'development' && { error: err, stack: err.stack }),
+    ...(process.env.NODE_ENV === 'development' && {
+      error: err,
+      stack: err.stack,
+    }),
   };
 
   if (process.env.NODE_ENV === 'development') {

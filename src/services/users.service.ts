@@ -44,7 +44,10 @@ class UserService {
   }
 
   public async findUserByToken(hashToken: string) {
-    return await this.users.findOne({ passwordResetToken: hashToken, passwordResetExpire: { $gt: new Date() } });
+    return await this.users.findOne({
+      passwordResetToken: hashToken,
+      passwordResetExpire: { $gt: new Date() },
+    });
   }
 
   // UPDATE

@@ -13,7 +13,9 @@ class AuthController {
   private userService = new UserService();
 
   public signJWTToken = (id: Types.ObjectId) => {
-    const token = jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE_IN });
+    const token = jwt.sign({ id }, process.env.JWT_SECRET, {
+      expiresIn: process.env.JWT_EXPIRE_IN,
+    });
 
     return token;
   };
