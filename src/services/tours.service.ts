@@ -84,6 +84,19 @@ class TourService {
       },
     ]);
   }
+
+  public async findDistanceWithin(lat: number, lng: number, radius: number) {
+    return await this.tours.find({ startLocation: { $geoWithin: { $centerSphere: [[lng, lat], radius] } } });
+  }
+
+  public async findDistances(lat: number, lng: number, multiplier: number) {
+    return await this.tours.aggregate([
+      {
+        $geoNear: { near: { type: 'point', coordinates: [lng, lat] }, distanceField: 'distance', distanceMultiplier: multiplier },
+        $project: { distance: 1, name: 1 },
+      },
+    ]);
+  }
 }
 
 export { TourService };

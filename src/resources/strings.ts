@@ -10,9 +10,12 @@ export const USER_WITH_EMAIL_NOT_FOUND = 'There is no user with email address.';
 // NOT DEFINED
 export const USER_ROUTE_NOT_DEFINED = 'This route is not yet defined! Please use /signup instead.';
 export const USER_ROUTE_NOT_FOR_UPDATE = 'This route is not for password updates. Please use /updateMyPassword.';
+
+// PROVIDE Object
 export const PROVIDE_TOKEN = 'Please provide right token.';
 export const PROVIDE_EMAIL_ADDRESS = 'Please provide email.';
 export const PROVIDE_EMAIL_PASSWORD = 'Please provide email and password!';
+export const PROVIDE_LAT_LONG = 'Please provide latitude and longitude in lat, lng.';
 
 // INVALID & INCORRECT & EXPIRED
 export const INVALID_TOKEN = 'Token is invalid or has expired';

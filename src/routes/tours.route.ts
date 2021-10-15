@@ -16,6 +16,10 @@ class TourRoute {
     this.router.route(`${this.path}/stats`).get(protect, restrictTo('admin', 'lead-guide', 'guide'), this.tourController.getTourStats);
     this.router.route(`${this.path}/plan/:year/:month?`).get(protect, restrictTo('admin', 'lead-guide', 'guide'), this.tourController.getMonthlyPlan);
 
+    this.router.route(`${this.path}/within/:distance/center/:latlng/unit/:unit`).get(this.tourController.getToursWithin);
+
+    this.router.route(`${this.path}/distances/:latlng/unit/:unit`).get(this.tourController.getTourDistances);
+
     this.router
       .route(`${this.path}/`)
       .get(this.tourController.getAllTours)

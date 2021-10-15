@@ -4,6 +4,12 @@ import AppError from '@exceptions/AppError';
 import catchAsync from '@utils/catchAsync';
 import * as strings from '@resources/strings';
 
+interface tourGeoBody {
+  distance: number;
+  latlng: string;
+  unit: string;
+}
+
 class TourController {
   private tourService = new TourService();
 
@@ -90,6 +96,48 @@ class TourController {
       status: 'success',
       data: {
         plan,
+      },
+    });
+  });
+
+  public getToursWithin = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    const { distance, latlng, unit } = req.params;
+    const [lat, lng] = latlng.split(',').map(x => Number(x));
+
+    const radius: number = unit === 'mi' ? Number(distance) / 3963.2 : Number(distance) / 6378.1;
+
+    if (!lat || !lng) {
+      next(new AppError(strings.PROVIDE_LAT_LONG, 400));
+    }
+
+    const tours = await this.tourService.findDistanceWithin(lat, lng, radius);
+
+    res.status(200).json({
+      status: 'success',
+      results: tours.length,
+      data: {
+        data: tours,
+      },
+    });
+  });
+
+  public getTourDistances = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    const { latlng, unit } = req.params;
+    const [lat, lng] = latlng.split(',').map(x => Number(x));
+
+    const multiplier: number = unit === 'mi' ? 0.000621371 : 0.001;
+
+    if (!lat || !lng) {
+      next(new AppError(strings.PROVIDE_LAT_LONG, 400));
+    }
+
+    const tours = await this.tourService.findDistances(lat, lng, multiplier);
+
+    res.status(200).json({
+      status: 'success',
+      results: tours.length,
+      data: {
+        data: tours,
       },
     });
   });
