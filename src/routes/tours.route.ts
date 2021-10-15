@@ -2,6 +2,8 @@ import { Router } from 'express';
 import { TourController } from '@controllers/tours.controller';
 import { protect, restrictTo } from '@middlwares/auth.middleware';
 import { aliasTopTours } from '@middlwares/tour.middleware';
+import { resizeTourImages } from '@middlwares/tour.middleware';
+import { upload } from '@middlwares/image.middleware';
 
 class TourRoute {
   public path = '/tours';
@@ -28,7 +30,16 @@ class TourRoute {
     this.router
       .route(`${this.path}/:id`)
       .get(this.tourController.getTour)
-      .patch(protect, restrictTo('admin', 'lead-guide'), this.tourController.updateTour)
+      .patch(
+        protect,
+        restrictTo('admin', 'lead-guide'),
+        upload.fields([
+          { name: 'imageCover', maxCount: 3 },
+          { name: 'images', maxCount: 5 },
+        ]),
+        resizeTourImages,
+        this.tourController.updateTour,
+      )
       .delete(protect, restrictTo('admin', 'lead-guide'), this.tourController.deleteTour);
   }
 }

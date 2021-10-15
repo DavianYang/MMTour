@@ -1,8 +1,9 @@
 import { Router } from 'express';
 import { UserController } from '@controllers/users.controller';
 import { AuthController } from '@controllers/auth.controller';
-import * as auth from '@middlwares/auth.middleware';
-import * as user from '@middlwares/user.middleware';
+import { protect, restrictTo } from '@middlwares/auth.middleware';
+import { resizeUserImage } from '@middlwares/user.middleware';
+import { upload } from '@middlwares/image.middleware';
 
 class UserRoute {
   public path = '/users';
@@ -22,7 +23,7 @@ class UserRoute {
     this.router.post(`${this.path}/forgotPassword`, this.authController.forgotPassword); // Not tested yet
     this.router.patch(`${this.path}/resetPassword/:token`, this.authController.resetPassword); // Not tested yet
 
-    this.router.use(auth.protect);
+    this.router.use(protect);
 
     this.router.patch(`${this.path}/updateMyPassword`, this.authController.updatePassword); // Not tested yet
 
@@ -30,10 +31,10 @@ class UserRoute {
       .route(`${this.path}/me`)
       .get(this.userController.getMe)
       .get(this.userController.getUser)
-      .patch(user.uploadUserImage, this.userController.updateMe)
+      .patch(upload.single('photo'), resizeUserImage, this.userController.updateMe) // Image not tested
       .delete(this.userController.deleteUser);
 
-    this.router.use(auth.restrictTo('admin'));
+    this.router.use(restrictTo('admin'));
 
     this.router.route(`${this.path}/`).get(this.userController.getAllUsers).post(this.userController.createUser);
 

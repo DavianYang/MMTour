@@ -79,27 +79,8 @@ const tourSchema = new Schema<TourDocument>(
       type: String,
       trim: true,
     },
-    images: {
-      type: [
-        {
-          image: {
-            type: String,
-            match: [new RegExp('(https?://.*.(?:png|jpeg|jpg))'), 'Please input correct image url'],
-          },
-          placeName: String,
-        },
-      ],
-      validate: [ImageLimit, 'Images exceeds the limit of 5'],
-    },
-    imageCover: {
-      type: [
-        {
-          type: String,
-          match: [new RegExp('(https?://.*.(?:png|jpeg|jpg))'), 'Please input correct image url'],
-        },
-      ],
-      validate: [ImageLimit, 'Image Cover exceeds the limit of 5'],
-    },
+    images: [String],
+    imageCover: [{ type: String, required: [true, 'A tour must have a cover image'] }],
     createdAt: {
       type: Date,
       default: Date.now(),
@@ -150,12 +131,7 @@ const tourSchema = new Schema<TourDocument>(
         },
         day: { type: Number, required: [true, 'An itinerary must have a day'] },
         placeImages: {
-          type: [
-            {
-              type: String,
-              match: [new RegExp('(https?://.*.(?:png|jpeg|jpg))'), 'Please input correct image url'],
-            },
-          ],
+          type: [String],
           validate: [ImageLimit, 'Image Cover exceeds the limit of 5'],
         },
         placeDescription: {
