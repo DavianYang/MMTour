@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { UserController } from '@controllers/users.controller';
 import { AuthController } from '@controllers/auth.controller';
 import { protect, restrictTo } from '@middlwares/auth.middleware';
+import { upload } from '@middlwares/image.middleware';
 
 class UserRoute {
   public path = '/users';
@@ -29,7 +30,7 @@ class UserRoute {
       .route(`${this.path}/me`)
       .get(this.userController.getMe)
       .get(this.userController.getUser)
-      .patch(this.userController.updateMe)
+      .patch(upload.single('photo'), this.userController.updateMe)
       .delete(this.userController.deleteUser);
 
     this.router.use(restrictTo('admin'));
