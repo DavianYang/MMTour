@@ -52,7 +52,7 @@ class UserController {
       return next(new AppError(strings.USER_ROUTE_NOT_FOR_UPDATE, 404));
     }
 
-    const updatedUser = await this.userService.updateCurrentUser(req.user.id, req.body);
+    const updatedUser = await this.userService.updateCurrentUser(req.user.id, req.body, req.file && req.file.filename);
 
     res.status(200).json({
       status: 'success',

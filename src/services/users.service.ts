@@ -1,7 +1,7 @@
 import { userModel } from '@models/users.model';
+import { findAll, findOne, updateOne, deleteOne } from '@services/factory.service';
 import { QueryString, filterObj } from '@interfaces/queries.interface';
 import { User } from '@interfaces/users.interface';
-import { findAll, findOne, updateOne, deleteOne } from '@services/factory.service';
 
 class UserService {
   public users = userModel;
@@ -52,8 +52,10 @@ class UserService {
     return await updateOne(this.users, id, body);
   }
 
-  public async updateCurrentUser(id: string, body: object) {
+  public async updateCurrentUser(id: string, body: object, file?: string) {
     const filteredObj = this.filterObj(body as filterObj, 'name', 'email');
+
+    if (file) filteredObj.photo = file;
 
     const updatedUser = await this.users.findByIdAndUpdate(id, filteredObj, {
       runValidators: true,
