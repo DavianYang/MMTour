@@ -2,8 +2,8 @@ import { Router } from 'express';
 import { UserController } from '@controllers/users.controller';
 import { AuthController } from '@controllers/auth.controller';
 import { protect, restrictTo } from '@middlwares/auth.middleware';
-import { resizeUserImage } from '@middlwares/user.middleware';
 import { upload } from '@middlwares/image.middleware';
+import { resizeUserImage } from '@middlwares/user.middleware';
 
 class UserRoute {
   public path = '/users';

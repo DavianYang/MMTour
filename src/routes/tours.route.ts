@@ -2,8 +2,8 @@ import { Router } from 'express';
 import { TourController } from '@controllers/tours.controller';
 import { protect, restrictTo } from '@middlwares/auth.middleware';
 import { aliasTopTours } from '@middlwares/tour.middleware';
-import { resizeTourImages } from '@middlwares/tour.middleware';
 import { upload } from '@middlwares/image.middleware';
+import { resizeTourImages } from '@middlwares/tour.middleware';
 
 class TourRoute {
   public path = '/tours';

@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
 import sharp from 'sharp';
-import { upload } from '@middlwares/image.middleware';
 import catchAsync from '@utils/catchAsync';
 
 const resizeUserImage = catchAsync(async (req: Request, res: Response, next: NextFunction) => {

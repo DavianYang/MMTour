@@ -1,11 +1,9 @@
 // @ts-nocheck
 import { NextFunction, Request, Response } from 'express';
-import { Multer } from 'multer';
 import sharp from 'sharp';
-import { upload } from '@middlwares/image.middleware';
 import catchAsync from '@utils/catchAsync';
 
-export const aliasTopTours = (req: Request, res: Response, next: NextFunction) => {
+const aliasTopTours = (req: Request, res: Response, next: NextFunction) => {
   req.query.limit = req.params.number;
   req.query.sort = '-ratingAverage,price';
   req.query.fields = 'name,price,ratingsAverage,summary,difficult';
@@ -41,4 +39,4 @@ const resizeTourImages = catchAsync(async (req: Request, res: Response, next: Ne
   next();
 });
 
-export { resizeTourImages };
+export { aliasTopTours, resizeTourImages };
