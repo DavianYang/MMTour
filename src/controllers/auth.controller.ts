@@ -48,7 +48,11 @@ class AuthController {
       return next(new AppError(strings.EMAIL_ALREADY_TAKEN, 400));
     }
     const newUser = await this.userService.createUser(req.body);
-    console.log(newUser);
+
+    const url = `${req.protocol}://${req.get('host')}/me`;
+
+    await new Email(newUser, url).send('welcome', strings.WELCOME_TO_MMTOUR);
+
     this.sendJWTToken(req, res, newUser, 201);
   });
 

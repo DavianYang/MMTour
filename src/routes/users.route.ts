@@ -31,7 +31,7 @@ class UserRoute {
       .route(`${this.path}/me`)
       .get(this.userController.getMe)
       .get(this.userController.getUser)
-      .patch(upload.single('photo'), resizeUserImage, this.userController.updateMe) // Image not tested
+      .patch(upload.single('photo'), resizeUserImage, this.userController.updateMe)
       .delete(this.userController.deleteUser);
 
     this.router.use(restrictTo('admin'));

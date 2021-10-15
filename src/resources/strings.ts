@@ -1,4 +1,5 @@
 // INFORM USER
+export const WELCOME_TO_MMTOUR = 'Welcome to the MMTour Family';
 export const YOUR_PASSWORD_RESET_TOKEN = 'Your password reset token (valid for only 10 minutes).';
 
 // NOT FOUND
