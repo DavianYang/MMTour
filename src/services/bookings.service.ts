@@ -1,6 +1,7 @@
 import Stripe from 'stripe';
 import { bookingModel } from '@models/bookings.model';
 import { findAll, findOne, createOne, updateOne, deleteOne } from '@services/factory.service';
+import { UserDocument } from '@/interfaces/users.interface';
 import { TourDocument } from '@interfaces/tours.interface';
 import { QueryString } from '@interfaces/queries.interface';
 
@@ -20,12 +21,12 @@ class BookingService {
     return await createOne(this.bookings, tourBody);
   }
 
-  public async createCheckoutSession(protocol: string, host: string, email: string, tourId: string, tour: TourDocument) {
+  public async createCheckoutSession(protocol: string, host: string, tourId: string, user: UserDocument, tour: TourDocument) {
     return await this.stripe.checkout.sessions.create({
       payment_method_types: ['card'],
-      success_url: `${protocol}://${host}/`,
+      success_url: `${protocol}://${host}/?tour${tourId}&user=${user.id}&price=${tour.price}`,
       cancel_url: `${protocol}://${host}/tour/${tour.slug}`,
-      customer_email: email,
+      customer_email: user.email,
       client_reference_id: tourId,
       line_items: [
         {

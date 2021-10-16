@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import BookingController from '@controllers/bookings.controller';
-import { protect } from '@middlwares/auth.middleware';
+import { protect, restrictTo } from '@middlwares/auth.middleware';
 
 class BookingRoute {
   public path = '/bookings';
@@ -12,7 +12,19 @@ class BookingRoute {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}/checkout-session/:tourId`, protect, this.bookingController.getCheckoutSession);
+    this.router.use(protect);
+
+    this.router.get(`${this.path}/checkout-session/:tourId`, this.bookingController.getCheckoutSession);
+
+    this.router.use(restrictTo('admin', 'lead-guide'));
+
+    this.router.route(`${this.path}/`).get(this.bookingController.getAllBookings).post(this.bookingController.createBooking);
+
+    this.router
+      .route(`${this.path}/:id`)
+      .get(this.bookingController.getBooking)
+      .patch(this.bookingController.updateBooking)
+      .delete(this.bookingController.deleteBooking);
   }
 }
 
