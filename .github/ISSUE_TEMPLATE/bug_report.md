@@ -7,7 +7,7 @@ labels: 'bug: pending triage'
 
 ### Reproduction link
 
-<!-- Please provide the Python Playground link. -->
+<!-- Please provide MMTour link. -->
 
 ### Steps to reproduce
 

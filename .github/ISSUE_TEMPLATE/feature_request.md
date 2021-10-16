@@ -7,7 +7,7 @@ labels: 'enhancement: pending triage'
 
 ### Clear and concise description of the problem
 
-<!-- Please provide the needs while you are using The Python Playground. -->
+<!-- Please provide the needs while you are using MMTour. -->
 
 ### Suggested solution
 
