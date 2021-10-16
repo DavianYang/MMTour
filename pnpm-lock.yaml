@@ -8,7 +8,6 @@ specifiers:
   '@types/cors': ^2.8.10
   '@types/express': ^4.17.12
   '@types/express-rate-limit': ^5.1.2
-  '@types/express-serve-static-core': ^4.17.24
   '@types/faker': ^5.5.8
   '@types/hpp': ^0.2.1
   '@types/jest': ^27.0.1
@@ -66,6 +65,7 @@ specifiers:
   pug: ^3.0.2
   shelljs: ^0.8.4
   slugify: ^1.5.3
+  stripe: ^8.183.0
   supertest: 6.0.1
   swagger-jsdoc: ^6.1.0
   swagger-ui-express: ^4.1.6
@@ -103,6 +103,7 @@ dependencies:
   pnpm: 6.9.1
   pug: 3.0.2
   slugify: 1.5.3
+  stripe: 8.183.0
   swagger-jsdoc: 6.1.0
   swagger-ui-express: 4.1.6_express@4.17.1
   ts-jest: 27.0.3_jest@27.2.0+typescript@4.3.4
@@ -122,7 +123,6 @@ devDependencies:
   '@types/cors': 2.8.10
   '@types/express': 4.17.12
   '@types/express-rate-limit': 5.1.2
-  '@types/express-serve-static-core': 4.17.24
   '@types/faker': 5.5.8
   '@types/hpp': 0.2.1
   '@types/jest': 27.0.1
@@ -5063,7 +5063,6 @@ packages:
 
   /object-inspect/1.11.0:
     resolution: {integrity: sha512-jp7ikS6Sd3GxQfZJPyH3cjcbJF6GZPClgdV+EFygjFLQ5FmW/dRUnTd9PQ9k0JhoNDabWFbpF1yCdSWCC6gexg==}
-    dev: true
 
   /on-finished/2.3.0:
     resolution: {integrity: sha1-IPEzZIGwg811M3mSoWlxqi2QaUc=}
@@ -5476,7 +5475,6 @@ packages:
     engines: {node: '>=0.6'}
     dependencies:
       side-channel: 1.0.4
-    dev: true
 
   /qs/6.7.0:
     resolution: {integrity: sha512-VCdBRNFTX1fyE7Nb6FYoURo/SPe62QCaAyzJvUjwRaIsc+NePBEniHlvxFmmX56+HZphIGtV0XeCirBtpDrTyQ==}
@@ -5786,7 +5784,6 @@ packages:
       call-bind: 1.0.2
       get-intrinsic: 1.1.1
       object-inspect: 1.11.0
-    dev: true
 
   /sift/13.5.2:
     resolution: {integrity: sha512-+gxdEOMA2J+AI+fVsCqeNn7Tgx3M9ZN9jdi95939l1IJ8cZsqS8sqpJyOkic2SJk+1+98Uwryt/gL6XDaV+UZA==}
@@ -6067,6 +6064,14 @@ packages:
     resolution: {integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==}
     engines: {node: '>=8'}
     dev: true
+
+  /stripe/8.183.0:
+    resolution: {integrity: sha512-QcM3nimH1CuP49VPPRt36Wgfu4QoS+Wm0eyGMis7Ej+seWFKqMffMdx7TE2gn8dVsJIOA1kDuIbAQGqpZHozGA==}
+    engines: {node: ^8.1 || >=10.*}
+    dependencies:
+      '@types/node': 15.14.9
+      qs: 6.10.1
+    dev: false
 
   /superagent/6.1.0:
     resolution: {integrity: sha512-OUDHEssirmplo3F+1HWKUrUjvnQuA+nZI6i/JJBdXb5eq9IyEQwPyPpqND+SSsxf6TygpBEkUjISVRN4/VOpeg==}

@@ -4,12 +4,6 @@ import AppError from '@exceptions/AppError';
 import catchAsync from '@utils/catchAsync';
 import * as strings from '@resources/strings';
 
-interface tourGeoBody {
-  distance: number;
-  latlng: string;
-  unit: string;
-}
-
 class TourController {
   private tourService = new TourService();
 
