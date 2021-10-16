@@ -1,4 +1,4 @@
-# A Real World API for Travel Tour Website
+# A Real World API for Travel Tour Agency
 
 <p align="center">
   <img src="public/img/brand/icon.png" width="300"/>
