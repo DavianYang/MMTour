@@ -67,8 +67,9 @@ class App {
     });
 
     if (this.env === 'production') {
+      this.app.enable('trust proxy');
       this.app.use(morgan('combined', { stream }));
-      this.app.use(cors({ origin: 'your.domain.com', credentials: true }));
+      this.app.use(cors({ origin: 'https://www.mmtour.com', credentials: true }));
       this.app.use('/api', limiter);
     } else {
       this.app.use(morgan('dev', { stream }));
