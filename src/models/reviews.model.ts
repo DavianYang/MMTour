@@ -1,6 +1,6 @@
 import { Schema, Types, model, Model, Query } from 'mongoose';
 import { tourModel } from '@models/tours.model';
-import { ReviewDocument, ReviewModel, ReviewPopulatedDocument, ReviewBaseDocument } from '@interfaces/reviews.interface';
+import { ReviewDocument, ReviewModel, ReviewPopulatedDocument } from '@interfaces/reviews.interface';
 
 const reviewSchema = new Schema<ReviewDocument, ReviewModel>(
   {
