@@ -38,7 +38,9 @@
       "experimentalDecorators": true,
       "emitDecoratorMetadata": true,
       "skipLibCheck": true,
-      "forceConsistentCasingInFileNames": true
+      "forceConsistentCasingInFileNames": true,
+      "jsxImportSource": "preact",
+      "isolatedModules": true
     },
     "include": ["src/**/*.ts", "src/**/*.json", ".env", "src/app.ts"],
     "exclude": ["node_modules"]

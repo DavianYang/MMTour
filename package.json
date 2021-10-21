@@ -4,7 +4,7 @@
   "description": "MMTour API",
   "main": "src/app.js",
   "scripts": {
-    "build-ts": "tsc && npx tsc-alias",
+    "build:ts": "tsc && npx tsc-alias",
     "build": "pnpm run build-ts && pnpm run lint && pnpm run copy-static-assets",
     "copy-static-assets": "ts-node copyStaticAssets.ts",
     "lint": "eslint --ignore-path .gitignore --ext .ts src/",
@@ -13,13 +13,13 @@
     "start": "pnpm run build && NODE_ENV=production pnpm run serve",
     "dev": "NODE_ENV=development nodemon",
     "test": "jest src/tests/unit/models/tour.model.test.ts --forceExit --detectOpenHandles",
-    "watch-node": "nodemon dist/server.js",
-    "watch-ts": "tsc -w",
-    "watch-test": "pnpm run test -- --watchAll",
     "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"pnpm run watch-ts\" \"pnpm run watch-node\"",
+    "watch:debug": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"pnpm run watch-ts\" \"pnpm run serve-debug\"",
+    "watch:node": "nodemon dist/server.js",
+    "watch:ts": "tsc -w",
+    "watch:test": "pnpm run test -- --watchAll",
     "debug": "pnpm run build && pnpm run watch-debug",
-    "serve-debug": "nodemon --inspect dist/server.js",
-    "watch-debug": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"pnpm run watch-ts\" \"pnpm run serve-debug\""
+    "serve:debug": "nodemon --inspect dist/server.js"
   },
   "repository": {
     "type": "git",
@@ -53,6 +53,7 @@
     "morgan": "^1.10.0",
     "multer": "1.4.1",
     "nodemailer": "^6.6.2",
+    "parcel": "^2.0.0",
     "pnpm": "^6.9.1",
     "pug": "^3.0.2",
     "slugify": "^1.5.3",
