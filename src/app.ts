@@ -9,6 +9,7 @@ import ExpressMongoSanitize from 'express-mongo-sanitize';
 import xss from 'xss-clean';
 import hpp from 'hpp';
 import cookieParser from 'cookie-parser';
+import compression from 'compression';
 import mongoose from 'mongoose';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
@@ -94,6 +95,9 @@ class App {
         whitelist: ['duration', 'ratingsQuantity', 'ratingsAverage', 'maxGroupSize', 'difficulty', 'price'],
       }),
     );
+
+    // Compress send API
+    this.app.use(compression());
   }
 
   private initializeRoutes(routes: Routes[]) {

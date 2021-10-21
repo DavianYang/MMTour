@@ -34,6 +34,7 @@
   "dependencies": {
     "axios": "^0.21.4",
     "bcryptjs": "^2.4.3",
+    "compression": "^1.7.4",
     "config": "^3.3.6",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
@@ -72,6 +73,7 @@
   "devDependencies": {
     "@shelf/jest-mongodb": "^2.0.3",
     "@types/bcryptjs": "^2.4.2",
+    "@types/compression": "^1.7.2",
     "@types/config": "^0.0.38",
     "@types/cookie-parser": "^1.4.2",
     "@types/cors": "^2.8.10",
@@ -114,5 +116,8 @@
     "shelljs": "^0.8.4",
     "supertest": "6.0.1",
     "tsconfig-paths": "^3.9.0"
+  },
+  "engines": {
+    "node": ">=10.0.0"
   }
 }
