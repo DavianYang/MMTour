@@ -1,4 +1,6 @@
 import nodemailer from 'nodemailer';
+import pug from 'pug';
+import { convert } from 'html-to-text';
 import { UserDocument } from '@/interfaces/users.interface';
 
 export default class Email {
@@ -11,7 +13,7 @@ export default class Email {
     this.to = user.email;
     this.firstName = user.name;
     this.url = url;
-    this.from = `Davian Yang <${process.env.EMAIL_FROM}>`;
+    this.from = `Thant Yar Zar Hein <${process.env.EMAIL_FROM}>`;
   }
 
   private newTransport() {
@@ -36,11 +38,19 @@ export default class Email {
   }
 
   public async send(template: string, subject: string) {
+    // Template Rendering
+    const html = pug.renderFile(`public/views/emails/${template}.pug`, {
+      firstName: this.firstName,
+      url: this.url,
+      subject,
+    });
+
     const mailOptions = {
       from: this.from,
       to: this.to,
       subject,
-      text: this.url,
+      html,
+      text: convert(html, { wordwrap: 130 }),
     };
 
     await this.newTransport().sendMail(mailOptions);
