@@ -167,7 +167,7 @@ tourSchema.pre<Query<TourDocument, TourDocument>>(/^find/, function (next: HookN
 });
 
 tourSchema.pre<Query<TourDocument, TourDocument>>(/^find/, function (next: HookNextFunction) {
-  this.populate({
+  this.populate({ path: 'itineraries', select: 'name day images description remark' }).populate({
     path: 'guides',
     select: '-__v -passwordChangedAt',
   });

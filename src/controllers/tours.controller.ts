@@ -1,11 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
 import { TourService } from '@services/tours.service';
+import { ItineraryService } from '@services/itineraries.service';
 import AppError from '@exceptions/AppError';
 import catchAsync from '@utils/catchAsync';
 import * as strings from '@resources/strings';
 
 class TourController {
   private tourService = new TourService();
+  private itineraryService = new ItineraryService();
 
   // GET
   public getAllTours = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
