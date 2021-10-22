@@ -1,6 +1,7 @@
-import { Schema, Types, model, Model, Query } from 'mongoose';
+import { Schema, Types, model, Query } from 'mongoose';
+import { BookingDocument, BookingPopulatedDocument } from '@interfaces/bookings.interface';
 
-const bookingSchema = new Schema({
+const bookingSchema = new Schema<BookingDocument>({
   tour: {
     type: Types.ObjectId,
     ref: 'Tour',
@@ -19,13 +20,16 @@ const bookingSchema = new Schema({
     type: Date,
     default: Date.now(),
   },
+  updatedAt: {
+    type: Date,
+  },
   paid: {
     type: Boolean,
     default: true,
   },
 });
 
-bookingSchema.pre(/^find/, function (this, next) {
+bookingSchema.pre<Query<BookingPopulatedDocument, BookingPopulatedDocument>>(/^find/, function (this, next) {
   this.populate('user').populate({
     path: 'tour',
     select: 'name',
@@ -34,6 +38,6 @@ bookingSchema.pre(/^find/, function (this, next) {
   next();
 });
 
-const bookingModel = model('Booking', bookingSchema);
+const bookingModel = model<BookingDocument>('Booking', bookingSchema);
 
 export { bookingModel };
