@@ -7,6 +7,7 @@ export const USER_WITH_ID_NOT_FOUND = 'No user found with that ID.';
 export const TOUR_WITH_ID_NOT_FOUND = 'No tour found with that ID.';
 export const REVIEW_WITH_ID_NOT_FOUND = 'No review found with that ID.';
 export const BOOKING_WITH_ID_NOT_FOUND = 'No booking found with that ID.';
+export const ITINERARY_WITH_ID_NOT_FOUND = 'No itinerary found with that ID.';
 export const USER_WITH_EMAIL_NOT_FOUND = 'There is no user with email address.';
 
 // NOT DEFINED

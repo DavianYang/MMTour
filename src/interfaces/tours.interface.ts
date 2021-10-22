@@ -1,5 +1,6 @@
 import { Document, Types } from 'mongoose';
 import { UserBaseDocument } from '@interfaces/users.interface';
+import { ItineraryBaseDocument } from '@interfaces/itineraries.interface';
 
 enum Badge {
   'Jain Food',
@@ -31,14 +32,6 @@ interface Location {
   day: number;
 }
 
-interface Itinerary {
-  name: string;
-  day: number;
-  placeImages: Array<string>;
-  placeDescription: string;
-  remark: string;
-}
-
 export interface Tour {
   name: string;
   duration: number;
@@ -57,7 +50,6 @@ export interface Tour {
   startDates?: Array<Date>;
   startLocations?: StartLocation;
   locations?: Array<Location>;
-  itinerary?: Array<Itinerary>;
   additionalService?: string;
   flights?: string;
   optional?: string;
@@ -72,14 +64,15 @@ export interface TourBaseDocument extends Tour, Document {
   imageCover?: Types.Array<string>;
   startDates?: Types.Array<Date>;
   locations?: Types.Array<Location>;
-  itinerary?: Types.Array<Itinerary>;
   duratinWeek: number;
 }
 
 export interface TourDocument extends TourBaseDocument {
   guides?: Types.Array<UserBaseDocument['_id']>;
+  itineraries?: Types.Array<ItineraryBaseDocument['_id']>;
 }
 
 export interface TourPopulatedDocument extends TourBaseDocument {
   guides?: Types.Array<UserBaseDocument>;
+  itineraries?: Types.Array<ItineraryBaseDocument>;
 }

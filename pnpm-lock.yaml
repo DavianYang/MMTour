@@ -33,7 +33,7 @@ specifiers:
   bcryptjs: ^2.4.3
   compression: ^1.7.4
   concurrently: 6.0.2
-  config: ^3.3.6
+  convict: ^6.2.1
   cookie-parser: ^1.4.5
   cors: ^2.8.5
   dotenv: ^10.0.0
@@ -88,7 +88,7 @@ dependencies:
   axios: 0.21.4
   bcryptjs: 2.4.3
   compression: 1.7.4
-  config: 3.3.6
+  convict: 6.2.1
   cookie-parser: 1.4.5
   cors: 2.8.5
   dotenv: 10.0.0
@@ -3260,13 +3260,6 @@ packages:
       yargs: 16.2.0
     dev: true
 
-  /config/3.3.6:
-    resolution: {integrity: sha512-Hj5916C5HFawjYJat1epbyY2PlAgLpBtDUlr0MxGLgo3p5+7kylyvnRY18PqJHgnNWXcdd0eWDemT7eYWuFgwg==}
-    engines: {node: '>= 10.0.0'}
-    dependencies:
-      json5: 2.2.0
-    dev: false
-
   /configstore/5.0.1:
     resolution: {integrity: sha512-aMKprgk5YhBNyH25hj8wGt2+D52Sw1DRRIzqBwLp2Ya9mFmY8KPvvtvmna8SxVR9JMZ4kzMD68N22vlaRpkeFA==}
     engines: {node: '>=8'}
@@ -3328,6 +3321,14 @@ packages:
     resolution: {integrity: sha512-+OQdjP49zViI/6i7nIJpA8rAl4sV/JdPfU9nZs3VqOwGIgizICvuN2ru6fMd+4llL0tar18UYJXfZ/TWtmhUjA==}
     dependencies:
       safe-buffer: 5.1.2
+
+  /convict/6.2.1:
+    resolution: {integrity: sha512-Mn4AJiYkR3TAZH1Xm/RU7gFS/0kM5TBSAQDry8y40Aez0ASY+3boUhv+3QE5XbOXiXM2JjdhkKve3IsBvWCibQ==}
+    engines: {node: '>=6'}
+    dependencies:
+      lodash.clonedeep: 4.5.0
+      yargs-parser: 20.2.9
+    dev: false
 
   /cookie-parser/1.4.5:
     resolution: {integrity: sha512-f13bPUj/gG/5mDr+xLmSxxDsB9DQiTIfhJS/sqjrmfAWiAN+x2O4i/XguTL9yDZ+/IFDanJ+5x7hC4CXT9Tdzw==}
@@ -6424,7 +6425,6 @@ packages:
 
   /lodash.clonedeep/4.5.0:
     resolution: {integrity: sha1-4j8/nE+Pvd6HJSnBBxhXoIblzO8=}
-    dev: true
 
   /lodash.get/4.4.2:
     resolution: {integrity: sha1-LRd/ZS+jHpObRDjVNBSZ36OCXpk=}

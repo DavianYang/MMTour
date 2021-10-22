@@ -6,6 +6,7 @@ import { UserRoute } from '@routes/users.route';
 import { TourRoute } from '@routes/tours.route';
 import { ReviewRoute } from '@routes/reviews.route';
 import { BookingRoute } from '@routes/bookings.route';
+import { ItineraryRoute } from '@routes/itineraries.route';
 
 import { logger } from '@utils/logger';
 
@@ -16,7 +17,7 @@ process.on('uncaughtException', (err: Error) => {
   process.exit(1);
 });
 
-const app = new App([new IndexRoute(), new TourRoute(), new UserRoute(), new ReviewRoute(), new BookingRoute()]);
+const app = new App([new IndexRoute(), new TourRoute(), new UserRoute(), new ReviewRoute(), new BookingRoute(), new ItineraryRoute()]);
 
 const server = app.listen();
 

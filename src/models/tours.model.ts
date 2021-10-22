@@ -121,30 +121,6 @@ const tourSchema = new Schema<TourDocument>(
         day: Number,
       },
     ],
-    itinerary: [
-      {
-        name: {
-          type: String,
-          required: [true, 'An itinerary must have a name'],
-          minLength: [20, 'Itinerary name must have at least {MINLENGTH} characters'],
-          maxLength: [250, 'Itinerary name must have at most {MAXENGTH} characters'],
-        },
-        day: { type: Number, required: [true, 'An itinerary must have a day'] },
-        placeImages: {
-          type: [String],
-          validate: [ImageLimit, 'Image Cover exceeds the limit of 5'],
-        },
-        placeDescription: {
-          type: String,
-          minLength: [300, 'Itinerary description must have at least {MINLENGTH} characters'],
-          maxLength: [2000, 'Itinerary description must have at most {MAXENGTH} characters'],
-        },
-        remark: {
-          type: String,
-          maxLength: [500, 'Itinerary remark must have at most {MAXENGTH} characters'],
-        },
-      },
-    ],
     additionalService: String,
     flights: String,
     optional: String,
@@ -152,6 +128,12 @@ const tourSchema = new Schema<TourDocument>(
       type: Boolean,
       default: false,
     },
+    itineraries: [
+      {
+        type: Types.ObjectId,
+        ref: 'Itinerary',
+      },
+    ],
     guides: [
       {
         type: Types.ObjectId,
